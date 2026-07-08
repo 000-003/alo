@@ -1,0 +1,149 @@
+# Orchestrateur IA : Matrice Absolue des Commandes Cardinal (Function Calling)
+
+*Dans ALfheim Online, le Système Cardinal gère l'auto-régulation du monde pour maintenir l'intérêt des joueurs. Via ces outils de `Function Calling`, notre modèle Gemini 1.5 agit avec l'autorité absolue d'un "Dungeon Master" automatisé sur l'intégralité du backend Node.js.*
+
+## 1. 🌍 Manipulations Environnementales & Topographiques
+- `SYS_CHANGE_WEATHER(Zone_ID, Type)` : Modifie la météo (Pluie, Tempête, Brume toxique, Neige) modifiant instantanément la physique de vol et la visibilité.
+- `SYS_TIME_SHIFT(Zone_ID, Time_Target)` : Force le cycle Jour/Nuit, par exemple pour créer une éclipse qui paralyse la magie Sylphe.
+- `SYS_ALTER_GRAVITY(Zone_ID, Valeur)` : Modifie la constante `9.8m/s²`. Utilisé dans les donjons spéciaux (Jötunheimr profond).
+- `SYS_LOCK_ZONE(Zone_ID, Raison)` : Verrouille l'accès à un groupe WhatsApp (ex: "Mur de ronces magiques") empêchant tout transfert de joueur.
+- `SYS_TRIGGER_DISASTER(Zone_ID, Disaster_Type)` : Invoque une catastrophe naturelle (Tremblement de terre, Éruption) causant des dégâts passifs dans la zone.
+- `SYS_CONNECT_ZONES(Zone_A, Zone_B)` : Crée une liaison bidirectionnelle dans le graphe de voisinage (ex: un pont apparaît, un éboulement ouvre un passage). Met à jour l'atlas (`connected_zones` symétrique, règle L1).
+- `SYS_DISCONNECT_ZONES(Zone_A, Zone_B)` : Supprime une liaison du graphe (ex: pont détruit). Les joueurs en transit sont renvoyés vers la zone source.
+- `SYS_SYNC_PRESENCE(Avatar_ID)` : Résout toute désynchronisation entre les groupes WhatsApp et `T_AVATARS.current_zone` — fait respecter l'invariant « 1 joueur = 1 lieu » (protocole R0).
+- `SYS_SET_ENV_HAZARD(Zone_ID, Param, Valeur)` : Pilote les jauges environnementales de zone/instance (`OXYGEN` — Apnée du Gouffre de Léviathan, `HEAT` — Surchauffe de la Caldeira d'Obsidienne, `DOT` — dégâts continus type Désolation de Magma). Équivalent GM : `!sys_env_set`.
+
+## 2. 🎭 Manipulations PNJ, Factions & Narratives
+- `SYS_MODIFY_AFFINITY(Avatar_ID, NPC_ID, Valeur)` : Altère le respect d'un PNJ envers un joueur selon son Roleplay textuel.
+- `SYS_NPC_DIALOG_OVERRIDE(NPC_ID, Dialogue_Urgent)` : Force un PNJ marchand ou garde à relayer un message critique au lieu de son menu habituel.
+- `SYS_DECLARE_FACTION_WAR(Race_A, Race_B)` : L'IA détecte une tension diplomatique entre les joueurs de deux races et déclenche un état de guerre officiel (PK autorisé sans perte de Karma).
+- `SYS_ASSASSINATE_NPC(NPC_ID)` : L'IA décide de tuer un Lord PNJ pour relancer une quête d'élection diplomatique.
+- `SYS_REBUILD_TOWN(Town_ID)` : L'IA reconstruit ou modifie l'architecture d'une ville (après une invasion par exemple).
+- `SYS_MOVE_NPC(NPC_ID, Zone_ID)` : Déplace un PNJ vers une autre zone (`T_NPC.zone_id`) — pèlerinages, fuites, exils narratifs. Équivalent GM : `!sys_npc_move`.
+- `SYS_NPC_DIALOGUE(NPC_ID, Avatar_ID, Topic, Knowledge_Scope)` : Génère la réplique d'un PNJ **strictement dans le périmètre** `Knowledge_Scope` = K0 + K1 + K2 débloqués de l'avatar (vue `V_NPC_LLM_SCOPE`) + section « Bio & Personnalité » de la fiche. Invariants D18 : jamais de K3, jamais de sujet hors enveloppe (le bot a déjà répondu par la ligne d'ignorance). Cf. `npc_knowledge_protocol.md` §2.
+- `SYS_NPC_KNOWLEDGE_CHECK(NPC_ID)` : Retourne l'enveloppe QI complète d'un PNJ (audit avant scène narrative). Équivalent GM : `!sys_npc_info`.
+- `SYS_NPC_KNOWLEDGE_UNLOCK(NPC_ID, QI_ID, Avatar_ID)` : Débloque un slot K2/K3 pour un joueur (récompense d'arc narratif — écrit `T_NPC_KNOWLEDGE_UNLOCKS`). Équivalent GM : `!sys_npc_unlock`.
+- `SYS_SPAWN_CANON(NPC_ID, Zone_ID, Duration, Silent?)` : Matérialise un personnage canonique (D19) pour `Duration` minutes — renseigne `T_NPC.zone_id` puis la remet à NULL à expiration. `Silent = VRAI` : aucune annonce, seuls les joueurs présents le découvrent. Équivalent GM : `!sys_canon_spawn`.
+- Événement entrant `NPC_SECRET_PROBED(NPC_ID, Avatar_ID, QI_ID)` : émis par le bot quand un joueur sonde un secret K3 (trigger T4 de `T_NPC_KNOWLEDGE`) — hook narratif : l'IA peut décider d'en faire une quête, une filature, une rumeur.
+
+## 3. ⚔️ Manipulation des Mobs & Bosses (Auto-Balancing)
+- `SYS_BUFF_MONSTER(Mob_Instance, Stat, %)` : "Phase 2" dynamique si le boss est vaincu trop facilement (Boost HP, Force).
+- `SYS_MUTATE_MONSTER(Mob_Instance, New_Element)` : L'IA adapte le Boss aux attaques des joueurs (ex: Si spammé de Feu, le Boss devient Immunisé au Feu).
+- `SYS_SPAWN_INVASION(Zone_ID, Mob_ID, Qté)` : Déclenche un raid massif de monstres attaquant une capitale ou un campement de joueurs.
+- `SYS_SPAWN_WORLD_BOSS(Zone_ID)` : Fait apparaître un Boss Unique non-instancié, nécessitant la coopération de multiples guildes (Ping Global).
+- `SYS_MERGE_MOBS(Mob_ID_1, Mob_ID_2)` : Fusionne deux entités en plein combat pour créer une aberration si le chronomètre du combat est trop long.
+- `SYS_ADJUST_SPAWN(Zone_ID, Mob_ID, Taux)` : Ajuste dynamiquement un taux d'apparition dans `T_SPAWN_TABLES` (surpopulation, événements, équilibrage). Équivalent GM : `!sys_spawn_set`.
+
+## 4. 🧬 Manipulation Directe des Joueurs (Droit Divin)
+- `SYS_DEBUFF_PLAYER(Avatar_ID, Status_Effect)` : Applique une altération d'état (Cécité, Poison, Silence) suite à une erreur critique du joueur.
+- `SYS_BLESS_PLAYER(Avatar_ID, Buff_Type)` : Accorde une bénédiction (ex: +50% EXP pendant 1h) pour récompenser un Roleplay héroïque.
+- `SYS_CURSE_KARMA(Avatar_ID, Yrd_Penalty)` : Si le joueur triche ou exploite une faille de langage, l'IA draine son compte bancaire ou brise son arme.
+- `SYS_FORCE_TELEPORT(Avatar_ID, Zone_ID)` : Téléporte instantanément un joueur dans une prison système ou une dimension parallèle (ex: Salle blanche du GM).
+- `SYS_WIPE_MEMORY(Avatar_ID, Knowledge_ID)` : Efface une entrée de l'Encyclopédie du joueur, simulant une amnésie due à un Boss Psychique.
+- `SYS_OVERRIDE_HP(Avatar_ID, Valeur)` : Fixe les HP d'un joueur à 1 (Le laisse à l'article de la mort pour créer du drame narratif).
+
+## 5. 💰 Manipulation de l'Économie & du Loot
+- `SYS_INFLATION_CRASH()` : Augmente le coût de réparation des armes de 300% à l'échelle du serveur si la masse monétaire en circulation est trop grande.
+- `SYS_DROP_SECRET_LORE(Avatar_ID, Knowledge_ID)` : Débloque la véritable histoire d'Aincrad dans l'Encyclopédie d'un joueur s'il fouille le bon endroit.
+- `SYS_GRANT_ITEM(Avatar_ID, Item_ID, Qty)` : L'IA remet au joueur un objet existant du dictionnaire MLD (récompense de quête, drop scénarisé, compensation). Équivalent IA de la commande GM `!sys_give`.
+- `SYS_GENERATE_UNIQUE_ITEM(Avatar_ID, Item_JSON)` : L'IA forge de toutes pièces une arme unique (Épée Démoniaque de Sang) qui n'existait pas dans le dictionnaire MLD et l'offre au joueur.
+- `SYS_DESTROY_ITEM_INSTANCE(Instance_ID)` : L'IA brise volontairement une arme en plein combat, forçant le joueur à s'adapter sans équipement.
+- `SYS_GENERATE_QUEST(Group_ID, Quest_JSON)` : L'IA génère et propose une "Emergency Quest" (Quête Urgente) directement aux joueurs présents dans la zone.
+
+## 6. ⚙️ Gestion de l'Interface et du Cache Serveur
+- `SYS_ANNOUNCE_GLOBAL(Texte)` : L'IA pousse un message épinglé dans tous les groupes WhatsApp de la communauté en tant qu'Alerte Rouge.
+- `SYS_OVERRIDE_BGM(Track_Name)` : (Narration) Le bot précise au joueur que la musique du monde virtuel vient de changer (ex: *BGM: Boss Theme*).
+- `SYS_PAUSE_INSTANCE(Combat_ID)` : L'IA gèle le timer d'un combat asynchrone si une maintenance ou une vérification est requise.
+
+## 7. 🏰 Grand Quests & Événements Mondiaux
+- `SYS_TRIGGER_GRAND_QUEST(Quest_Type, Quest_JSON)` : L'IA déclenche une Grand Quest serveur-wide (Excalibur, World Tree, Purge).
+- `SYS_OPEN_WORLD_TREE_GATE(Floor_ID)` : L'IA ouvre un palier de l'Arbre-Monde pour l'ascension.
+- `SYS_CLOSE_WORLD_TREE_GATE(Floor_ID)` : L'IA referme le palier après échec ou complétion.
+- `SYS_SPAWN_INFINITE_GUARDIANS(Zone_ID, Guardian_Type)` : Génère les Chevaliers Dorés en boucle infinie pour l'assaut de l'Arbre-Monde.
+- `SYS_TRIGGER_SIEGE(Target_Capital, Attacking_Race)` : L'IA lance un siège de capitale.
+- `SYS_ACTIVATE_SEASONAL_EVENT(Event_Type, Duration_Days)` : L'IA active un événement saisonnier (Festival, Invasion, Tournoi).
+- `SYS_BROADCAST_WORLD_MESSAGE(Text)` : Message scénarisé dans TOUS les groupes du serveur.
+- `SYS_MODIFY_WORLD_STATE(State_Key, Value)` : Modifie une variable globale (ex: `eternal_winter = true`).
+- `SYS_TRIGGER_SERVER_FREEZE(Zone_ID, Duration)` : Glaciation du serveur si quête échouée.
+- `SYS_TRIGGER_BOSS_RACE(Boss_ID, Competing_Guilds[])` : Course au boss entre guildes.
+
+## 8. 🕊️ Vol, Navigation & Cristaux
+- `SYS_DISABLE_FLIGHT(Zone_ID)` : L'IA interdit le vol dans une zone (grottes, pièges, anti-vol magique).
+- `SYS_EXTEND_FLIGHT_GAUGE(Avatar_ID, Seconds)` : L'IA octroie un bonus de vol pour une quête narrative.
+- `SYS_FORCE_CRASH(Avatar_ID)` : L'IA force la chute d'un joueur en vol (piège, tempête).
+- `SYS_DISABLE_CRYSTALS(Zone_ID)` : L'IA verrouille l'usage des cristaux dans une zone.
+- `SYS_ENABLE_CRYSTALS(Zone_ID)` : L'IA réactive les cristaux après un événement.
+- `SYS_DROP_RARE_CRYSTAL(Avatar_ID, Crystal_Type)` : L'IA fait tomber un cristal rare en récompense.
+- `SYS_REVEAL_MAP(Avatar_ID, Zone_ID)` : L'IA révèle une zone sur la carte du joueur.
+- `SYS_SCRAMBLE_MAP(Avatar_ID)` : L'IA brouille la carte (malédiction, labyrinthe).
+- `SYS_CREATE_MAZE(Zone_ID, Complexity)` : L'IA reconfigure les connexions d'un donjon.
+
+## 9. 🎭 Magie Raciale & Compétences Spéciales
+- `SYS_GRANT_SPELL(Avatar_ID, Spell_ID)` : L'IA enseigne un sort à un joueur.
+- `SYS_GRANT_OSS(Avatar_ID, OSS_JSON)` : L'IA valide un OSS créé par un joueur.
+- `SYS_TRANSFER_OSS(Source_ID, Target_ID, OSS_ID)` : Transfert d'OSS via parchemin.
+- `SYS_VALIDATE_SKILL_CONNECT(Avatar_ID, Skill_A, Skill_B)` : Vérification du timing de Skill Connect.
+- `SYS_GRANT_MELODY(Avatar_ID, Melody_ID)` : L'IA enseigne une mélodie secrète à un Puca.
+- `SYS_AMPLIFY_MUSIC(Zone_ID, Multiplier)` : L'IA amplifie la portée de la musique dans une zone sacrée.
+- `SYS_REVEAL_ILLUSION(Zone_ID)` : L'IA dissipe toutes les illusions actives.
+- `SYS_CREATE_MIRAGE_ZONE(Zone_ID, Description)` : L'IA crée un mirage environnemental.
+- `SYS_PLANT_TREASURE(Zone_ID, Item_ID)` : L'IA cache un objet rare détectable par les Spriggans.
+- `SYS_TRIGGER_SACRIFICE(Avatar_ID, Damage_Radius)` : L'IA gère les conséquences d'un sort sacrificiel.
+
+## 10. 💍 Social, Mariage & Housing
+- `SYS_GENERATE_CEREMONY(Avatar_ID_1, Avatar_ID_2, Zone_ID)` : L'IA génère la narration de cérémonie de mariage.
+- `SYS_CREATE_HOME_GROUP(Avatar_ID, House_Type)` : L'IA crée le groupe WhatsApp privé du logement.
+- `SYS_DESTROY_HOME(Avatar_ID, Reason)` : L'IA peut détruire la maison d'un joueur (invasion).
+- `SYS_INVADE_GUILD_HALL(Guild_ID, Attacker_Guild_ID)` : L'IA déclenche un siège de QG de guilde.
+- `SYS_TRIGGER_ALLIANCE_EVENT(Race_A, Race_B, Type)` : L'IA déclenche un événement d'alliance.
+
+## 11. 🎣 Récolte, Artisanat & Économie Dynamique
+- `SYS_STOCK_FISHING_SPOT(Zone_ID, Fish_ID, Rarity)` : L'IA peuple un point de pêche.
+- `SYS_DEPLETE_RESOURCE(Zone_ID, Resource_Type)` : L'IA vide un gisement de minerai.
+- `SYS_BONUS_HARVEST(Zone_ID, Multiplier)` : L'IA déclenche une Récolte Abondante (x2 drops).
+- `SYS_MODIFY_DURABILITY(Item_Instance_ID, Delta)` : L'IA modifie la durabilité d'un item.
+- `SYS_DROP_WEAPON(Avatar_ID, Weapon_ID)` : L'IA force le drop d'une arme en récompense.
+- `SYS_BREAK_WEAPON(Item_ID, Instance_ID)` : L'IA brise une arme en combat pour créer du drame.
+- `SYS_SET_SHOP_PRICES(NPC_ID, Multiplier)` : L'IA modifie les prix d'un marchand (inflation locale).
+
+## 12. 🧬 Gestion Avancée des Joueurs
+- `SYS_GRANT_ADMIN_RIGHTS(Avatar_ID, Level)` : Octroyer des droits admin temporaires.
+- `SYS_REVOKE_ADMIN_RIGHTS(Avatar_ID)` : Révoquer les droits admin.
+- `SYS_SET_PAIN_ABSORBER(Avatar_ID, Level_0_to_10)` : Modifier le Pain Absorber.
+- `SYS_ENGRAVE_MONUMENT(Monument_ID, Player_Names, Achievement)` : Graver un exploit sur le Monument.
+- `SYS_REWARD_LAST_ATTACK(Avatar_ID, Boss_ID)` : Récompenser le Last Attack.
+- `SYS_MANAGE_REMAIN_LIGHT(Avatar_ID, Extension_Seconds)` : Modifier le timer de Remain Light.
+- `SYS_REVIVE_PLAYER(Avatar_ID, Target_ID)` : Valider une résurrection par sort.
+- `SYS_CONVERT_CHARACTER(Avatar_ID, Target_Game)` : Conversion inter-jeux The Seed.
+
+## 13. 🐉 Gestion Avancée des PNJ & Monstres
+- `SYS_SUMMON_NPC_ARMY(Zone_ID, Faction, Count)` : Invoquer une armée PNJ alliée.
+- `SYS_NPC_TRANSFORM(NPC_ID, New_Form)` : Transformation de PNJ (ex: Freyja → Thor).
+- `SYS_ASSASSINATE_NPC(NPC_ID)` : L'IA tue un Lord PNJ pour relancer une élection.
+- `SYS_SUMMON_MOUNT(Avatar_ID, Mount_ID)` : Invoquer une monture (Tonkii, dragons).
+- `SYS_SEAL_LEGENDARY_WEAPON(Item_ID, Zone_ID)` : Sceller une arme dans un donjon.
+- `SYS_COLLAPSE_DUNGEON(Dungeon_ID)` : Effondrement d'un donjon après complétion.
+- `SYS_SET_ENV_HAZARD(Zone_ID, Hazard_Type, Value)` : Configurer un danger environnemental (Lave, Acide, Gel, Oxygène).
+- `SYS_GENERATE_CARDINAL_QUEST(Myth_Source, Zone_ID)` : Quête auto-générée à partir de mythologie nordique.
+
+## 14. 🌳 Services de Capitale Neutre — Alne (lot 2.3)
+*Équivalents IA des commandes Joueur du roster d'Alne (`NPC_ALN_00-99`, cf. §21 de `whatsapp_commands_list.md`). Règle de complétude (D). Réutilisent quand c'est possible les primitives existantes (`SYS_GRANT_ITEM`, `SYS_SET_SHOP_PRICES`, `SYS_QUEST_HOOK`, `SYS_SET_ENV_HAZARD`, `SYS_SUMMON_MOUNT`).*
+- `SYS_SET_TRADE_ROUTE(Route_ID, State)` : Ouvre/ferme/perturbe une des 9 routes aériennes (blocus, essaim `MOB_AIR_*`). Face joueur : `!routes` / `!voyage` (Halvard `10`, Wrenna `11`).
+- `SYS_LOG_RAID(Raid_ID, Roster, Dome_Floor)` : Inscrit un raid montant au Dôme `ZONE_YGG_DUN_001` (Dorn `12`, Sella `13`).
+- `SYS_SPAWN_ESCORT(Avatar_ID, Escort_Type)` : Matérialise guide/coursier/mercenaire (Torin `14`, Pip `80`, Della `76`).
+- `SYS_STOCK_HARVEST_NODE(Zone_ID, Resource_ID, Rarity)` : Peuple un nœud de récolte (sève/flore d'Yggdrasil, Yssa `15`).
+- `SYS_GRANT_LORE(Avatar_ID, Lore_ID)` : Débloque un contenu de lore traduit/copié (Lingua `22`, Denn `23`, Valerius `01`).
+- `SYS_SET_FACTION_STANDING(Avatar_ID, Race_ID, Delta)` : Ajuste la réputation raciale (Cassia `25`).
+- `SYS_APPLY_SOCKET(Item_ID, Gem_ID)` : Sertit une gemme dans un équipement (Vireth `34`).
+- `SYS_APPLY_BUFF(Avatar_ID, Buff_ID, Duration)` : Applique un buff de départ/tranchant/food (Ilia `41`, Griss `88`, Aubin `47`).
+- `SYS_SET_VAULT(Avatar_ID, Item_ID, Op)` : Dépôt/retrait de coffre (Lom `46`) — distinct de la banque (`!bank_*`, Ovena `60`).
+- `SYS_FLAG_ILLEGAL_GOODS(Item_ID)` / `SYS_FLAG_SOUL_CONTRACT(Contract_ID)` / `SYS_CLEAR_PK_FLAG(Avatar_ID)` : Traçage du marché noir (Morne `55`, Sept-Doigts `53`, Sten `59`) — **exploits scénarisés, réservés orchestrateur**.
+- `SYS_SEAL_CONTRACT(Contract_ID, Parties, Clauses)` : Scelle un acte notarié inviolable (Verd `62`) ; le « contrat fondateur » de l'anti-PK (`QI_ALN_62_09`) est non ouvrable.
+- `SYS_LEVY_TAX(Avatar_ID, Amount)` : Prélève une taxe de marché (Molk `63`) ; la « taxe fantôme » (`QI_ALN_63_09`) est un flag méta.
+- `SYS_SET_COSMETIC(Avatar_ID, Cosmetic_ID)` : Portrait/coiffure/tatouage cosmétique (Ode `83`, Vane `65`, Sten `59`).
+- `SYS_ANNOUNCE(Zone_ID, Message)` : Diffuse une annonce publique (Perla `64`, Prell `89`) — vecteur des événements serveur.
+- `SYS_QUERY_REGISTRY(Registry, Key)` : Consulte les registres de disparus (Sorne `97`, Lom `46`, Wrenna `11`).
+- `SYS_APPLY_HEAL(Avatar_ID, Amount)` : Soins de fortune (Osmé `40`, Aeliss `91`) ; résurrection = `SYS_REVIVE_PLAYER` (§12).
+- `SYS_TUTORIAL_STEP(Avatar_ID, Step_ID)` : Progression du tutoriel d'onboarding (Pell `96`).
+- **Note fil méta (D20)** : les slots K3 des PNJ `00`, `35`, `81`, `98`, `99` (lancement/relance du serveur, dessein du Cardinal) ne sont JAMAIS injectés au LLM — 1 révélation méta max/session, jamais confirmée frontalement, pilotée exclusivement par l'orchestrateur via `NPC_SECRET_PROBED`.
+

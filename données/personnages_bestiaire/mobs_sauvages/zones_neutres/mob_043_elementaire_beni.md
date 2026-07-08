@@ -1,0 +1,28 @@
+# Élémentaire Béni
+
+## Identification Cardinal
+- **Monster_ID** : `MOB_043_2B1C679A`
+- **Type** : Élémentaire
+- **Niveau** : 40
+- **Zone** : Cratère Neutre
+- **Agressivité** : Agressif
+
+## Stats
+| Stat | Val |
+|---|---|
+| HP | 10000 | 
+| ATK | 600 | 
+| DEF | 400 | 
+| AGI | 320 |
+| Élément | Neutre | 
+
+## Récompenses
+- **EXP** : 1600
+- **Prime** : 400 Yrds
+- **Loot** : Composants de Élémentaire (Drop Rate: 35%)
+
+## Comportement IA
+Utilise le flanking. Fuira le combat si ses HP chutent sous 10%. Peut appeler des renforts s'il est attaqué par un joueur solo.
+
+## Lore
+Une créature générée de manière procédurale par le Cardinal System pour maintenir l'équilibre écologique de la zone. 

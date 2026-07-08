@@ -1,0 +1,199 @@
+# Interface Système : Registre Global des Commandes (Index Cardinal SAO/ALO)
+
+*Version 2.0 - Intégration de la gestion de Communauté WhatsApp, de l'Encyclopédie et des privilèges Game Master.*
+
+## 1. 👑 Commandes Game Master & Système Cardinal (Admin Only)
+*Le bot agit avec des droits de Super-Admin WhatsApp pour réguler les 200 joueurs.*
+- `!sys_group_create [Nom_Lieu] [Type: Public/Secret]` : Le bot génère un nouveau groupe WhatsApp (ex: *Palier 27 - Salle du Boss*).
+- `!sys_group_add [Num_WhatsApp] [Group_ID]` : Ajoute silencieusement un joueur à un groupe secret s'il en a les droits.
+- `!sys_group_kick [Num_WhatsApp] [Group_ID]` : Expulse un joueur du groupe (ex: mort dans le donjon ou retour en ville).
+- `!sys_announce [Texte]` : Ping global du bot (Message épinglé) dans tous les groupes de la communauté (ex: *L'Event de la Purge commence*).
+- `!sys_ban [Num_WhatsApp]` : Blacklist un numéro.
+- `!sys_give [Objet/Yrd] [Num_WhatsApp]` : Commande GM pour le support.
+- `!sys_spawn_boss [Group_ID] [Boss_ID]` : Force l'apparition d'un Raid Boss dans un groupe WhatsApp spécifique.
+- `!sys_sync [Num_WhatsApp]` : Resynchronise la présence d'un joueur (vérité = `T_AVATARS.current_zone`, cf. `zone_movement_protocol.md` R0).
+- `!sys_zone_link [Zone_A] [Zone_B]` / `!sys_zone_unlink [Zone_A] [Zone_B]` : Ajoute/retire une liaison dans le graphe de voisinage (atlas).
+- `!sys_zone_lock [Zone_ID]` : Verrouille les entrées/sorties d'une zone (équivalent GM de `SYS_LOCK_ZONE`).
+- `!sys_spawn_set [Zone_ID] [Mob_ID] [Taux%]` : Ajuste le taux d'apparition d'un mob dans une zone (écrit dans `T_SPAWN_TABLES`, budget de zone ≤ 100%).
+- `!sys_npc_move [NPC_ID] [Zone_ID]` : Déplace un PNJ vers une autre zone (met à jour `T_NPC.zone_id` — le bot annonce le départ/l'arrivée dans les groupes concernés).
+- `!sys_env_set [Zone_ID] [Param] [Valeur]` : Règle un paramètre environnemental de zone/instance (`OXYGEN` — jauge d'Apnée du Gouffre de Léviathan, `HEAT` — jauge de Surchauffe de la Caldeira d'Obsidienne, `DOT`…). Équivalent GM de `SYS_SET_ENV_HAZARD`.
+- `!sys_npc_info [NPC_ID]` : Audit de l'enveloppe informationnelle d'un PNJ (slots K0-KX, conditions, déblocages — cf. `npc_knowledge_protocol.md`). Équivalent IA : `SYS_NPC_KNOWLEDGE_CHECK`.
+- `!sys_npc_unlock [NPC_ID] [QI_ID] [Num_WhatsApp]` : Débloque manuellement un slot K2/K3 pour un joueur (écrit dans `T_NPC_KNOWLEDGE_UNLOCKS`). Équivalent IA : `SYS_NPC_KNOWLEDGE_UNLOCK`.
+- `!sys_canon_spawn [NPC_ID] [Zone_ID] [Durée_min]` : Matérialise un personnage canonique dans une zone pour une fenêtre limitée (D19 — seul moyen de rencontrer la trame principale). Équivalent IA : `SYS_SPAWN_CANON`.
+
+## 2. 📚 Encyclopédie & Index Système (Guide d'Argo)
+*Le savoir est verrouillé. Les joueurs débloquent la documentation en explorant.*
+- `!help` : Index général des commandes.
+- `!help [Catégorie]` : Manuel détaillé (ex: `!help craft`).
+- `!encyclopedia` : Liste les pages de Lore débloquées par l'exploration du joueur.
+- `!wiki [Nom_Monstre_ou_Lieu]` : Affiche la fiche Fandom détaillée (Stats, Faiblesses). *Requiert que le joueur ait vaincu le monstre au moins une fois ou exploré la zone (Discovery Level).*
+- `!lore [Titre]` : Affiche un document d'histoire ancienne (ex: *La Chute de Jötunheimr*) trouvé en loot.
+
+## 3. 🚪 Mouvement Dynamique & Architecture des Groupes WhatsApp
+*Se déplacer dans ALO correspond à naviguer entre différents groupes WhatsApp gérés par le bot.*
+*Règle d'exclusivité (cf. `system_mechanics/zone_movement_protocol.md`) : entrer dans un groupe de type lieu retire automatiquement le joueur de tous les autres groupes lieux/instances. Le groupe de chat communautaire (HUB) n'est jamais quitté.*
+- `!enter_zone [Nom_Zone]` : Si la zone est adjacente (atlas `cartographie/atlas_monde_liaisons.md`) et les conditions remplies, le bot l'ajoute au groupe WhatsApp de la zone et le retire de l'ancienne. Alias : `!marcher [direction]`, `!voler [destination]`.
+- `!leave_zone` : Le joueur quitte la zone (retour vers la zone parente — capitale ou zone précédente).
+- `!where` : Affiche la zone actuelle du joueur, son type et ses zones adjacentes accessibles.
+- `!dungeon_queue [Donjon_ID]` : Place le joueur en file d'attente. Quand 7 joueurs sont prêts, le bot crée un groupe WhatsApp éphémère (Raid Instance) et les ajoute dedans.
+- `!portal [Ville]` : Utilise un cristal de téléportation pour changer de groupe WhatsApp instantanément (capitale).
+
+## 4. ⚙️ Gestion de Compte & AmuSphere
+- `!link_start [Race]` : Inscription, liaison du MSISDN.
+- `!profil` / `!stats_view` / `!stats_add [Attribut] [Points]` / `!titre_set [ID]`.
+- `!logout` : Déconnexion. Le bot retire temporairement le joueur des groupes de combat pour éviter le spam.
+- `!ping` : Affiche la latence de réponse du bot (Simule le *Connection Status* de l'AmuSphere).
+
+## 5. ⚔️ Moteur de Combat & Instances (PvE/PvP)
+- `!attaque` / `!cast [Sort]` / `!oss [Skill]` / `!parry` / `!switch [Allié]` / `!analyze` / `!fuite`.
+- `!target [ID_Ennemi]` : Verrouille une cible si la zone contient plusieurs monstres (le bot affiche les ID dans le groupe).
+- `!use_potion [Nom_Potion]` / `!revive_light [Cible]`.
+- `!respirer` : Reprend son souffle dans une poche d'air (+50 à la jauge d'Apnée, canalisation 10 s — donjons sous-marins, cf. `ZONE_UND_DUN_001` Gouffre de Léviathan).
+- `!duel_challenge [Num_WhatsApp]` : Lance une invitation au duel formel (Anti-PK). Si accepté, le bot arbitre les dégâts sans pénalité de mort.
+
+## 6. 🎒 Inventaire, Équipement & Paramètres d'Avatar
+- `!inventaire` / `!equiper [Item_ID] [Slot]` / `!unequip [Slot]` / `!jeter [Item_ID]`.
+- `!inspect [Item_ID]` : Lit la description d'un objet.
+- `!outfit [Cosmétique]` : Change la description visuelle publique de l'avatar.
+- `!bank_depot` / `!bank_retrait` / `!mail_send [Destinataire] [Colis]`.
+
+## 7. 🔨 Artisanat, Forgeron & Alchimie
+- `!craft_list` / `!forge [Recette]` / `!repair [Objet]` / `!enchant [Objet]` / `!alchimie [Herbe]` / `!cook` / `!mine`.
+- `!appraise [Objet_Non_Identifié]` : Identifie un loot mystère moyennant des Yrds (Marchand).
+
+## 8. 🐾 Domptage & Familiers (Beast Taming)
+- `!tame [Cible]` / `!pet_summon` / `!pet_attack` / `!pet_feed` / `!pet_resurrect`.
+
+## 9. ⚖️ Économie, Hôtel des Ventes & Échanges
+- `!shop_list` / `!buy` / `!sell`.
+- `!market_view` / `!market_list` / `!market_buy` : Interaction avec l'Auction House.
+- `!trade_request` / `!trade_add` / `!trade_confirm` : Échange P2P.
+- `!bounty_board` / `!bounty_claim` : Registre des assassins.
+
+## 10. 🛡️ Guildes, Groupes & Politique
+- `!guilde_create` / `!guilde_invite` / `!guilde_kick` / `!guilde_bank`.
+- `!guilde_war [Nom_Guilde]` : Déclare une guerre de faction. Autorise le PK sans pénalité de Karma entre les deux guildes.
+- `!party_create` / `!party_invite` / `!party_leave` / `!party_leader [Allié]`.
+- `!lord_vote` : Vote politique de la race.
+
+## 11. 🏆 Quêtes, Succès & Tracking
+- `!quest_board` / `!quest_accept` / `!quest_turnin`.
+- `!achievements` : Liste les hauts-faits débloqués par le joueur (ex: "Survivant d'Aincrad").
+- `!rankings` : Affiche le Top 10 des joueurs par Yrds, par Niveau ou par Boss tués.
+- `!monument_view` : Affiche le Monument des Épéistes (noms gravés des joueurs ayant accompli des exploits).
+- `!spectate [Combat_ID]` : Mode spectateur pour observer un combat en cours sans y participer.
+- `!last_attack` : Affiche le joueur ayant porté le coup final lors du dernier Boss vaincu et sa récompense bonus.
+
+## 12. 🕊️ Vol & Manœuvres Aériennes
+*Commandes liées au système de vol d'ALfheim (cf. `voluntary_flight_system.md`).*
+- `!fly_mode [assisté|libre]` : Bascule entre Vol Assisté (bridé, sûr) et Vol Libre (rapide, risqué). Vol Libre nécessite Niveau 20 + quête de déblocage.
+- `!vol_libre [Direction]` : Déplacement en Vol Libre avec contrôle directionnel fin.
+- `!barrel_roll` : Esquive rotative en vol (90% évasion vs projectiles, coût 30 MP).
+- `!dive_bomb` : Piqué offensif (+50% dégâts prochaine attaque, risque de crash).
+- `!hover` : Vol stationnaire pour caster en altitude.
+- `!flight_gauge` : Affiche la barre de vol restante (10 min max, recharge au sol).
+
+## 13. 🎭 Magie Illusoire (Spriggan)
+*Commandes liées au système d'illusion (cf. `illusion_magic_system.md`).*
+- `!illusion [Type]` : Lance une illusion (Leurre, Mirage, Nuit Artificielle, Transmutation, etc.).
+- `!treasure_sense` : (Passif Spriggan) Détecte les coffres et objets cachés dans un rayon de 50m.
+
+## 14. 🎵 Magie Musicale (Puca)
+*Commandes liées au système de mélodies (cf. `music_magic_system.md`).*
+- `!music [Nom_Mélodie]` : Joue une mélodie conférant un buff de zone au groupe (Hymne du Vent, Requiem de Guerre, Symphonie de Guérison, etc.).
+- `!music_stop` : Arrête la mélodie en cours.
+- `!melodies` : Liste les mélodies débloquées par le joueur.
+
+## 15. 💍 Mariage & Housing
+*Commandes liées au système social avancé (cf. `marriage_housing_system.md`).*
+- `!propose [Num_WhatsApp]` : Envoie une demande de mariage (nécessite Ring of Betrothal).
+- `!accept_proposal` : Accepte la demande.
+- `!divorce` : Annule le mariage (pénalité : 50% du coffre partagé).
+- `!whisper_partner [Message]` : Message privé au conjoint, peu importe la zone.
+- `!partner_locate` : Affiche la zone du conjoint.
+- `!partner_bank` : Accède au coffre partagé conjugal.
+- `!housing_buy [Type]` : Achète un logement (Chambre, Maison, Manoir, Château de Guilde).
+- `!home_storage` : Accède au stockage de la maison.
+- `!home_invite [Num_WhatsApp]` / `!home_kick [Num_WhatsApp]` : Gère les invités du logement.
+- `!decorate [Item]` : Place un objet décoratif dans la maison (confère des buffs passifs).
+
+## 16. 🎣 Pêche, Cuisine & Récolte Avancée
+*Commandes liées aux métiers secondaires (cf. `gathering_cooking_system.md`).*
+- `!fish` : Lance une session de pêche (nécessite canne + zone avec eau).
+- `!reel` : Remonte la ligne au bon moment (mini-jeu textuel basé sur la DEX).
+- `!cook [Recette]` : Prépare un repas avec des ingrédients (buffs temporaires).
+- `!sew [Matériau]` : Couture d'armure textile ou de sacs d'inventaire.
+- `!gather` : Récolte des herbes et plantes dans la zone.
+- `!mine` : Extraction de minerais (nécessite pioche + zone minière).
+
+## 17. 🧭 Navigation & Cristaux
+*Commandes liées à la cartographie et aux cristaux (cf. `navigation_system.md`, `crystals_system.md`).*
+- `!map` : Affiche la zone actuelle et les zones connectées (détail selon niveau de Navigation).
+- `!compass [Destination]` : Indique la direction d'une zone.
+- `!mark [Nom]` : Place un marqueur personnel sur la zone actuelle.
+- `!fast_travel [Zone_ID]` : Téléportation instantanée (Navigation Lv.6 + Teleport Crystal requis).
+- `!use_crystal teleport [Ville]` : Brise un Teleport Crystal pour se téléporter.
+- `!use_crystal corridor [Zone]` : Ouvre un portail bidirectionnel pour le groupe (30s).
+- `!use_crystal mirage` : Affiche les infos détaillées des zones adjacentes.
+- `!use_crystal record` : Sauvegarde les 5 derniers logs de combat.
+- `!enter_portal` : Traverse un portail ouvert par un Corridor Crystal allié.
+- `!yui_analyze [Cible]` : (Nécessite Yui's Heart) Analyse complète d'un monstre ou joueur.
+
+## 18. ⚔️ Compétences Avancées & OSS
+*Commandes liées aux compétences passives et au système d'OSS (cf. `competences_magie/`).*
+- `!skill_list` : Liste toutes les compétences actives et passives du joueur avec leur rang de maîtrise.
+- `!skill_connect [OSS_1] [OSS_2]` : Tente un enchaînement Skill Connect (fenêtre de timing de 0.3s).
+- `!oss_create [Nom]` : Commence le processus de création d'un OSS personnel (nécessite Maîtrise d'arme Avancée).
+- `!oss_transfer [Parchemin] [Num_WhatsApp]` : Transfère un OSS à un autre joueur via un Parchemin d'OSS.
+- `!meditate` : Active la méditation (régénération HP/MP x3 hors combat).
+- `!track [Joueur/Monstre]` : Active le pistage d'une cible.
+- `!search` : Recherche les pièges, coffres cachés et passages secrets dans la zone.
+- `!hide` : Active la furtivité (invisible sur la map des autres joueurs).
+- `!throw [Item]` : Lance une arme de jet (dague, pick, chakram).
+
+## 19. 🏰 Alliances, Diplomatie & Événements Mondiaux
+*Commandes liées aux Grand Quests et à la politique inter-raciale.*
+- `!alliance_create [Guilde_Cible]` : Propose une alliance multi-guildes.
+- `!alliance_invite [Guilde]` : Invite une guilde dans l'alliance.
+- `!alliance_war [Alliance_Cible]` : Déclare la guerre entre deux alliances.
+- `!race_council` : Convoque un conseil diplomatique inter-races (Lord uniquement).
+- `!lord_campaign [Discours]` : Lance une campagne électorale pour le poste de Lord.
+- `!lord_tax_set [Pourcentage]` : Le Lord ajuste les taxes de sa capitale (0-15%).
+
+## 20. 🗣️ Dialogue PNJ & Quantité Informationnelle
+*Commandes liées aux conversations avec les PNJ (cf. `system_mechanics/npc_knowledge_protocol.md`, D16-D19). Tout dialogue passe par le pare-feu informationnel : un PNJ ne révèle que ce qui est dans son enveloppe QI.*
+- `!parler [NPC_ID|Nom]` : Engage la conversation avec un PNJ présent dans la zone. Le bot ouvre le dialogue avec la réplique d'accueil, puis les réponses libres du joueur sont résolues contre l'enveloppe QI du PNJ.
+- `!demander [NPC_ID] [sujet]` : Interroge un PNJ sur un sujet précis. Hors enveloppe → ligne d'ignorance scriptée (aucun appel IA) ; secret K3 → ligne de déflection ; info conditionnelle K2 → le PNJ évoque sa condition (affinité, quête, paiement, titre).
+- `!pnj_list` : Liste les PNJ visibles dans la zone actuelle (les PNJ cachés `NPC_*_00` et les canoniques hors fenêtre n'y figurent JAMAIS).
+
+## 21. 🌳 Services de Capitale Neutre — Alne (lot 2.3)
+*Commandes de service introduites par le roster d'Alne (`NPC_ALN_00-99`, `ZONE_NEU_CAP_001`). Règle de complétude (D) : chaque commande Joueur possède un équivalent GM (`!sys_*`) et IA (`SYS_*`, cf. §14 de `ai_orchestrator_commands.md`). Les commandes déjà couvertes par les sections 1-20 (`!parler`, `!shop_list`, `!repair`, `!forge`, `!enchant`, `!tame`, `!bank_depot/retrait`, `!mail_send`, `!outfit`, `!learn_skill`, `!bounty`, `!appraise`, `!perform`, `!bet`) sont réutilisées telles quelles.*
+
+| Commande Joueur | Rôle | PNJ type | Équivalent GM | Équivalent IA |
+|---|---|---|---|---|
+| `!voyage [Cité]` / `!routes` | Hub aérien : voyage inter-cités, état des 9 routes | Halvard `10`, Wrenna `11` | `!sys_route_state` | `SYS_SET_TRADE_ROUTE` |
+| `!dome_enter` / `!dome_log [étage]` | Accès endgame / registre des raids | Dorn `12`, Sella `13` | `!sys_dome_gate` | `SYS_LOG_RAID` |
+| `!raid_register` / `!raid_join` | Inscrire / rejoindre un raid | Dorn `12`, Vira `75` | `!sys_raid_form` | `SYS_QUEST_HOOK` |
+| `!hire_guide [dome\|ville]` / `!courier` | Guide / coursier | Torin `14`, Pip `80` | `!sys_escort` | `SYS_SPAWN_ESCORT` |
+| `!gather` | Récolte guidée (sève, flore) | Yssa `15` | *(réutilise récolte §16)* | `SYS_STOCK_HARVEST_NODE` |
+| `!biblio_search` / `!translate [texte]` / `!copy_scroll` | Bibliothèque : recherche, traduction, copie | Nima `20`, Lingua `22`, Denn `23` | `!sys_lore_unlock` | `SYS_GRANT_LORE` |
+| `!repair_book` | Restauration/datation d'ouvrage | Ombric `21` | `!sys_item_state` | `SYS_SET_ITEM_STATE` |
+| `!reputation [race]` | Consulter/améliorer le standing racial | Cassia `25` | `!sys_faction_set` | `SYS_SET_FACTION_STANDING` |
+| `!broker [denrée]` / `!market_stall` | Courtage de denrées / location d'étal | Grède `26`, Bost `24` | `!sys_market_price` | `SYS_SET_SHOP_PRICES` |
+| `!gem_set [équip] [gemme]` | Sertissage de gemme | Vireth `34` | `!sys_item_enchant` | `SYS_APPLY_SOCKET` |
+| `!buff` | Bénédictions/buffs de départ | Ilia `41` | `!sys_grant_buff` | `SYS_APPLY_BUFF` |
+| `!vault` | Coffre/consigne personnel | Lom `46` | `!sys_vault` | `SYS_SET_VAULT` |
+| `!fence` / `!smuggle` / `!loan` / `!forge_doc` / `!ink` | Marché noir : recel, contrebande, usure, faux, marquage | Morne `55`, Rask `57`, Sept-Doigts `53`, Quill `56`, Sten `59` | `!sys_flag [Avatar] [flag]` | `SYS_FLAG_ILLEGAL_GOODS` / `SYS_FLAG_SOUL_CONTRACT` / `SYS_CLEAR_PK_FLAG` |
+| `!buy_info` / `!buy_silence` | Renseignement / discrétion payante | Wisp `58`, Tibbe `50` | `!sys_npc_unlock` | `SYS_NPC_KNOWLEDGE_UNLOCK` |
+| `!contract` / `!write_letter` | Actes notariés / écriture publique | Verd `62`, Emm `67` | `!sys_contract` | `SYS_SEAL_CONTRACT` |
+| `!tax_pay` | Acquitter les taxes de marché | Molk `63` | `!sys_tax` | `SYS_LEVY_TAX` |
+| `!hire_merc [profil]` | Louer un mercenaire | Della `76`, Gorak `04` | `!sys_spawn_merc` | `SYS_SPAWN_ESCORT` |
+| `!mount_rent` | Louer une monture aérienne | Wick `84` | `!sys_grant_mount` | `SYS_SUMMON_MOUNT` |
+| `!laundry` | Lessive/entretien du linge | Sud `87` | `!sys_item_state` | `SYS_SET_ITEM_STATE` |
+| `!sharpen` | Affûtage (buff tranchant) | Griss `88` | `!sys_grant_buff` | `SYS_APPLY_BUFF` |
+| `!portrait` | Portrait cosmétique | Ode `83` | `!sys_cosmetic` | `SYS_SET_COSMETIC` |
+| `!gazette` | Lire/publier une annonce | Prell `89` | `!sys_announce` | `SYS_ANNOUNCE` |
+| `!oracle` | Consultation d'oracle (hooks de quête) | Isilde `98` | `!sys_quest_give` | `SYS_QUEST_HOOK` |
+| `!memorial` | Registre/hommage aux comptes bannis | Sorne `97` | `!sys_registry` | `SYS_QUERY_REGISTRY` |
+| `!heal` (mineur) | Soins de fortune/rue | Osmé `40`, Aeliss `91` | `!sys_heal` | `SYS_APPLY_HEAL` |
+| `!tutorial` | Onboarding des mécaniques (R0, éco) | Pell `96` | `!sys_tutorial` | `SYS_TUTORIAL_STEP` |
