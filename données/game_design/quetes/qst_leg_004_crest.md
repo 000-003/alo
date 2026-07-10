@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_CANON_LISBETH` — Lisbeth, maître-artisane (canonique errante, invulnérable C5)
 - **Lieu de l'épreuve** : forge unique de Lisbeth · matériaux de Jötunheimr & des Undine
 - **Prérequis** : Niveau 44 · Affinité Undine · **Titre « Épée Absolue »** (`QST_T5_OSS_RAP_01`, Mother's Rosario) · Cristal d'Eau Pur + Argent (matériaux de commande)
-- **Récompense** : 8 000 EXP · `WPN_LEG_004` Crest of Yggdrasil (**liée à l'âme**, jamais un butin — une transmission)
+- **Récompense** : 50 000 EXP, 2 000 Yrds · `WPN_LEG_004` Crest of Yggdrasil (**liée à l'âme**, jamais un butin — une transmission) · Titre **« Héritier de Yuuki »** (`!titre_set`)
 
 ## Déroulement (étapes)
 1. Lisbeth ne forge cette rapière que pour qui a hérité de l'Original Sword Skill de Yuuki : elle exige d'abord la preuve du titre **« Épée Absolue »** (Mother's Rosario, `QST_T5_OSS_RAP_01`).

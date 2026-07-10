@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_68` — Zephyrine, Maîtresse d'Armes (SKILL_MASTER Arc)
 - **Lieu de l'épreuve** : Débarcadère & Canopée d'Alne (`ZONE_NEU_CAP_001`) → `MOB_AIR_001-004`
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Arc : **Avancé** · OSS T4 Arc maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Chasseur Céleste »** (`!titre_set`) · OSS `OSS_ARC_012` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Chasseur Céleste »** (`!titre_set`) · OSS `OSS_ARC_012` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Zephyrine raconte le mythe de Sköll, le loup qui poursuit le soleil : Sköll's Hunt est l'art d'atteindre une cible qui ne s'arrête jamais.

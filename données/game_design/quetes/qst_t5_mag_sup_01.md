@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_68` — Zephyrine, Maîtresse du Support (SKILL_MASTER)
 - **Lieu de l'épreuve** : `ZONE_PUC_DUN_001` — Amphithéâtre Oublié (`BOSS_PUC_DUN_001` Ondaro)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_SUP_009` · Affinité Puca ≥ 80 · maîtrise du tempo (`PAS_SOC` scène)
-- **Récompense** : 5 000 EXP · Titre **« Chef de l'Ouverture »** (`!titre_set`) · sort `MAG_SUP_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Chef de l'Ouverture »** (`!titre_set`) · sort `MAG_SUP_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Zephyrine explique que l'Overture of Genesis est la première mesure jamais jouée dans le monde — dormante au fond de l'Amphithéâtre Oublié, elle n'attend qu'un chef assez juste pour la reprendre.

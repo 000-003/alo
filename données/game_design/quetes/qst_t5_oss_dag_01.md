@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_69` — Roan, Maître d'Armes (SKILL_MASTER Dague)
 - **Lieu de l'épreuve** : Ruelles d'ombre de `ZONE_IMP_CAP_001` (Duskarn)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Dague : **Avancé** · OSS T4 Dague maîtrisé · discrétion (`PAS_EXP`/`PAS_SOC`)
-- **Récompense** : 5 000 EXP · Titre **« Mille Lames »** (`!titre_set`) · OSS `OSS_DAG_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Mille Lames »** (`!titre_set`) · OSS `OSS_DAG_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Roan avertit : Thousand Cuts n'est pas de la puissance, c'est de la *fréquence*. Il faut la cité sans aube pour l'apprendre, là où l'ombre couvre chaque geste.

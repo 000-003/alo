@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_GAT_31` — Ferra, Maîtresse d'Armes (SKILL_MASTER Katana)
 - **Lieu de l'épreuve** : Dojo de Gattan → duel au premier sang
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Katana : **Avancé** · OSS T4 Katana maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Lame Céleste »** (`!titre_set`) · OSS `OSS_KAT_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Lame Céleste »** (`!titre_set`) · OSS `OSS_KAT_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Ferra pose l'énigme : Amakakeru est une frappe d'iaijutsu — dégainer, trancher, rengainer en un seul souffle. Tout est dans l'instant *avant* le coup.

@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_69` — Roan, Maître d'Armes (SKILL_MASTER Armes de jet)
 - **Lieu de l'épreuve** : Terrain d'adresse d'Alne (`ZONE_NEU_CAP_001`)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Jet : **Avancé** · OSS T4 Jet maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Souffle Lancé »** (`!titre_set`) · OSS `OSS_JET_008` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Souffle Lancé »** (`!titre_set`) · OSS `OSS_JET_008` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Roan pose la difficulté : Zephyr's Volley lance plusieurs projectiles en un seul geste, chacun sur une cible différente — la dispersion maîtrisée, pas le tir groupé.

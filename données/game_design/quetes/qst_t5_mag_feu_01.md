@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_GAT_31` — Ferra, Maîtresse du Feu (SKILL_MASTER)
 - **Lieu de l'épreuve** : `ZONE_SAL_DUN_001` — Caldeira d'Obsidienne (`BOSS_SAL_DUN_001` Logi)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_FEU_009` (Solar Flare) · Affinité Salamander ≥ 80
-- **Récompense** : 5 000 EXP · Titre **« Porteur de la Flamme Crépusculaire »** (`!titre_set`) · sort `MAG_FEU_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Porteur de la Flamme Crépusculaire »** (`!titre_set`) · sort `MAG_FEU_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Ferra confie que Ragnarök Flame ne s'apprend pas — il se *reprend* à la source : la braise que Logi a laissée en mourant dans le troisième anneau de la Caldeira.

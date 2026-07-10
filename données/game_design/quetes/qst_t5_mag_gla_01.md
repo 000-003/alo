@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_SWI_79` — Sora, Maître de la Glace (SKILL_MASTER)
 - **Lieu de l'épreuve** : Cimes gelées de **Jötunheimr** (axe vertical, `HAZARD` froid D12)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_GLA_009` · Affinité Cait Sith ≥ 80 · endurance au froid (`PAS_EXP`)
-- **Récompense** : 5 000 EXP · Titre **« Souffle de l'Hiver Éternel »** (`!titre_set`) · sort `MAG_GLA_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Souffle de l'Hiver Éternel »** (`!titre_set`) · sort `MAG_GLA_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Sora raconte que Fimbulwinter n'est pas un sort mais un *souvenir* du monde : celui de l'hiver qui précéda la Chute de Jötunheimr. Il faut monter le chercher là où il n'a jamais fondu.

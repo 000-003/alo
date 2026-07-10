@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_CANON_KIRITO` — Kirito (canonique errant, invulnérable C5)
 - **Lieu de l'épreuve** : crevasse sous Alne → `ZONE_JOT_FLD_001` (Abysse de Jötunheimr) → `ZONE_JOT_RAID_001` (Trône de Thrym / Thrymheim), boss `BOSS_JOT_001` **Thrym**
 - **Prérequis** : Niveau 46 · **Clé de Glace** (item-clé de `ZONE_JOT_FLD_001`, atlas — vol impossible) · groupe de raid
-- **Récompense** : 10 000 EXP · `WPN_LEG_002` Excalibur (**liée à l'âme**, relique de serveur, toutes races)
+- **Récompense** : 50 000 EXP, 5 000 Yrds · `WPN_LEG_002` Excalibur (**liée à l'âme**, relique de serveur, toutes races) · Titre **« Libérateur d'Excalibur »** (`!titre_set`)
 
 ## Déroulement (étapes)
 1. Kirito confie avoir trouvé une crevasse sous Alne qui descend jusqu'au monde de glace : Thrym, le Roi des Géants, a volé Excalibur et s'en sert de **cœur énergétique** pour faire léviter son palais au-dessus de l'abysse.

@@ -1138,3 +1138,48 @@ Axe vertical **bouclé** : Yggdrasil (Gardien du Dôme → Sommet), Jötunheimr 
 **766 fichiers non conformes archivés** cette étape (240 armures + 223 faune + 303 skills ; rien perdu, 0 ID unique sacrifié). **0 collision d'ID en titre** (MOB/OSS/MAG/PAS/ARM, vérifié). Corpus actif ramené de ~3 865 à **3 406 `.md`** conformes. Rapport détaillé : `directives_generation/11_audit_conformite_etape36.md`. **Complétude commandes** : rien à propager (opération purement structurelle). Chantier transverse restant : **équilibrage économique** (prix/drop rates).
 
 ---
+
+## ÉTAPE 37 — Équilibrage économique : prix, drop rates, récompenses 💰 ✅ CLOS (2026-07-10)
+
+**Objectif** : dernier chantier transverse — calibrer l'économie du jeu sur les prix réels des items, formaliser les drop rates, ajuster les récompenses de quêtes T5/légendaires, et mettre à jour le balance sheet.
+
+### Constat d'entrée
+
+- **Balance sheet v1.0** (2026-07-06) sous-estimait massivement les prix réels (×1.5 à ×8 selon les catégories) — les items ayant été créés entre-temps avec des prix auto-cohérents, c'est le **sheet** qui devait être mis à jour, pas les items.
+- **Drop rates** : non formalisés dans le balance sheet, mais les taux constatés sur le corpus faune sont calés (55-65% T1 commun, 100% boss, 35-60% donjon).
+- **Quêtes T5** : 5 000 EXP flat, zéro Yrds — correct comme récompense symbolique, mais mérite un ajustement à la hausse (le vrai gain = skill débloqué).
+- **Quêtes légendaires** : 8 000-10 000 EXP — dérisoire pour des quêtes niveau 75+ (<1% d'un niveau).  
+- **Aucun package de départ** défini pour les nouveaux joueurs.
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 37.1 | ✏️ **Balance sheet v2.0** — toutes les valeurs recalibrées sur les prix réels constatés : armes T1 150-400 ¥, T4 14 000-20 000 ¥ ; armures T1 150-400 ¥/pièce, T4 14 000-20 000 ¥/pièce ; consommables gamme 12-2 400 ¥ ; matériaux 4-1 960 ¥. Grille de drop rates par type/tier. Courbe d'EXP/Niveau. Package départ (300 ¥ + consommables). Gold sinks classés par impact. | `données/the_seed_engine/stat_scaling/economy_balance_sheet.md` |
+| 37.2 | ✏️ **10 quêtes T5 magies** : 5 000 EXP → 8 000 EXP + 500 Yrds | `game_design/quetes/qst_t5_mag_*.md` (×10) |
+| 37.3 | ✏️ **10 quêtes T5 OSS** : 5 000 EXP → 8 000 EXP + 500 Yrds | `game_design/quetes/qst_t5_oss_*.md` (×10) |
+| 37.4 | ✏️ **4 quêtes légendaires** : 8-10k EXP → 50 000 EXP + 2 000-5 000 Yrds + titre de prestige | `game_design/quetes/qst_leg_*.md` (×4) |
+| 37.5 | ✏️ **Index quêtes** : §5 récompense T5 → 8 000 EXP + 500 Yrds ; §6 légendaires → 50 000 EXP + 2-5k Yrds + titre | `game_design/quetes/_index_quetes.md` |
+| 37.6 | ➕ **Rapport d'équilibrage** complet : constats, décisions D72-D75, tests de cohérence | `directives_generation/12_equilibrage_economique.md` |
+| 37.7 | ✏️ Fichiers d'état | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées
+
+- **D72** : le prix catalogue d'un item est celui de sa fiche, pas le balance sheet (le sheet est une grille de référence pour la création future).
+- **D73** : les drop rates suivent une grille simple par type de mob × tier (pas de formule complexe). Chaque ligne de loot = roll indépendant.
+- **D74** : les récompenses EXP/Yrds des quêtes T5 et légendaires sont volontairement modestes — le vrai gain est fonctionnel (skill ultime / arme unique liée).
+- **D75** : package de départ = 300 ¥ + 3× Pain de Voyage + 3× Potion Soin Mineure + tenue régionale — permet d'acheter une arme T1 dès la création.
+
+### Tests de cohérence
+
+- **T1 abordable** : 300 ¥ départ + arme T1 la moins chère 150 ¥ = ✅ 150 ¥ restants
+- **Set T1 à niveau 10** : ~900 ¥, revenu cumulé 400 ¥ (farm) + 200 ¥ (quêtes) = ✅ atteignable
+- **Craft rentable** : marge ~20% (armes) à ~50% (potions) vs achat = ✅
+- **Enchantement T5** : 300k ¥, ~100h de farm niveau 80+ = ✅ sink crédible
+- **Citadelle guilde** : 3M ¥, guilde 100 membres, ~6 semaines = ✅ atteignable
+
+### État de sortie
+
+**28 fichiers modifiés** (1 balance sheet + 20 T5 + 4 légendaires + 1 index + 1 rapport + 1 état). **Tous les chantiers transverses sont clos.** Aucune dette structurelle résiduelle. Le projet ALO est intégralement livré : 11 CDC, audit de conformité, équilibrage économique.
+
+---

@@ -1,7 +1,7 @@
 # 🧠 ALO_CONTEXT — Cache d'État Critique (à lire en premier après /clear)
 
 > **Rôle** : synthèse de l'état actuel du projet pour reprise instantanée. Mis à jour à CHAQUE modification.
-> **Dernière mise à jour** : 2026-07-10 — **✅ PROJET ALO TERMINÉ + AUDIT DE CONFORMITÉ FINAL passé (étape 36).** Tous les lots des 11 CDC livrés : PNJ 1 100, Items 731, Boutiques 302, Armures 500, Faune 256, Flore 100, **Quêtes 57**, Tenues 55, Micro-familles 65, Index complets. **Étape 36** : 766 fichiers non conformes archivés (junk armures 240 + faune legacy `mobs_sauvages/` 223 + dossier parasite `items_equipements/skills/` 303), **0 collision d'ID résiduelle** (MOB/OSS/MAG/PAS/ARM), index `taille` créé, **D71** (clé canonique = `Item_ID`, jamais le nom de fichier). Corpus actif ramené à **~3 406 fichiers markdown** conformes. Relire `alo_progression.md` (étape 36) + `directives_generation/11_audit_conformite_etape36.md`. ⚠️ Session parallèle détectée sur ce fichier — fusion prudente.
+> **Dernière mise à jour** : 2026-07-10 — **✅ PROJET ALO TERMINÉ + AUDIT CONFORMITÉ (étape 36) + ÉQUILIBRAGE ÉCONOMIQUE (étape 37).** Tous les lots des 11 CDC livrés : PNJ 1 100, Items 731, Boutiques 302, Armures 500, Faune 256, Flore 100, Quêtes 57, Tenues 55, Micro-familles 65, Index complets. **Étape 36** : 766 fichiers non conformes archivés, 0 collision d'ID. **Étape 37** : équilibrage économique — balance sheet v2.0 (prix réels calibrés), drop rates formalisés, récompenses T5 (5 000→8 000 EXP + 500 Yrds) et légendaires (8-10k→50k EXP + 2-5k Yrds + titres), 28 fichiers modifiés. Rapport : `directives_generation/12_equilibrage_economique.md`. **Tous les chantiers transverses sont clos.**
 
 ## Directives actives (non négociables)
 
@@ -116,7 +116,7 @@ Directive : chaque type d'objet (PNJ, armes, skills, équipements par slot, faun
 - **Récompenses de quêtes T5/légendaires non finement chiffrées** (EXP forfaitaire 5 000 / 8-10 000, pas de drop secondaire) — équilibrage économique possible.
 - Amendements items mineurs : gamme `CSM_NOU` à élargir si besoin ; arbitrage `ZONE_ROUTE_LUGRU` (non bloquant, cf. Point ouvert).
 - **Audit de conformité final : ✅ APURÉ (étape 36)** — 766 fichiers non conformes archivés (junk armures 240 + faune legacy 223 + parasite skills 303), **0 collision d'ID résiduelle** (MOB/OSS/MAG/PAS/ARM), index `taille` créé, **D71** (clé canonique = `Item_ID`). Rapport : `directives_generation/11_audit_conformite_etape36.md`. Reste documenté non bloquant : variance de gabarit lot `taille` (rampe plate, pas de T5), casse de nom de fichier armures (cosmétique, D71).
-- **Équilibrage économique** (prix/drop rates, récompenses fines T5/légendaires) — **seul chantier transverse restant**.
+- ~~**Équilibrage économique** (prix/drop rates, récompenses fines T5/légendaires) — **seul chantier transverse restant**.~~ ✅ **CLOS (étape 37)** — grille calibrée, balance sheet v2.0, 28 fichiers modifiés. Rapport : `directives_generation/12_equilibrage_economique.md`.
 
 **Dette de commandes : ✅ APURÉE** (étape 21) — étapes 33-34 n'ont introduit aucune commande (déblocage via `!learn_skill`/`SYS_GRANT_SPELL`/`SYS_GRANT_OSS`/`SYS_GRANT_ITEM`/`!titre_set`/`!forge` existants).
 

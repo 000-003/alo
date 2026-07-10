@@ -89,7 +89,7 @@ Périmètre NON couvert par le présent index : pas de quêtes de légendaires (
 
 ## 5. Quêtes de titre T5 (`QST_T5_*`) — 20 fiches
 
-Chaque skill T5 (jamais achetable) se débloque par une **quête de maîtrise** dont le donneur est l'enseignant confirmé de l'école/famille, et dont l'épreuve est ancrée sur un donjon/boss ou une zone existante (chaînage écologique). Prérequis communs : **Niveau 45**, maîtrise du tier précédent ; magies = affinité raciale ≥ 80 ; OSS = maîtrise d'arme **Avancé**. Récompense : 5 000 EXP + **Titre** (`!titre_set`) + le skill T5.
+Chaque skill T5 (jamais achetable) se débloque par une **quête de maîtrise** dont le donneur est l'enseignant confirmé de l'école/famille, et dont l'épreuve est ancrée sur un donjon/boss ou une zone existante (chaînage écologique). Prérequis communs : **Niveau 45**, maîtrise du tier précédent ; magies = affinité raciale ≥ 80 ; OSS = maîtrise d'arme **Avancé**. Récompense : 8 000 EXP, 500 Yrds + **Titre** (`!titre_set`) + le skill T5.
 
 ### 5.1 Magies — 10 titres (`QST_T5_MAG_<ECO>_01`)
 
@@ -127,7 +127,7 @@ Chaque skill T5 (jamais achetable) se débloque par une **quête de maîtrise** 
 
 ## 6. Quêtes de légendaires (`QST_LEG_*`) — 4 fiches
 
-Chaque arme légendaire `WPN_LEG_001-004` (T5, **liée à l'âme**) est adossée à une quête d'acquisition unique (raid, grande quête serveur ou forge canon). Récompense = l'arme via `SYS_GRANT_ITEM` (bind-on-pickup) + EXP serveur (8 000–10 000). **Aucune commande nouvelle** (`!equiper`/`!inspect`/`!forge` existants). Toutes ancrées sur des IDs **réels de l'atlas** (résolution du fantôme `ZONE_JOT_DUN_001` → `ZONE_JOT_RAID_001`, étape 34).
+Chaque arme légendaire `WPN_LEG_001-004` (T5, **liée à l'âme**) est adossée à une quête d'acquisition unique (raid, grande quête serveur ou forge canon). Récompense = l'arme via `SYS_GRANT_ITEM` (bind-on-pickup) + EXP serveur (50 000 EXP) + 2 000–5 000 Yrds + titre de prestige. **Aucune commande nouvelle** (`!equiper`/`!inspect`/`!forge` existants). Toutes ancrées sur des IDs **réels de l'atlas** (résolution du fantôme `ZONE_JOT_DUN_001` → `ZONE_JOT_RAID_001`, étape 34).
 
 | QST_ID | Arme débloquée | Type | Donneur | Épreuve (ancrage) |
 |---|---|---|---|---|

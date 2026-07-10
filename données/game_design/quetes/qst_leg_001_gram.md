@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_GAT_01` — Kagemune, Seigneur de Gattan (notable, `is_essential`)
 - **Lieu de l'épreuve** : `ZONE_SAL_TWN_001` — forteresse de Voulg (raid contre le **Général Eugene**, hologramme canon sans ID)
 - **Prérequis** : Niveau 45 · groupe de raid (contenu multi-joueurs) · réputation Salamander élevée
-- **Récompense** : 8 000 EXP · `WPN_LEG_001` Gram (**liée à l'âme dès le ramassage**, une seule Gram active par serveur)
+- **Récompense** : 50 000 EXP, 2 000 Yrds · `WPN_LEG_001` Gram (**liée à l'âme dès le ramassage**, une seule Gram active par serveur) · Titre **« Briseur de Voulg »** (`!titre_set`)
 
 ## Déroulement (étapes)
 1. Kagemune révèle que le Général Eugene garde encore, au cœur de Voulg, la jumelle sombre d'Excalibur — Gram, la lame qu'aucun Salamander vivant n'a osé lui reprendre.

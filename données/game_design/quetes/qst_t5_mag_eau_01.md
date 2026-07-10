@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_68` — Zephyrine, Maîtresse de l'Eau (SKILL_MASTER)
 - **Lieu de l'épreuve** : `ZONE_UND_DUN_001` — Gouffre de Léviathan (`BOSS_UND_DUN_001` Jörmun)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_EAU_009` · Affinité Undine ≥ 80 · Potion d'Oxygène (`NPC_UND_07` Coralia)
-- **Récompense** : 5 000 EXP · Titre **« Héraut des Abysses »** (`!titre_set`) · sort `MAG_EAU_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Héraut des Abysses »** (`!titre_set`) · sort `MAG_EAU_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Zephyrine révèle que la Colère du Léviathan n'est pas une magie que l'on jette : c'est le courant même de Jörmun, qu'il faut apprendre à emprunter sans se noyer.

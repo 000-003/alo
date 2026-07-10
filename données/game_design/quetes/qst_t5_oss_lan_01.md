@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_VOU_29` — Vork, Maître d'Armes (SKILL_MASTER Lance)
 - **Lieu de l'épreuve** : Champ d'estoc de Voulg (`ZONE_SAL_TWN_001`)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Lance : **Avancé** · OSS T4 Lance maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Lance qui ne Manque Jamais »** (`!titre_set`) · OSS `OSS_LAN_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Lance qui ne Manque Jamais »** (`!titre_set`) · OSS `OSS_LAN_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Vork rappelle la légende : Gungnir, la lance d'Odin, ne rate jamais sa cible. L'épreuve consiste à mériter ce nom d'un unique estoc parfait.

@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_69` — Roan, Maître de la Terre (SKILL_MASTER)
 - **Lieu de l'épreuve** : `ZONE_GNO_DUN_001` — Mine de Mithril (`BOSS_GNO_DUN_001` Mithrandur)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_TER_009` · Affinité Gnome ≥ 80
-- **Récompense** : 5 000 EXP · Titre **« Pilier du Monde »** (`!titre_set`) · sort `MAG_TER_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Pilier du Monde »** (`!titre_set`) · sort `MAG_TER_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Roan avertit : la galerie profonde de la Mine de Mithril s'effondre. World Pillar ne s'enseigne pas — il se prouve, en tenant la montagne.

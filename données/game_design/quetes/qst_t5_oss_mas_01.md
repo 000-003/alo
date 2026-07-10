@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_VOU_29` — Vork, Maître d'Armes (SKILL_MASTER Masse)
 - **Lieu de l'épreuve** : Enclume-arène de Voulg (`ZONE_SAL_TWN_001`)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Masse : **Avancé** · OSS T4 Masse maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Marteau Divin »** (`!titre_set`) · OSS `OSS_MAS_008` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Marteau Divin »** (`!titre_set`) · OSS `OSS_MAS_008` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Vork explique que Mjölnir Strike ne tue pas par tranchant mais par *choc* — l'art de désorganiser un adversaire plus grand que soi (stagger/crush).

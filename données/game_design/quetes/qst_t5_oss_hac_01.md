@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_VOU_29` — Vork, Maître d'Armes (SKILL_MASTER Hache)
 - **Lieu de l'épreuve** : Forge-arène de Voulg (`ZONE_SAL_TWN_001`)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Hache : **Avancé** · OSS T4 Hache (Ragnar's Fury) maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Fin du Monde »** (`!titre_set`) · OSS `OSS_HAC_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Fin du Monde »** (`!titre_set`) · OSS `OSS_HAC_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Vork prévient : World Ender n'est pas une frappe, c'est une *démolition*. Elle brise l'arme si elle est mal portée — et le porteur avec, s'il n'a pas la charpente.

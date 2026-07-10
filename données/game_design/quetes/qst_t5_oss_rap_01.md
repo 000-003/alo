@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_69` — Roan, Maître d'Armes (SKILL_MASTER Rapière)
 - **Lieu de l'épreuve** : Salle des Onze — dédiée à la mémoire de Yuuki (`NPC_CANON_*`)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Rapière : **Avancé** · OSS T4 Rapière maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Épée Absolue »** (`!titre_set`) · OSS `OSS_RAP_001` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Épée Absolue »** (`!titre_set`) · OSS `OSS_RAP_001` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Roan confie que Mother's Rosario est une combinaison de onze estocs, léguée par une bretteuse dont plus personne ne prononce le nom (renvoi discret au canon Yuuki, `NPC_CANON_*`).

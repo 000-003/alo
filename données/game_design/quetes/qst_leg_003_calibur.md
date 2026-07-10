@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_CANON_SINON` — Sinon (canonique errante, invulnérable C5)
 - **Lieu de l'épreuve** : `ZONE_JOT_RAID_001` (Trône de Thrym / Thrymheim) — glaces de l'abysse
 - **Prérequis** : Niveau 45 · Affinité Cait Sith · maîtrise d'arme Arc : Avancé · avoir atteint le Trône de Thrym (chaîne `QST_LEG_002` ou raid concomitant)
-- **Récompense** : 10 000 EXP · `WPN_LEG_003` Shekinah (**liée à l'âme**, arme de la légende Sinon)
+- **Récompense** : 50 000 EXP, 5 000 Yrds · `WPN_LEG_003` Shekinah (**liée à l'âme**, arme de la légende Sinon) · Titre **« Tireur d'Élite »** (`!titre_set`)
 
 ## Déroulement (étapes)
 1. Sinon signale que sous les glaces de Thrymheim dort un arc technologique — Shekinah — que les tourelles de Thrym protègent depuis trop loin pour une épée : seul un arc peut l'atteindre.

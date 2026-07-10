@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_VOU_29` — Vork, Maître de la Foudre (SKILL_MASTER)
 - **Lieu de l'épreuve** : `ZONE_IMP_DUN_001` — Caverne des Hurleurs (`BOSS_IMP_DUN_001` Skreech)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_FOU_009` · Affinité Imp ≥ 80
-- **Récompense** : 5 000 EXP · Titre **« Marteau du Ciel »** (`!titre_set`) · sort `MAG_FOU_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Marteau du Ciel »** (`!titre_set`) · sort `MAG_FOU_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Vork explique que la foudre a besoin de ciel — et qu'il n'y en a pas dans la Caverne des Hurleurs. Appeler Mjölnir *sous terre*, là où le tonnerre n'a pas de place, voilà l'épreuve.

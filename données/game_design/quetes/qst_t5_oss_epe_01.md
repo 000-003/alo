@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_GAT_31` — Ferra, Maîtresse d'Armes (SKILL_MASTER Épée 1M)
 - **Lieu de l'épreuve** : Arène de Gattan → gantelet enchaîné
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Épée 1M : **Avancé** · OSS T4 Épée maîtrisé · double maniement (`PAS_CBT` Dual Wielding)
-- **Récompense** : 5 000 EXP · Titre **« Épéiste Noir »** (`!titre_set`) · OSS `OSS_EPE_001` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Épéiste Noir »** (`!titre_set`) · OSS `OSS_EPE_001` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Ferra pose la règle : Starburst Stream est une combo de 16 coups à deux épées, sans respiration. On ne l'apprend pas — on prouve qu'on peut la *tenir*.

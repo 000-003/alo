@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_SWI_71` — Zeph, Maître du Vent (SKILL_MASTER)
 - **Lieu de l'épreuve** : Hautes Tours de `ZONE_SYL_CAP_001` (Swilvane) → Canopée `MOB_AIR_001-004`
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_VEN_009` · Affinité Sylph ≥ 80 · vol prolongé (`PAS_EXP`)
-- **Récompense** : 5 000 EXP · Titre **« Seigneur des Tempêtes »** (`!titre_set`) · sort `MAG_VEN_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Seigneur des Tempêtes »** (`!titre_set`) · sort `MAG_VEN_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Zeph explique qu'un cataclysme aérien ne se lance pas depuis le sol : il faut *devenir* la tempête, au sommet des Hautes Tours, là où les courants se déchirent.

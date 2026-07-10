@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_70` — Selene, Maîtresse de la Lumière (SKILL_MASTER)
 - **Lieu de l'épreuve** : `ZONE_LEP_DUN_001` — Atelier Englouti (`BOSS_LEP_DUN_001` MK-0)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_LUM_009` · Affinité Leprechaun ≥ 80 · endurance à l'apnée (sections nagées)
-- **Récompense** : 5 000 EXP · Titre **« Aube Empyréenne »** (`!titre_set`) · sort `MAG_LUM_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Aube Empyréenne »** (`!titre_set`) · sort `MAG_LUM_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Selene confie qu'aucune lumière n'a jamais atteint le fond de l'Atelier Englouti — les sections nagées engloutissent le jour. Empyrean Dawn est le premier soleil qu'on y allumera.

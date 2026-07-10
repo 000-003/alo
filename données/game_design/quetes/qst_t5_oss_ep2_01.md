@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_VOU_29` — Vork, Maître d'Armes (SKILL_MASTER Épée 2M)
 - **Lieu de l'épreuve** : Arène de Voulg (`ZONE_SAL_TWN_001`)
 - **Prérequis** : Niveau 45 · Maîtrise d'arme Épée 2M : **Avancé** · OSS T4 Épée 2M maîtrisé
-- **Récompense** : 5 000 EXP · Titre **« Juge de Gram »** (`!titre_set`) · OSS `OSS_EP2_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Juge de Gram »** (`!titre_set`) · OSS `OSS_EP2_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Vork explique que Gram's Judgment est un seul coup — mais un coup qui tranche une sentence, pas une chair. Il faut la maîtrise de la lenteur assumée.

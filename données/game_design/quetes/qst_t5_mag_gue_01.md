@@ -7,7 +7,7 @@
 - **Donneur** : `NPC_ALN_70` — Selene, Maîtresse de la Guérison (SKILL_MASTER)
 - **Lieu de l'épreuve** : Racines d'`ZONE_YGG_DUN_001` (base d'Yggdrasil, axe vertical)
 - **Prérequis** : Niveau 45 · Maîtrise `MAG_GUE_009` · Affinité Undine ≥ 80 · avoir déjà utilisé `MAG_GUE_006` (Revive)
-- **Récompense** : 5 000 EXP · Titre **« Main de la Genèse »** (`!titre_set`) · sort `MAG_GUE_010` (jamais achetable)
+- **Récompense** : 8 000 EXP, 500 Yrds · Titre **« Main de la Genèse »** (`!titre_set`) · sort `MAG_GUE_010` (jamais achetable)
 
 ## Déroulement (étapes)
 1. Selene confie qu'une racine d'Yggdrasil s'est flétrie — aucune magie de soin connue ne la ranime. Genesis Bloom n'existe que pour celui qui saura la faire refleurir.
