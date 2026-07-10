@@ -1112,3 +1112,29 @@ Règle atlas **D3** : les paliers d'Aincrad sont **éphémères** (`!dungeon_que
 Axe vertical **bouclé** : Yggdrasil (Gardien du Dôme → Sommet), Jötunheimr (Thrym, étape 34), New Aincrad (5 boss nommés + gabarit paramétrique + index). Junk archivé (rien perdu). Endgame double (vertical Grand Quest / horizontal 100 paliers) désormais fiché. Plus aucune dette `[TODO]` d'axe vertical.
 
 ---
+
+## ÉTAPE 36 — Audit de conformité final (chantier transverse) 🔍 ✅ CLOS (2026-07-10)
+
+**Objectif** : premier des deux chantiers transverses restants (audit de conformité, puis équilibrage économique). Détecter et résoudre les violations de conformité résiduelles laissées par les sessions parallèles/délégations : junk co-résident, doublons d'ID inter-dossiers, ID fantômes, gabarits divergents, séquences incomplètes. Livrable : rapport d'audit + résolutions vérifiées mécaniquement. Rien supprimé (tout junk → `deprecated_v1/`).
+
+### Findings & résolutions
+
+| # | Défaut | Statut | Action |
+|---|---|---|---|
+| A | **Junk d'armures co-résident** (étapes 26-27 ont créé les lots conformes sans archiver le pré-généré remplacé) | ✅ RÉSOLU | 240 archivés → `deprecated_v1/armures_junk/<slot>/` : tête 100 (lot doublon UPPER_BARE), torse 57, jambes 29, bras 34, taille 20 (hash `arm_NNN` + `arm_canon_*` dégénérés + strays). Chaque slot = **100 conformes (`_001`→`_100`) + index** |
+| B | **Faune legacy `mobs_sauvages/`** en doublon d'ID avec le lot autoritaire `monstres/` (étape 28) | ✅ RÉSOLU | 223 archivés → `deprecated_v1/mobs_sauvages_legacy/` (100 `MOB_CANON` hash + 172 zones_neutres + doublons `MOB_<race>_NNN` + orphelins). Test sûreté : **0 ID à la fois référencé live ET absent de `monstres/`**. Faune autoritaire = `monstres/` (259) |
+| C | **Dossier parasite `items_equipements/skills/`** : 300 doublons `OSS/MAG/PAS` (intersection 300 communs / 0 unique) — étape 19 n'avait purgé que les `SKL_*` | ✅ RÉSOLU | 303 archivés → `deprecated_v1/skills_parasite_oss_mag_pas/`. Lot autoritaire = `competences_magie/`. 300 collisions d'ID skill éliminées |
+| D | **Index `taille` manquant** (les 4 autres slots l'avaient) | ✅ RÉSOLU | Créé `armures/taille/_index_armures_taille.md` (100/100, grille, organisation par ville, registre 001-100) |
+| E | **ID fantôme `ZONE_JOT_DUN_001`** (4 occurrences) | ✅ FAUX POSITIF | Toutes en notes de résolution étape 34 (barré/négation), aucun renvoi live. L'étape 34 avait bien corrigé |
+| F | **Variances de gabarit** (lot taille : rampe plate T1-T4/labels EN/pas de T5 ; casse nom fichier armures tête vs autres) | 📝 DOCUMENTÉ | **D71** actée |
+
+### Décisions actées
+
+- **D71** : la **clé canonique** d'un item/entité = son `Item_ID` interne (uniforme, séquentiel `<PFX>_<NNN>`), **jamais le nom de fichier**. Casse/slug non autoritatifs ; divergences cosmétiques héritées non corrigées en masse (churn/risque nuls, gain structurel nul). Futur chargeur bot (P3) indexe par `Item_ID`.
+- Règle de purge réaffirmée : tout lot conforme qui **remplace** un lot pré-généré DOIT archiver l'ancien dans `deprecated_v1/` dans la même étape (la dette A/B/C venait de son non-respect en sessions parallèles).
+
+### État de sortie
+
+**766 fichiers non conformes archivés** cette étape (240 armures + 223 faune + 303 skills ; rien perdu, 0 ID unique sacrifié). **0 collision d'ID en titre** (MOB/OSS/MAG/PAS/ARM, vérifié). Corpus actif ramené de ~3 865 à **3 406 `.md`** conformes. Rapport détaillé : `directives_generation/11_audit_conformite_etape36.md`. **Complétude commandes** : rien à propager (opération purement structurelle). Chantier transverse restant : **équilibrage économique** (prix/drop rates).
+
+---

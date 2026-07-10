@@ -1,7 +1,7 @@
 # 🧠 ALO_CONTEXT — Cache d'État Critique (à lire en premier après /clear)
 
 > **Rôle** : synthèse de l'état actuel du projet pour reprise instantanée. Mis à jour à CHAQUE modification.
-> **Dernière mise à jour** : 2026-07-10 — **✅ PROJET ALO TERMINÉ + Phase C 11/11 régénérée (Archipel, Brokkheim, Duskarn, Granzam, Lioda, Penwether).** Tous les lots des 11 CDC livrés : PNJ 1 100, Items 731, **Boutiques 302 (100% conformes R1-R8, 0 Item_ID fabriqué)**, Armures 500, Faune 256, Flore 100, **Quêtes 57** (33 localité + 20 titres T5 + 4 légendaires), Tenues 55, Micro-familles 65, Index complets. ~**3 800 fichiers markdown**. Relire `alo_progression.md`.
+> **Dernière mise à jour** : 2026-07-10 — **✅ PROJET ALO TERMINÉ + AUDIT DE CONFORMITÉ FINAL passé (étape 36).** Tous les lots des 11 CDC livrés : PNJ 1 100, Items 731, Boutiques 302, Armures 500, Faune 256, Flore 100, **Quêtes 57**, Tenues 55, Micro-familles 65, Index complets. **Étape 36** : 766 fichiers non conformes archivés (junk armures 240 + faune legacy `mobs_sauvages/` 223 + dossier parasite `items_equipements/skills/` 303), **0 collision d'ID résiduelle** (MOB/OSS/MAG/PAS/ARM), index `taille` créé, **D71** (clé canonique = `Item_ID`, jamais le nom de fichier). Corpus actif ramené à **~3 406 fichiers markdown** conformes. Relire `alo_progression.md` (étape 36) + `directives_generation/11_audit_conformite_etape36.md`. ⚠️ Session parallèle détectée sur ce fichier — fusion prudente.
 
 ## Directives actives (non négociables)
 
@@ -64,12 +64,12 @@ Directive : chaque type d'objet (PNJ, armes, skills, équipements par slot, faun
 | Lot | État |
 |---|---|
 | Équipements tête (`ARM_TET_001-100` + index) | ✅ 100/100 (étape 4, lot 1) |
-| Autres slots armure (torse 57 junk, jambes 29, bras 34, taille 20, boucliers_armure 0, cuir/maille/plaque/tissu/robes ≤6) | ⏳ |
+| Autres slots armure (torse/jambes/bras/taille) | ✅ **4×100 (étapes 26-27)** — junk co-résident (57/29/34/20) **archivé étape 36** ; index `taille` créé (étape 36). Chaque slot = 100 conformes + index |
 | Accessoires (anneaux 5, capes 2, ceintures 3, colliers 4) | ⏳ |
 | Armes (junk v1 archivé : 205 fiches) | ✅ **Lot I-2 `WPN_*` 100/100 (étape 16)** — voir ligne dédiée |
 | PNJ (185 junk racine archivé) | ✅ **Phase A COMPLÈTE** : Lot 2.1 Gattan (100) / 2.2 Canoniques (10) / 2.3 Alne (100) / 2.4 Swilvane (100) / 2.5 Voulg (100) / 2.6 Freelia (100) / 2.7 Archipel (100) / 2.8 Lioda (100) / 2.9 Duskarn (100) / 2.10 Granzam (100) / 2.11 Brokkheim (100) / 2.12 Penwether (100) = **1200 PNJ D17** |
-| **Skills** `MAG_`/`OSS_`/`PAS_` (I-4, 300) | ✅ **300/300 (étape 19)** — S-1 magies 100 (10 écoles×10) / S-2 OSS 100 (10 familles) / S-3 passives 100 (CBT40/CRA25/EXP20/SOC15) ; junk archivé (309 fiches, dont `SKL_*` du dossier parasite) ; canon préservé (Starburst, Revive, Mother's Rosario…) ; index `_index_skills.md`. `[BESOIN_COMMANDE]` : `SYS_GRANT_PASSIVE` à propager |
-| Faune (mobs par territoire ≤6 ; zones_neutres 172 junk) | ⏳ |
+| **Skills** `MAG_`/`OSS_`/`PAS_` (I-4, 300) | ✅ **300/300 (étape 19)** — S-1 magies 100 (10 écoles×10) / S-2 OSS 100 (10 familles) / S-3 passives 100 (CBT40/CRA25/EXP20/SOC15) ; junk archivé (309 fiches à l'étape 19, + **dossier parasite `items_equipements/skills/` 303 doublons OSS/MAG/PAS archivé étape 36** — 300 collisions d'ID éliminées, lot autoritaire = `competences_magie/`) ; canon préservé (Starburst, Revive, Mother's Rosario…) ; index `_index_skills.md`. `[BESOIN_COMMANDE]` : `SYS_GRANT_PASSIVE` à propager |
+| Faune (`MOB_*` par territoire) | ✅ **256 (étape 28)** dans `personnages_bestiaire/monstres/` — legacy `mobs_sauvages/` (223 : hash `MOB_CANON`, zones_neutres 172, doublons d'ID) **archivé étape 36** (0 collision résiduelle) |
 | Flore (15 racine ; sous-dossiers par race 0) | ⏳ |
 | **Consommables** `CSM_*` (I-1) + annexe portage | ✅ **100/100 + 30/30 (étape 14)** — 90 `cons_*` junk archivés |
 | **Armes** `WPN_*` (I-2, 100 / 13 familles) | ✅ **100/100 (étape 16)** — 205 junk `wpn_*` archivés ; 4 légendaires T5 liés ; index `_index_armes.md` |
@@ -115,7 +115,8 @@ Directive : chaque type d'objet (PNJ, armes, skills, équipements par slot, faun
 - **Boss d'axe vertical : ✅ APURÉ (étape 35)** — Yggdrasil `BOSS_YGG_001`, Jötunheimr `BOSS_JOT_001`, New Aincrad `BOSS_AIN_001/027/074/075/100` + gabarit paramétrique (index `_index_boss_axe_vertical.md`). 200 junk `boss_palier_*` archivés. Plus aucun `[TODO]` d'axe vertical.
 - **Récompenses de quêtes T5/légendaires non finement chiffrées** (EXP forfaitaire 5 000 / 8-10 000, pas de drop secondaire) — équilibrage économique possible.
 - Amendements items mineurs : gamme `CSM_NOU` à élargir si besoin ; arbitrage `ZONE_ROUTE_LUGRU` (non bloquant, cf. Point ouvert).
-- **Audit de conformité final** (gabarits D17/D67/D68, plages d'ID) et **équilibrage économique** (prix/drop rates) — chantiers transverses.
+- **Audit de conformité final : ✅ APURÉ (étape 36)** — 766 fichiers non conformes archivés (junk armures 240 + faune legacy 223 + parasite skills 303), **0 collision d'ID résiduelle** (MOB/OSS/MAG/PAS/ARM), index `taille` créé, **D71** (clé canonique = `Item_ID`). Rapport : `directives_generation/11_audit_conformite_etape36.md`. Reste documenté non bloquant : variance de gabarit lot `taille` (rampe plate, pas de T5), casse de nom de fichier armures (cosmétique, D71).
+- **Équilibrage économique** (prix/drop rates, récompenses fines T5/légendaires) — **seul chantier transverse restant**.
 
 **Dette de commandes : ✅ APURÉE** (étape 21) — étapes 33-34 n'ont introduit aucune commande (déblocage via `!learn_skill`/`SYS_GRANT_SPELL`/`SYS_GRANT_OSS`/`SYS_GRANT_ITEM`/`!titre_set`/`!forge` existants).
 
