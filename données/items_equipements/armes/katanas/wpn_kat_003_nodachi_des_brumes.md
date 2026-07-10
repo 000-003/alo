@@ -2,39 +2,25 @@
 
 ## Identification Cardinal
 - **Item_ID** : `WPN_KAT_003`
-- **Type** : Katana
-- **Tier** : T2 (Niveau recommandé : 21-40)
-- **Rareté** : Rare
+- **Famille** : Katana · **Vitesse** : rapide
+- **Tier** : T2 · **Rareté** : Peu commun
+- **Niveau requis** : 14 · **Affinité raciale** : Imp (+5% aux bonus si Imp)
 
-## Statistiques de Combat
+## Statistiques
 | Paramètre | Valeur |
 |---|---|
-| ATK de Base | 120 |
-| Vitesse d'Attaque | Moyenne (1.1s) |
-| Modificateur Critique | x2.5 |
-| Poids (kg) | 4.0 |
-| Portée | Mêlée |
-| Affinité Élémentaire | Vent |
-| Durabilité Max | 280 |
-| Coût de Réparation | 700 Yrds |
+| ATQ | 26 |
+| Poids | 1,9 kg |
+| Durabilité | 330 |
+| Bonus | +3 AGI |
 
-## Prérequis d'Équipement
-- **STR minimum** : 55
-- **DEX minimum** : 30
-- **Niveau minimum** : 21
-
-## Économie
-- **Prix Marchand (Achat)** : 7000 Yrds
-- **Prix de Revente** : 2800 Yrds
-- **Source de Drop** : Drop Ronin Fantôme (Forêt des Brumes, 6%)
-- **Taux de Drop** : 20%
-
-## Capacité Spéciale
-Plus long qu'un katana standard, ce nodachi est maudit. Son ancien porteur, un samouraï spectral, erre encore dans la Forêt des Brumes. Quiconque manie cette arme entend parfois ses murmures.
+## Acquisition & Chaînage économique
+- **Source** : Craft — forgeron de Duskarn (`NPC_DUS_04`).
+- **Recette** : 4× Fer d'ombre + 2× Écaille de crépuscule.
+- **Prix** : 1 100 Yrds (achat) · 275 Yrds (revente)
 
 ## Lore (Encyclopédie d'Argo)
-En cas de parade réussie (!parry), le contre-attaque automatique inflige x3 dégâts.
+Sa lame anormalement longue est si sombre qu'elle se fond dans la brume perpétuelle du Canyon des Ombres. Les Imps la dégainent d'un seul mouvement ample, coupant avant que l'adversaire ait deviné la distance. On dit qu'une Nodachi bien polie ne renvoie ni la lune ni les torches — seulement le vide.
 
-## Commande IA Associée
-- `SYS_DROP_WEAPON(Avatar_ID, "WPN_KAT_003")` : L'IA peut forcer le drop de cette arme en récompense narrative.
-- `SYS_BREAK_WEAPON("WPN_KAT_003", Instance_ID)` : L'IA peut briser cette arme en combat pour créer du drame.
+## Intégration Bot
+- Joueur : `!equiper WPN_KAT_003` · `!inspect WPN_KAT_003` — GM : `!sys_give WPN_KAT_003 [Num]` — IA : `SYS_GRANT_ITEM(Avatar_ID, WPN_KAT_003, 1)`

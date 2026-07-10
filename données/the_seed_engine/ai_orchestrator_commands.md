@@ -77,10 +77,13 @@
 - `SYS_REVEAL_MAP(Avatar_ID, Zone_ID)` : L'IA révèle une zone sur la carte du joueur.
 - `SYS_SCRAMBLE_MAP(Avatar_ID)` : L'IA brouille la carte (malédiction, labyrinthe).
 - `SYS_CREATE_MAZE(Zone_ID, Complexity)` : L'IA reconfigure les connexions d'un donjon.
+- `SYS_OPEN_CORRIDOR(Zone_A, Zone_B, Duration)` : Matérialise un portail bidirectionnel temporaire entre deux zones — résolution d'effet du Cristal de Corridor (`CSM_CRI_006`, `!use`). Le groupe le franchit via `!enter_portal` pendant `Duration` secondes (30 s par défaut). Équivalent GM : `!sys_open_corridor`.
+- `SYS_GROUP_RECALL(Party_ID, Anchor_Avatar_ID)` : Rappelle les membres **consentants** d'un groupe vers une ancre (porteur/zone) — résolution d'effet du Cristal de Ralliement (`CSM_CRI_010`, `!use`). Chaque membre confirme par `!accept_rally` (aucun transfert sans consentement, invariant R0). Équivalent GM : `!sys_recall_party`.
 
 ## 9. 🎭 Magie Raciale & Compétences Spéciales
-- `SYS_GRANT_SPELL(Avatar_ID, Spell_ID)` : L'IA enseigne un sort à un joueur.
-- `SYS_GRANT_OSS(Avatar_ID, OSS_JSON)` : L'IA valide un OSS créé par un joueur.
+- `SYS_GRANT_SPELL(Avatar_ID, Spell_ID)` : L'IA enseigne un sort élémentaire (`MAG_*`) à un joueur. Face joueur : `!learn_skill` ; équivalent GM : `!sys_grant_skill`.
+- `SYS_GRANT_OSS(Avatar_ID, OSS_JSON)` : L'IA valide un OSS créé par un joueur. *(Enseignement d'un OSS existant `OSS_*` : même primitive, face joueur `!learn_skill`.)*
+- `SYS_GRANT_PASSIVE(Avatar_ID, Skill_ID, Rang)` : L'IA enseigne ou fait monter une compétence passive (`PAS_*`) à un rang I/II/III (bonus plafonné +8 %, max 2 passives du même domaine équipées — cf. `competences_magie/_index_skills.md`). Complète `SYS_GRANT_SPELL` (sorts `MAG_*`) et `SYS_GRANT_OSS` (`OSS_*`). Face joueur : `!learn_skill` ; équivalent GM : `!sys_grant_skill`.
 - `SYS_TRANSFER_OSS(Source_ID, Target_ID, OSS_ID)` : Transfert d'OSS via parchemin.
 - `SYS_VALIDATE_SKILL_CONNECT(Avatar_ID, Skill_A, Skill_B)` : Vérification du timing de Skill Connect.
 - `SYS_GRANT_MELODY(Avatar_ID, Melody_ID)` : L'IA enseigne une mélodie secrète à un Puca.
@@ -98,6 +101,8 @@
 - `SYS_TRIGGER_ALLIANCE_EVENT(Race_A, Race_B, Type)` : L'IA déclenche un événement d'alliance.
 
 ## 11. 🎣 Récolte, Artisanat & Économie Dynamique
+- `SYS_SPAWN_NODE(Zone_ID, FLO_ID, Qty)` : Fait apparaître un node de flore (`FLO_*`) dans une zone — quantité d'utilisations avant épuisement, timer de repousse géré par le Cardinal. Face joueur : `!recolter <FLO_ID>`.
+- `SYS_REMOVE_NODE(Node_ID)` : Supprime un node de flore existant (épuisement narratif, événement, déséquilibre). Distinct de `SYS_DEPLETE_RESOURCE` qui vide un gisement entier.
 - `SYS_STOCK_FISHING_SPOT(Zone_ID, Fish_ID, Rarity)` : L'IA peuple un point de pêche.
 - `SYS_DEPLETE_RESOURCE(Zone_ID, Resource_Type)` : L'IA vide un gisement de minerai.
 - `SYS_BONUS_HARVEST(Zone_ID, Multiplier)` : L'IA déclenche une Récolte Abondante (x2 drops).
@@ -105,6 +110,7 @@
 - `SYS_DROP_WEAPON(Avatar_ID, Weapon_ID)` : L'IA force le drop d'une arme en récompense.
 - `SYS_BREAK_WEAPON(Item_ID, Instance_ID)` : L'IA brise une arme en combat pour créer du drame.
 - `SYS_SET_SHOP_PRICES(NPC_ID, Multiplier)` : L'IA modifie les prix d'un marchand (inflation locale).
+- `SYS_SHOP_RESTOCK(Shop_ID)` : Réassort d'une boutique (réécrit `T_SHOP_ITEMS.stock`), périodique (`T_SHOPS.restock_days`) ou événementiel (pénurie, afflux, siège). Employé par les 54 fiches boutiques C-1+. Équivalent GM : `!sys_shop_restock`. **Aucune face joueur** (anti-exploit) — le joueur ne voit que `!shop_list`/`!buy`/`!sell`.
 
 ## 12. 🧬 Gestion Avancée des Joueurs
 - `SYS_GRANT_ADMIN_RIGHTS(Avatar_ID, Level)` : Octroyer des droits admin temporaires.
@@ -147,3 +153,4 @@
 - `SYS_TUTORIAL_STEP(Avatar_ID, Step_ID)` : Progression du tutoriel d'onboarding (Pell `96`).
 - **Note fil méta (D20)** : les slots K3 des PNJ `00`, `35`, `81`, `98`, `99` (lancement/relance du serveur, dessein du Cardinal) ne sont JAMAIS injectés au LLM — 1 révélation méta max/session, jamais confirmée frontalement, pilotée exclusivement par l'orchestrateur via `NPC_SECRET_PROBED`.
 
+- `SYS_SET_LOADOUT(Avatar_ID, Slot, Item_ID)` : Assigne une arme/un conteneur à un slot de port (`hand_*`, `belt_left/right`, `gear_belt`, `gear_back`) — équivalent IA de `!degainer` / `!equiper ceinture|dos` (D45). Refus si l'arme irait en sac/inventaire virtuel (armes portées uniquement).

@@ -1,0 +1,28 @@
+# Material Efficiency (Économie de matière)
+
+## Identification Cardinal
+- **Skill_ID** : `PAS_CRA_020`
+- **Catégorie** : Passive — Craft
+- **Type** : Passif (toujours actif une fois appris ; **max 2 passives du même domaine équipées**)
+
+## Rangs
+| Rang | Bonus (réduction des matériaux requis) | Condition d'acquisition |
+|---|---|---|
+| I | +2% | Apprentissage initial (formateur ou pratique) |
+| II | +5% | Progression d'usage (palier intermédiaire) |
+| III | +8% | Maîtrise (palier avancé / quête de compétence) |
+
+> Plafond absolu **+8%** (rang III). Aucune passive n'accorde de dégâts globaux (règle CDC).
+
+## Effet
+Améliore passivement : **réduction des matériaux requis**. Le bonus s'applique en permanence tant que la passive est équipée, sans coût de MP ni de stamina.
+
+## Acquisition (Enseignement)
+- **Rang I** : `!learn_skill PAS_CRA_020` auprès d'un formateur de Craft (SKILL_MASTER de capitale) ou par pratique répétée.
+- **Rangs II-III** : progression d'usage automatique ; rang III peut requérir une quête de maîtrise.
+
+## Lore (Encyclopédie d'Argo)
+Ne rien gâcher : la marque d’un artisan chevronné.
+
+## Commande IA
+- `SYS_GRANT_PASSIVE(Avatar_ID, 'PAS_CRA_020', Rang)`

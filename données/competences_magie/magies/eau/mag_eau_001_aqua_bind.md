@@ -3,29 +3,34 @@
 ## Identification Cardinal
 - **Skill_ID** : `MAG_EAU_001`
 - **Catégorie** : Magie — Eau
-- **Tier** : T1
+- **Tier** : T1 · **Rareté** : Commun
 - **Race Affinité** : Undine (+30% efficacité si cette race)
 
 ## Paramètres de Combat
 | Paramètre | Valeur |
 |---|---|
-| Coût MP | 35 |
-| Temps d'Incantation | 1.0s |
-| Cooldown | 15s |
+| Coût MP | 40 |
+| Temps d'Incantation | 1.5s |
+| Cooldown | Aucun |
 | Niveau Requis | 5 |
 | Interruptible (Casting Break) | Oui (si dégâts > 5% Max HP reçus) |
 
 ## Effet
-Entrave la cible dans une sphère d'eau pendant 3s. La cible ne peut pas bouger ni attaquer mais peut caster des sorts.
+Effet de contrôle : entrave, immobilise ou repousse la ou les cible(s). Zone d’effet à partir du T3.
 
 ## Formule de Dégâts / Effet
-`Puissance = Base_Spell_Power * (INT * 0.6) * Elemental_Affinity_Multiplier`
+Sort de contrôle — dégâts secondaires 130 × 0,3 ; durée indexée sur INT et la maîtrise d’école.
 
-## Incantation (Pseudo-Vieux Norrois)
-*Le joueur doit taper la commande `!cast aqua_bind` pour activer le sort.*
+## Incantation
+*Le joueur tape `!cast aqua_bind` pour lancer le sort.*
+
+## Acquisition (Enseignement)
+- **Enseignant** : Guilde des Ondins d’Alne, maître Zephyrine `NPC_ALN_68`
+- **Prix d'apprentissage** : 150 Yrds (≈ 50 % d’un équipement T1)
+- **Commande** : `!learn_skill MAG_EAU_001`
 
 ## Lore (Encyclopédie d'Argo)
-Le sort de contrôle fondamental des Undines. L'eau emprisonne la cible dans une bulle qui réduit ses mouvements à néant. Les tanks l'utilisent pour figer les mobs dangereux.
+Des liens d’eau vive qui entravent une cible ; premier sort de contrôle des Undines.
 
 ## Commande IA
 - `SYS_GRANT_SPELL(Avatar_ID, 'MAG_EAU_001')`

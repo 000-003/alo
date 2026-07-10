@@ -4,27 +4,31 @@
 - **Skill_ID** : `OSS_RAP_002`
 - **Catégorie** : Original Sword Skill (OSS)
 - **Type d'Arme** : Rapière
-- **Tier** : T1
+- **Tier** : T1 · **Rareté** : Commun
 
 ## Paramètres de Combat
 | Paramètre | Valeur |
 |---|---|
-| Coût MP | 30 |
+| Coût MP | 0 |
 | Coût Stamina | 15% de la jauge |
-| Nombre de Hits | 1 |
-| Multiplicateur Total | x2.0 |
+| Nombre de Hits | 2 |
+| Multiplicateur Total | x1.4 |
 | Post-Motion Delay | 0.5s (le joueur est vulnérable) |
-| Niveau Requis | 5 |
-| Déblocage | Maîtrise de l'arme au rang Avancé + Quête spéciale |
+| Niveau Requis | 3 |
+| Déblocage | Maîtrise d’arme Rapière au rang **Novice** |
 
 ## Séquence d'Animation
-L'OSS est composé de 1 frappes enchaînées. Le système calcule chaque hit individuellement avec répartition des dégâts.
+Enchaînement de 2 frappe(s) calculées individuellement par le Système Cardinal (répartition des dégâts hit par hit). Le Post-Motion Delay croît avec le tier : plus l’OSS est puissant, plus la fenêtre de vulnérabilité finale est longue.
 
 ## Effet Spécial
-Les OSS ignorent 15% de la DEF ennemie. Si les 1 hits touchent tous, un bonus de dégâts "Perfect Chain" de +20% est appliqué.
+Les OSS ignorent **15% de la DEF** ennemie. Si tous les hits touchent, bonus **« Perfect Chain » +20%** de dégâts.
 
-## Lore
-L'estocade basique. Un pas en avant suivi d'une frappe rectiligne à la vitesse maximale. Simple mais mortel. C'est le premier Sword Skill qu'Asuna a maîtrisé dans SAO, et elle l'a importé dans ALO avec une précision chirurgicale.
+## Acquisition (Maîtrise d'arme)
+- **Déblocage** : Maîtrise d’arme Rapière au rang **Novice**
+- **Commande** : `!learn_skill OSS_RAP_002` puis `!cast linear` en combat
+
+## Lore (Encyclopédie d'Argo)
+Un estoc rectiligne d’une pureté parfaite, première leçon de toute duelliste à la rapière.
 
 ## Commande IA
 - `SYS_GRANT_OSS(Avatar_ID, 'OSS_RAP_002')`

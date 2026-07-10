@@ -4,27 +4,31 @@
 - **Skill_ID** : `OSS_EPE_002`
 - **Catégorie** : Original Sword Skill (OSS)
 - **Type d'Arme** : Épée à une main
-- **Tier** : T2
+- **Tier** : T3 · **Rareté** : Rare
 
 ## Paramètres de Combat
 | Paramètre | Valeur |
 |---|---|
-| Coût MP | 80 |
-| Coût Stamina | 30% de la jauge |
-| Nombre de Hits | 1 |
-| Multiplicateur Total | x3.5 |
-| Post-Motion Delay | 1.0s (le joueur est vulnérable) |
-| Niveau Requis | 20 |
-| Déblocage | Maîtrise de l'arme au rang Avancé + Quête spéciale |
+| Coût MP | 60 |
+| Coût Stamina | 45% de la jauge |
+| Nombre de Hits | 5 |
+| Multiplicateur Total | x3.2 |
+| Post-Motion Delay | 1.8s (le joueur est vulnérable) |
+| Niveau Requis | 24 |
+| Déblocage | Maîtrise **Confirmé** + entraînement auprès de Ferra `NPC_GAT_31` |
 
 ## Séquence d'Animation
-L'OSS est composé de 1 frappes enchaînées. Le système calcule chaque hit individuellement avec répartition des dégâts.
+Enchaînement de 5 frappe(s) calculées individuellement par le Système Cardinal (répartition des dégâts hit par hit). Le Post-Motion Delay croît avec le tier : plus l’OSS est puissant, plus la fenêtre de vulnérabilité finale est longue.
 
 ## Effet Spécial
-Les OSS ignorent 15% de la DEF ennemie. Si les 1 hits touchent tous, un bonus de dégâts "Perfect Chain" de +20% est appliqué.
+Les OSS ignorent **15% de la DEF** ennemie. Si tous les hits touchent, bonus **« Perfect Chain » +20%** de dégâts.
 
-## Lore
-Une estocade à pleine puissance qui concentre toute l'énergie du joueur dans un seul point. Le hit unique compense sa simplicité par une pénétration massive de l'armure (ignore 30% de la DEF). C'est le premier OSS que la plupart des épéistes apprennent dans ALO.
+## Acquisition (Maîtrise d'arme)
+- **Déblocage** : Maîtrise **Confirmé** + entraînement auprès de Ferra `NPC_GAT_31`
+- **Commande** : `!learn_skill OSS_EPE_002` puis `!cast vorpal_strike` en combat
+
+## Lore (Encyclopédie d'Argo)
+Un estoc unique d’une portée anormale qui transperce de part en part ; le sort favori de Kirito au corps à corps.
 
 ## Commande IA
 - `SYS_GRANT_OSS(Avatar_ID, 'OSS_EPE_002')`

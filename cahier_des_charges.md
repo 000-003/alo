@@ -1,8 +1,9 @@
 # 📜 CAHIER DES CHARGES — Projet ALO : MMORPG Textuel sur WhatsApp
 
-> **Version** : 1.0 (établissement de la base) · **Date** : 2026-07-06
+> **Version** : 1.1 (base + chantier de renflouement conforme) · **Date** : 2026-07-06, amendée 2026-07-10
 > **Gouvernance** : toute exécution est conditionnée par `system_persona_architecte.md` (Architecte Créateur Primaire).
 > **Phase actuelle** : établissement des données — **aucun code n'est produit à ce stade ; les livrables sont purement structurels.**
+> **Principe de conformité (v1.1)** : le périmètre livrable est le **corpus conforme** (voir §10), **jamais le contenu pré-généré** hérité de sessions automatiques. Le pré-généré non validé **ne fait pas foi** et **ne compte pas comme livré** : il est à **régénérer intégralement** selon les gabarits actés, pas à compléter (D66).
 
 ---
 
@@ -90,6 +91,7 @@ les couches où l'élément est référencé (atlas ↔ fiche zone ↔ table MLD
 | D5 | Capitales nommées pour les 4 territoires sans fiche : Lioda (Puca), Duskarn (Imp), Granzam (Gnome), Brokkheim (Leprechaun), Penwether (Spriggan — canon) | Complétude du découpage en 9 territoires |
 | D11 | Mécaniques signatures des 2 donjons restants (complète D10 sur 9/9) : Caldeira d'Obsidienne = jauge de **Surchauffe** (chaque message du groupe chauffe l'instance — anti-spam) ; Gouffre de Léviathan = jauge d'**Apnée** individuelle (chaque action consomme de l'oxygène, `!respirer` en poche d'air) | Exploiter nativement WhatsApp ; transformer les contraintes anti-spam (ENF-02) en gameplay |
 | D12 | Paramètres environnementaux de zone unifiés (`OXYGEN`, `HEAT`, `DOT`) pilotés par une commande générique unique : GM `!sys_env_set`, IA `SYS_SET_ENV_HAZARD` | Éviter une commande par jauge ; extensible aux futurs environnements (froid Jötunheimr, etc.) |
+| D66 | **Non-autorité du contenu pré-généré.** Toute donnée héritée de sessions automatiques (ID à hash, lore d'une ligne, zéro chaînage éco, doublons `Item_ID` R2, noms d'items fabriqués, zones erronées) est réputée **non conforme** : elle **ne fait pas foi**, **n'est jamais citée comme source de vérité**, et **ne compte pas comme livrée**. Un dossier pré-rempli est traité comme **vide** tant qu'il n'a pas été **régénéré et validé** selon les gabarits (D13-D15 items, D34-D37 rosters/boutiques, D61/D64/D65 tiers/marché noir/chevauchement). La régénération est **intégrale** (remplacement), jamais un complément. L'original non conforme part en `ressources_brutes/deprecated_v1/`. | Deux sessions parallèles ont pré-rempli les dossiers de villes/slots ; les compter comme « faits » masquerait des doublons R2, de faux `Item_ID` et des prix inventés — incompatibles avec ENF-05 (cohérence éco) et le persona (profondeur 200 %) |
 
 ## 8. Critères d'Acceptation de la Base
 
@@ -106,7 +108,38 @@ les couches où l'élément est référencé (atlas ↔ fiche zone ↔ table MLD
 | P1 | Fiches détaillées des zones nouvellement référencées (Freelia, Lioda, Duskarn, Granzam, Brokkheim, Penwether + chasses/donjons/routes) au format `capitale_swilvane.md` | ✅ Étape 2 (2026-07-06) — 30 fiches |
 | P1 | Tables MLD manquantes : `T_WA_GROUPS`, `T_SPAWN_TABLES`, `T_NPC`, `T_ZONE_LINKS` (détail des liaisons) | ✅ Étape 2 (2026-07-06) |
 | P1-bis | Fiches manquantes des territoires « anciens » : Salamander (`SAL_DUN_001` Caldeira d'Obsidienne, `ROUTE_SAL_ALN`), Undine (`UND_HUNT_001/002`, `UND_DUN_001`, `ROUTE_UND_ALN`), Gattan (registre PNJ `NPC_GAT_*`) | ✅ Étape 3 (2026-07-07) — 7 fichiers |
-| P2 | Renflouement du bestiaire des territoires sans fichiers mobs dédiés (Cait Sith, Imp, Puca, Spriggan, Leprechaun — les ID `MOB_<SEC>_*` sont actés dans les fiches de zones) | ⏳ |
-| P2 | Économie : grille de prix par tier, arbre de dépendances drop→craft complet | ⏳ |
+| **P2** | **Chantier de renflouement conforme « ≥100 unités par type » — voir §10** (le pré-généré non validé ne clôt aucune ligne, D66) | 🚧 en cours |
 | P2 | Détail MLD des mobs de donjons (plage réservée `MOB_<SEC>_030-034`) | ⏳ |
 | P3 | Implémentation Node.js du bot (hors phase données) | ⏳ |
+
+> **⚠️ Le statut d'une tâche ne peut être ✅ que sur du contenu conforme validé** (§10). Un dossier pré-rempli par une session automatique reste **⏳/🚧 « à régénérer »**, jamais ✅ (D66).
+
+## 10. Chantier de Renflouement Conforme (« ≥100 unités par type », directive PE 2026-07-07)
+
+**Objet** : chaque type d'objet (PNJ, armes, skills, équipements par slot, matériaux, consommables, boutiques, faune, flore, quêtes) doit compter **au moins 100 unités conformes** (1 unité = 1 fichier, précision persona 200 %, chaînage éco ENF-05, cohérence SAO/ALO). **Le pré-généré non validé n'entre pas dans ce compte (D66).**
+
+**Gabarits de conformité (source de vérité)** :
+- **Items** (`ARM_*`/`WPN_*`/`CSM_*`/`MAT_*`) : ID séquentiel strict, 5 sections, grille de prix par tier, chaînage éco réel (D13-D15). Détail : `directives_generation/02_cdc_items.md`, `04`/`05`.
+- **PNJ** : gabarit D17 (5 sections, budget QI, secret K3 non avoué), quotas de rôles D34. Détail : `directives_generation/01_cadrage_pnj.md`.
+- **Boutiques** : **CDC-SHP-01** (`directives_generation/03_cdc_boutiques.md`) — 1 boutique par PNJ `MERCHANT`/`BLACK_MARKET`, règles **R1-R8** (R1 panier universel à la seule taverne · R2 exclusivité intra-ville, **allocation disjointe, 0 doublon `Item_ID`** · R3 ≥10 exclusifs mondiaux vs villes closes · R4 prix **lus sur les fiches item réelles** modulés LOCAL −20 %/IMPORT +40 % · R5 taille · R6 tiers, T4 équipement légal ≤2/ville · R7 rachat · R8 cohérence roster), matrice D36, chevauchement territorial D65, marché noir T4 D64. **0 `Item_ID` inexistant, 0 prix inventé.**
+
+**Procédé de mise en conformité d'un lot pré-généré** : (1) le dossier pré-rempli est réputé **vide** (D66) ; (2) régénération **intégrale** par script outillé (extraction disque des familles conformes → catalogue, allocation disjointe assertée) ; (3) validation automatisée (comptage, unicité, prix multiples de 5, exclusivité) ; (4) l'original non conforme est archivé en `ressources_brutes/deprecated_v1/`.
+
+### État de conformité (au 2026-07-10)
+
+| Lot | Cible | Statut conforme | Reste (pré-généré à régénérer/auditer) |
+|---|---|---|---|
+| **PNJ** (Phase A) | 12 villes ×100 + 10 canoniques | ✅ validé (gabarit D17, quotas D34) | — |
+| **Items I-1 consommables** `CSM_*` | 100 + 30 portage | ✅ validé | — |
+| **Items I-2 armes** `WPN_*` | 100 / 13 familles | ✅ validé | — |
+| **Items I-3 matériaux** `MAT_*` | 100 / 5 familles | ✅ validé (normalisé) | famille « bois » `MAT_WOD_*` à créer (amendement CDC-ITM) |
+| **Items I-4 skills** `MAG_`/`OSS_`/`PAS_` | 300 | ✅ validé | — |
+| **Équipement tête** `ARM_TET_*` | 100 | ✅ validé | — |
+| **Boutiques** (Phase C) | 11 villes | 🚧 **5/11 validées** (C-1 Gattan, C-2 Alne, C-3 Swilvane, C-4 Voulg, C-5 Freelia) | **6 villes à régénérer** : Archipel 🌊, Lioda 🎭, Duskarn 🌑, Granzam ⛏️, Brokkheim 🔨, Penwether 🕯️ (pré-généré non validé) |
+| **Autres slots d'armure** (torse/jambes/bras/taille) | 4 ×100 | ⏳ **à auditer/régénérer** — pré-généré non conforme (doublons de fichiers `ARM_*` majuscules/minuscules constatés) | 4 slots |
+| **Accessoires** (anneaux/capes/ceintures/colliers) | dérogation ≥100 gelée (D39 caduque) | ⏳ à arbitrer PE | — |
+| **Faune** `MOB_*` par territoire | 249 (plages D6) | ⏳ **à auditer/régénérer** — pré-généré non validé | par territoire |
+| **Flore** `MAT_HRB_*`/nodes | 100 | ⏳ **à auditer/régénérer** — pré-généré non validé | par race |
+| **Quêtes** `QST_*` | 34 (dont dette `QST_SYL_HELKA_01`) | ⏳ **à auditer/régénérer** — pré-généré non validé | 34 |
+
+> **Lecture** : un ✅ n'est accordé qu'après validation par la méthode ci-dessus. Les lignes ⏳/🚧 restent dues **même si un dossier pré-rempli existe sur disque** — leur présence ne vaut pas livraison (D66). Ordre d'exécution recommandé pour les boutiques : C-6 Archipel → Lioda → Duskarn → Granzam → Brokkheim → Penwether. `alo_context.md` / `alo_progression.md` tiennent l'état fin par étape.

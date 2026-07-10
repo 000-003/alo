@@ -2,23 +2,27 @@
 
 ## Identification Cardinal
 - **Skill_ID** : `PAS_EXP_001`
-- **Catégorie** : Compétence Passive — Exploration
-- **Activation** : Permanente (toujours active une fois débloquée)
+- **Catégorie** : Passive — Exploration
+- **Type** : Passif (toujours actif une fois appris ; **max 2 passives du même domaine équipées**)
+
+## Rangs
+| Rang | Bonus (précision d’orientation) | Condition d'acquisition |
+|---|---|---|
+| I | +2% | Apprentissage initial (formateur ou pratique) |
+| II | +5% | Progression d'usage (palier intermédiaire) |
+| III | +8% | Maîtrise (palier avancé / quête de compétence) |
+
+> Plafond absolu **+8%** (rang III). Aucune passive n'accorde de dégâts globaux (règle CDC).
 
 ## Effet
-Améliore la carte et la boussole. Au rang Maître, débloque le Fast Travel vers toutes les zones visitées.
+Améliore passivement : **précision d’orientation**. Le bonus s'applique en permanence tant que la passive est équipée, sans coût de MP ni de stamina.
 
-## Condition de Déblocage
-Déblocage automatique dès le premier changement de zone.
+## Acquisition (Enseignement)
+- **Rang I** : `!learn_skill PAS_EXP_001` auprès d'un formateur de Exploration (SKILL_MASTER de capitale) ou par pratique répétée.
+- **Rangs II-III** : progression d'usage automatique ; rang III peut requérir une quête de maîtrise.
 
-## Niveaux de Maîtrise
-| Rang | EXP Requise | Bonus |
-|---|---|---|
-| Débutant | 0 | Effet de base (x1.0) |
-| Intermédiaire | 1 000 | Effet x1.2 |
-| Avancé | 5 000 | Effet x1.5 |
-| Expert | 15 000 | Effet x1.8 |
-| Maître | 50 000 | Effet x2.0 + Déblocage capacité secrète |
+## Lore (Encyclopédie d'Argo)
+Lire les étoiles d’Alfheim et ne jamais perdre le nord entre deux zones.
 
-## Lore
-Se repérer dans le monde immense d'ALfheim est crucial. Sans Navigation, un joueur est aveugle au-delà de sa zone actuelle.
+## Commande IA
+- `SYS_GRANT_PASSIVE(Avatar_ID, 'PAS_EXP_001', Rang)`

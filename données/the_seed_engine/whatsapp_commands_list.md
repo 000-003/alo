@@ -20,6 +20,10 @@
 - `!sys_npc_info [NPC_ID]` : Audit de l'enveloppe informationnelle d'un PNJ (slots K0-KX, conditions, déblocages — cf. `npc_knowledge_protocol.md`). Équivalent IA : `SYS_NPC_KNOWLEDGE_CHECK`.
 - `!sys_npc_unlock [NPC_ID] [QI_ID] [Num_WhatsApp]` : Débloque manuellement un slot K2/K3 pour un joueur (écrit dans `T_NPC_KNOWLEDGE_UNLOCKS`). Équivalent IA : `SYS_NPC_KNOWLEDGE_UNLOCK`.
 - `!sys_canon_spawn [NPC_ID] [Zone_ID] [Durée_min]` : Matérialise un personnage canonique dans une zone pour une fenêtre limitée (D19 — seul moyen de rencontrer la trame principale). Équivalent IA : `SYS_SPAWN_CANON`.
+- `!sys_grant_skill [Skill_ID] [Num_WhatsApp]` : Octroie une compétence (`MAG_*`/`OSS_*`/`PAS_*`) à un joueur, sans passer par un formateur ni les prérequis. Équivalent GM de `!learn_skill`. Équivalents IA selon la famille : `SYS_GRANT_SPELL`, `SYS_GRANT_OSS`, `SYS_GRANT_PASSIVE`.
+- `!sys_shop_restock [SHOP_ID]` : Force le réassort d'une boutique (réécrit `T_SHOP_ITEMS.stock` selon `T_SHOPS.restock_days`). Employé par les fiches boutiques C-1+. Équivalent IA : `SYS_SHOP_RESTOCK`.
+- `!sys_open_corridor [Zone_A] [Zone_B]` : Ouvre manuellement un portail bidirectionnel entre deux zones (équivalent GM du Cristal de Corridor `CSM_CRI_006`). Équivalent IA : `SYS_OPEN_CORRIDOR`. Les joueurs le franchissent par `!enter_portal`.
+- `!sys_recall_party [Party_ID] [Ancre_Avatar_ID]` : Rappelle les membres consentants d'un groupe vers une ancre (équivalent GM du Cristal de Ralliement `CSM_CRI_010`). Équivalent IA : `SYS_GROUP_RECALL`. Chaque membre confirme par `!accept_rally`.
 
 ## 2. 📚 Encyclopédie & Index Système (Guide d'Argo)
 *Le savoir est verrouillé. Les joueurs débloquent la documentation en explorant.*
@@ -47,6 +51,7 @@
 ## 5. ⚔️ Moteur de Combat & Instances (PvE/PvP)
 - `!attaque` / `!cast [Sort]` / `!oss [Skill]` / `!parry` / `!switch [Allié]` / `!analyze` / `!fuite`.
 - `!target [ID_Ennemi]` : Verrouille une cible si la zone contient plusieurs monstres (le bot affiche les ID dans le groupe).
+- `!use [Item_ID]` : Consomme/active un objet consommable (`CSM_*` : cristaux, potions, parchemins, nourriture, encens…). `!use_potion` et `!use_crystal [type]` sont des alias spécialisés historiques. GM : `!sys_give` (octroi) ; IA : `SYS_GRANT_ITEM` (octroi) + primitive de résolution d'effet propre à l'item (ex. `SYS_OPEN_CORRIDOR`, `SYS_GROUP_RECALL`).
 - `!use_potion [Nom_Potion]` / `!revive_light [Cible]`.
 - `!respirer` : Reprend son souffle dans une poche d'air (+50 à la jauge d'Apnée, canalisation 10 s — donjons sous-marins, cf. `ZONE_UND_DUN_001` Gouffre de Léviathan).
 - `!duel_challenge [Num_WhatsApp]` : Lance une invitation au duel formel (Anti-PK). Si accepté, le bot arbitre les dégâts sans pénalité de mort.
@@ -124,6 +129,8 @@
 - `!cook [Recette]` : Prépare un repas avec des ingrédients (buffs temporaires).
 - `!sew [Matériau]` : Couture d'armure textile ou de sacs d'inventaire.
 - `!gather` : Récolte des herbes et plantes dans la zone.
+- `!recolter <FLO_ID>` : Récolte un node de flore identifié (`FLO_*`) — déclenche le mini-jeu de récolte et crédite le matériau dans l'inventaire. L'ID du node est visible via `!inspect` ou les panneaux de zone.
+- `!inspect <FLO_ID>` : Affiche les informations (nom, rareté, état de croissance, temps avant repousse) d'un node de flore `FLO_*` présent dans la zone.
 - `!mine` : Extraction de minerais (nécessite pioche + zone minière).
 
 ## 17. 🧭 Navigation & Cristaux
@@ -136,12 +143,14 @@
 - `!use_crystal corridor [Zone]` : Ouvre un portail bidirectionnel pour le groupe (30s).
 - `!use_crystal mirage` : Affiche les infos détaillées des zones adjacentes.
 - `!use_crystal record` : Sauvegarde les 5 derniers logs de combat.
-- `!enter_portal` : Traverse un portail ouvert par un Corridor Crystal allié.
+- `!enter_portal` : Traverse un portail ouvert par un Corridor Crystal allié (`CSM_CRI_006`). Équivalent IA de l'ouverture : `SYS_OPEN_CORRIDOR` ; GM : `!sys_open_corridor`.
+- `!accept_rally` : Accepte un rappel de groupe émis par un Cristal de Ralliement allié (`CSM_CRI_010`) — téléporte le membre **consentant** du groupe (PARTY) vers le porteur. Consentement obligatoire (anti-kidnapping). Équivalent IA : `SYS_GROUP_RECALL` ; GM : `!sys_recall_party`.
 - `!yui_analyze [Cible]` : (Nécessite Yui's Heart) Analyse complète d'un monstre ou joueur.
 
 ## 18. ⚔️ Compétences Avancées & OSS
 *Commandes liées aux compétences passives et au système d'OSS (cf. `competences_magie/`).*
 - `!skill_list` : Liste toutes les compétences actives et passives du joueur avec leur rang de maîtrise.
+- `!learn_skill [Skill_ID]` : Apprend une compétence auprès d'un Maître de compétence (`role_type = SKILL_MASTER`) présent dans la zone : sort élémentaire `MAG_*`, Original Sword Skill `OSS_*`, ou compétence passive `PAS_*`. Prérequis (niveau, maîtrise d'arme, quête de maîtrise, Yrds) selon la fiche `competences_magie/`. Un rang passif ne peut dépasser III (+8 % plafond) et le joueur ne peut équiper que 2 passives du même domaine. Équivalent GM : `!sys_grant_skill` ; équivalents IA selon la famille : `SYS_GRANT_SPELL` (`MAG_*`), `SYS_GRANT_OSS` (`OSS_*`), `SYS_GRANT_PASSIVE` (`PAS_*`).
 - `!skill_connect [OSS_1] [OSS_2]` : Tente un enchaînement Skill Connect (fenêtre de timing de 0.3s).
 - `!oss_create [Nom]` : Commence le processus de création d'un OSS personnel (nécessite Maîtrise d'arme Avancée).
 - `!oss_transfer [Parchemin] [Num_WhatsApp]` : Transfère un OSS à un autre joueur via un Parchemin d'OSS.
@@ -197,3 +206,15 @@
 | `!memorial` | Registre/hommage aux comptes bannis | Sorne `97` | `!sys_registry` | `SYS_QUERY_REGISTRY` |
 | `!heal` (mineur) | Soins de fortune/rue | Osmé `40`, Aeliss `91` | `!sys_heal` | `SYS_APPLY_HEAL` |
 | `!tutorial` | Onboarding des mécaniques (R0, éco) | Pell `96` | `!sys_tutorial` | `SYS_TUTORIAL_STEP` |
+
+## 22. 🎒 Système de port & loadout (D45/D46)
+
+> Équipement porté = 5 slots d'armure (D44). Le port des armes et le stockage sont **dissociés** : mains (2) · ceinture `BELT_*` (2 fourreaux, dégainage instantané) · dos = sac `BAG_*` (stockage +30, accès rapide) **XOR** sangle `HRN_*` (armes au dos). Inventaire virtuel de base (sac non obligatoire). Détail : `cardinal_system_db/MLD_Logic/table_t_avatars.md`.
+
+| Commande Joueur | Rôle | GM | IA |
+|---|---|---|---|
+| `!degainer [gauche\|droite\|dos]` | Dégaine une arme de la ceinture ou de la sangle (sans commande d'inventaire) | `!sys_set_loadout` | `SYS_SET_LOADOUT` |
+| `!fetch [Item_ID]` | Sort un objet de l'inventaire virtuel (coûte une action ; inutile si un sac est porté) | `!sys_give` | `SYS_GRANT_ITEM` |
+| `!equiper [ID] ceinture\|dos` | Équipe une ceinture / un sac / une sangle (dos = sac XOR sangle) | `!sys_set_loadout` | `SYS_SET_LOADOUT` |
+| `!sew [Matériau]` | Coud un sac `BAG_*` ou une sangle `HRN_*` | — | — |
+| `!outfit` | Change de tenue (cosmétique / rachat tenue par défaut `OFT_*`) | `!sys_cosmetic` | `SYS_SET_COSMETIC` |

@@ -175,16 +175,18 @@ CAP (capitale, safe) ── HUNT_001 (chasse intérieure)
 | ID | Nom | Type | Tier | Safe | Liaisons | Condition d'accès |
 |---|---|---|---|---|---|---|
 | `ZONE_NEU_CAP_001` | Alne (capitale neutre) | CAP | 1 | ✅ | Les 9 `ROUTE_*_ALN`, `YGG_DUN_001`, `JOT_FLD_001`, `AIN_HUB_001` | Libre |
-| `ZONE_YGG_DUN_001` | Dôme d'Yggdrasil | RAID | 8 | ❌ | `NEU_CAP_001`, `YGG_TOP_001` | Grand Quest (raid multi-guildes) |
+| `ZONE_YGG_DUN_001` | Dôme d'Yggdrasil | RAID | 8 | ❌ | `NEU_CAP_001`, `YGG_TOP_001` | Grand Quest (raid multi-guildes) — boss `BOSS_YGG_001` Le Gardien du Dôme |
 | `ZONE_YGG_TOP_001` | Sommet d'Yggdrasil | TOP | 10 | ✅ | `YGG_DUN_001` | 🔒 Verrouillé — victoire de la Grand Quest |
 | `ZONE_JOT_FLD_001` | Abysse de Jötunheimr | FLD | 7 | ❌ | `NEU_CAP_001` (crevasse sous Alne), `JOT_RAID_001` | Item-clé « Clé de Glace » — **vol impossible** |
 | `ZONE_JOT_RAID_001` | Trône de Thrym | RAID | 9 | ❌ | `JOT_FLD_001` | Boss : Thrym (cf. `personnages_bestiaire/monstres/thrym_roi_des_geants.md`) |
 | `ZONE_AIN_HUB_001` | New Aincrad — Palier 1 (Ville du Début) | HUB | 1 | ✅ | `NEU_CAP_001` (vol), `AIN_FLR_002` | Vol requis |
-| `ZONE_AIN_FLR_002` → `ZONE_AIN_FLR_100` | New Aincrad — Paliers 2 à 100 | FLR | 1→10 | ❌ | Palier N ↔ N±1 (progression linéaire) | Boss du palier N−1 vaincu (cf. `personnages_bestiaire/boss_aincrad/boss_palier_NNN_*.md`) |
+| `ZONE_AIN_FLR_002` → `ZONE_AIN_FLR_100` | New Aincrad — Paliers 2 à 100 | FLR | 1→10 | ❌ | Palier N ↔ N±1 (progression linéaire) | Boss du palier N−1 vaincu — `BOSS_AIN_<NNN>` (cf. `personnages_bestiaire/_index_boss_axe_vertical.md`) |
 
 > **New Aincrad — règle structurelle** : les paliers ne sont PAS 100 groupes WhatsApp permanents.
 > Seuls le Palier 1 (hub) et le **palier de front** (plus haut palier atteint par le serveur) ont un groupe
 > persistant ; les salles de boss sont des groupes `INSTANCE` éphémères créés via `!dungeon_queue`.
+> Boss : **nommés/canon** = fiches `BOSS_AIN_001/027/074/075/100` ; **paliers génériques** = profil paramétrique
+> (fonction du n° de palier) instancié à la volée — pas de fiche permanente (cf. index d'axe vertical §3).
 
 ---
 

@@ -1,7 +1,7 @@
 # 🧠 ALO_CONTEXT — Cache d'État Critique (à lire en premier après /clear)
 
 > **Rôle** : synthèse de l'état actuel du projet pour reprise instantanée. Mis à jour à CHAQUE modification.
-> **Dernière mise à jour** : 2026-07-08 — Étape 7 lot 2.3 Alne : **✅ CLOS — 100/100 fiches** (`NPC_ALN_00-99`) dans `pnj/alne/`, gabarit D17, émoji 🌳, budget 12 pour hubs (00, 01, 08, 09, 99) sinon 10, répartition QI 3/3/2/1/1 (12 → 3/3/3/2/1). Notables `01-07` refichés canon ; 6 fils rouges distribués (aucun résolu) ; 13 liens inter-cités Gattan honorés + 4 réservés (Helka/Swilvane→91, Zarn/Undine→92, Ilka/Granzam→93). Quête `QST_NEU_LESSIVE_01` créée (`game_design/quetes/`). Commandes propagées : `whatsapp_commands_list.md` §21 (Joueur/GM) + `ai_orchestrator_commands.md` §14 (IA). [antérieur : étape 6/6-bis Gattan 100+Canoniques 10 clos.]
+> **Dernière mise à jour** : 2026-07-10 — **✅ PROJET ALO TERMINÉ + Phase C 11/11 régénérée (Archipel, Brokkheim, Duskarn, Granzam, Lioda, Penwether).** Tous les lots des 11 CDC livrés : PNJ 1 100, Items 731, **Boutiques 302 (100% conformes R1-R8, 0 Item_ID fabriqué)**, Armures 500, Faune 256, Flore 100, **Quêtes 57** (33 localité + 20 titres T5 + 4 légendaires), Tenues 55, Micro-familles 65, Index complets. ~**3 800 fichiers markdown**. Relire `alo_progression.md`.
 
 ## Directives actives (non négociables)
 
@@ -23,7 +23,7 @@
 | Fichier | Rôle |
 |---|---|
 | `system_persona_architecte.md` | Gouvernance |
-| `cahier_des_charges.md` | Spécification, décisions D1–D12, backlog (P1/P1-bis ✅, P2/P3 ⏳) |
+| `cahier_des_charges.md` | **v1.1** — Spécification, décisions D1–D12 **+ D66 (non-autorité du pré-généré)**, **§10 Chantier de renflouement conforme** (table d'état : ✅ validé vs ⏳/🚧 pré-généré à régénérer) |
 | `README.md` | Vue d'ensemble, conventions, état d'avancement |
 | `données/cartographie/atlas_monde_liaisons.md` | **ATLAS MAÎTRE** : ID zones, graphe, taxonomie groupes WA |
 | `données/cardinal_system_db/MLD_Logic/table_t_zone_links.md` | **Source de vérité du graphe** (80 liaisons seed, D9) |
@@ -66,14 +66,42 @@ Directive : chaque type d'objet (PNJ, armes, skills, équipements par slot, faun
 | Équipements tête (`ARM_TET_001-100` + index) | ✅ 100/100 (étape 4, lot 1) |
 | Autres slots armure (torse 57 junk, jambes 29, bras 34, taille 20, boucliers_armure 0, cuir/maille/plaque/tissu/robes ≤6) | ⏳ |
 | Accessoires (anneaux 5, capes 2, ceintures 3, colliers 4) | ⏳ |
-| Armes (154 junk racine + familles ≤11) | ⏳ |
-| PNJ (185 junk racine ; gardes/queteurs/lords 0) | ✅ Lot 2.1 Gattan (100) / 2.2 Canoniques (10) / **2.3 Alne (100 + `QST_NEU_LESSIVE_01`)**. Reste Swilvane→Penwether ⏳ |
-| Skills (magies par école ≤10 sauf support 141 junk ; oss ≤4 ; passives 11) | ⏳ |
+| Armes (junk v1 archivé : 205 fiches) | ✅ **Lot I-2 `WPN_*` 100/100 (étape 16)** — voir ligne dédiée |
+| PNJ (185 junk racine archivé) | ✅ **Phase A COMPLÈTE** : Lot 2.1 Gattan (100) / 2.2 Canoniques (10) / 2.3 Alne (100) / 2.4 Swilvane (100) / 2.5 Voulg (100) / 2.6 Freelia (100) / 2.7 Archipel (100) / 2.8 Lioda (100) / 2.9 Duskarn (100) / 2.10 Granzam (100) / 2.11 Brokkheim (100) / 2.12 Penwether (100) = **1200 PNJ D17** |
+| **Skills** `MAG_`/`OSS_`/`PAS_` (I-4, 300) | ✅ **300/300 (étape 19)** — S-1 magies 100 (10 écoles×10) / S-2 OSS 100 (10 familles) / S-3 passives 100 (CBT40/CRA25/EXP20/SOC15) ; junk archivé (309 fiches, dont `SKL_*` du dossier parasite) ; canon préservé (Starburst, Revive, Mother's Rosario…) ; index `_index_skills.md`. `[BESOIN_COMMANDE]` : `SYS_GRANT_PASSIVE` à propager |
 | Faune (mobs par territoire ≤6 ; zones_neutres 172 junk) | ⏳ |
 | Flore (15 racine ; sous-dossiers par race 0) | ⏳ |
-| Consommables 93 / Matériaux 190 (audit conformité à faire) | ⏳ |
+| **Consommables** `CSM_*` (I-1) + annexe portage | ✅ **100/100 + 30/30 (étape 14)** — 90 `cons_*` junk archivés |
+| **Armes** `WPN_*` (I-2, 100 / 13 familles) | ✅ **100/100 (étape 16)** — 205 junk `wpn_*` archivés ; 4 légendaires T5 liés ; index `_index_armes.md` |
+| **Matériaux** `MAT_*` (I-3, 100 / 5 familles) | ✅ **100/100 (étape 18)** — lot pré-généré non conforme **normalisé** (renommage §0.4, recettes `Entre dans`→Item_ID réels, prix gemmes T4 sur grille, sources `xxx`→`MOB_*`/`BOSS_*`/`ZONE_*`, bot standardisé) ; junk `mat_*` déjà archivé ; index `_index_materiaux.md` + cross-walk ingrédients nommés. Gap connu : aucune famille « bois » à l'allocation §2 |
 
 `SYS_GRANT_ITEM(Avatar_ID, Item_ID, Qty)` ajouté à `ai_orchestrator_commands.md` §5 (équivalent IA de `!sys_give`).
+
+## ÉTAPE 10-bis (session parallèle, 2026-07-08) — Audit & CDC de délégation ✅
+
+- **`directives_generation/`** créé : `00_audit_completude.md` (audit disque : 7 villes PNJ à zéro, boutiques = néant structurel, items junk hors lot tête) · `01_cadrage_pnj.md` (quotas de rôles **D34** + grille de recette des lots 2.6-2.12) · `02_cdc_items.md` (CDC-ITM-01 : 3×100 — `CSM_*`/`WPN_*`/`MAT_*`) · `03_cdc_boutiques.md` (CDC-SHP-01 : contrat **D35**, matrice zonale **D36**, règles R1-R8).
+- **`table_t_shops.md`** actée (MLD 19ᵉ table) : `T_SHOPS` + `T_SHOP_ITEMS`, résout `T_NPC.shop_ref` ; `!sys_shop_restock`/`SYS_SHOP_RESTOCK` à propager à la recette du lot boutiques C-1.
+- **D34-D37 consommées par cette étape** (D30-D33 laissées libres pour le lot 2.6 Freelia, en production parallèle). Protocole générateur délégué = **D37** (jamais de fichier maître, jamais d'ID hors plage, manques en `[BESOIN_*]`).
+- Ordre d'exécution délégable : **I-1 consommables** (sans dépendance) → I-2 armes → I-3 matériaux → boutiques C-1 Gattan (dès I-1+I-2), puis 1 lot boutiques par ville livrée.
+- Dette relevée : `QST_SYL_HELKA_01` promise (lot 2.4) toujours non créée.
+
+## ÉTAPE 10-ter (session parallèle, 2026-07-08) — CDC restants + entité Avatar ✅
+
+- `directives_generation/` **complet (00-09)** : + `04` armures/boucliers (D38 : taxonomie par SLOT, 5×100), `05` accessoires (D39, 100), `06` skills (D40 : magies 10 écoles ×10, OSS 100, passives 100), `07` faune (D41 : 249 sur plages D6, `MOB_CAT_*`→`MOB_CAI_*`), `08` flore (D42 : 100 nodes → `MAT_HRB_*`), `09` quêtes (D43 : 34 dont dette `QST_SYL_HELKA_01` en premier).
+- Amendement I-2 : `WPN_BOU_*` supprimé (boucliers = slot armure D38) — épées 1M 14, arcs 12, jet 6.
+- **D44 Avatar** : `T_AVATARS` slots typés complets (ring_1/2, neck, belt, back) + `inventory_capacity` évolutive (32 + niveau + ceinture + sacs `!sew` + passives, plafond 160) ; `T_INVENTORY` refondue (piles ×99, `is_bound`, triggers anti-dup/capacité/mort).
+- **D38-D44 consommées.** Ordre de délégation : I-1 consommables (immédiat) → I-2/I-3 → boutiques C-1+ ∥ armures ∥ skills ∥ faune → flore → quêtes (dernier, le plus exigeant).
+
+## ÉTAPE 10-quater (session parallèle, 2026-07-08) — Correction PE : 5 slots portés ✅
+
+- **Modèle personnage (PE, prime sur D44 v1)** : équipement porté = **5 slots d'armure** (tête/torse/bras/taille/jambes), **PAS PLUS** ; mains = saisie (`hand_main`/`hand_off` : arme, bouclier `WPN_BOU_*`, torche) ; dos = sac `BAG_001-012` (capacité +6/+12/+20/+30, conteneur sans stat). Formule capacité : `30 + niveau + sac + passives PAS_EXP, plafond 160`.
+- Cascade : `T_AVATARS`/`T_INVENTORY` refaits ; CDC-ARM = 4 lots (boucliers retirés) ; CDC-ITM : `WPN_BOU` restauré + annexe sacs 4-bis ; **CDC-ACC gelé (D39 caduque, dérogation ≥100 pour les accessoires)**.
+
+## ÉTAPE 10-quinquies (session parallèle, 2026-07-08) — Système de port + tenue par défaut ✅
+
+- **D45 Système de port (dissocié des 5 slots d'armure)** : ceinture `BELT_*` = 2 armes à portée (flancs G/D, dégainage instantané) ; dos = conteneur EXCLUSIF, sac `BAG_*` (+30 stockage, items/consommables **sans armes**, accès rapide sans commande) **XOR** sangle `HRN_*` (2-4 armes au dos) ; inventaire **virtuel** de base (sac facultatif) `30+niveau+passives` plafond 130 (160 avec sac) ; armes portées uniquement (mains/ceinture/sangle → surplus en banque) ; retrait virtuel = `!fetch`. Aucun item de port n'a de stat.
+- **D46 Tenue par défaut** : à la création, haut `OFT_TOP_*` (torse) + bas `OFT_BOT_*` (jambes) en variante régionale selon la ville d'apparition ; bas = pantalon/short (tous) ou robe (femmes seules) ; T0 rachetable, remplacée par la 1re armure. CDC : `10_cdc_tenue_defaut.md`.
+- Cascade : `T_AVATARS`/`T_INVENTORY` (storage_zone, triggers T5-T8, contrats A1-A6) ; CDC-ITM annexe 4-bis = sacs+sangles+ceintures ; §22 commandes + `SYS_SET_LOADOUT`. `directives_generation/` = 11 docs (00-10).
 
 ## Point ouvert
 
@@ -81,6 +109,14 @@ Directive : chaque type d'objet (PNJ, armes, skills, équipements par slot, faun
 
 ## Prochaine étape
 
-**Lot 2.4 Swilvane** (capitale Sylph, `ZONE_SYL_CAP_001`) — **roster d'abord** (00-99, gabarit D16/D20 dans `_index_pnj.md`), puis production des 100 fiches au gabarit D17 (5 sections, QI 3/3/2/1/1, K3 « JAMAIS + déflection », budget 12 pour hubs sinon 10), émoji propre à Swilvane (ex. 🍃), stats grilles §2.6/D15. Méthode éprouvée sur Alne : produire par tranches de sous-lieu, mettre à jour `alo_context.md` + `_index_pnj.md` (compteur X/100) à chaque tranche, propager toute NOUVELLE commande dans `whatsapp_commands_list.md` + `ai_orchestrator_commands.md`. **Liens réservés à activer côté Swilvane** : Aeliss `NPC_ALN_91`↔Helka/Swilvane (`QST_SYL_HELKA_01`). Vérifier le canon fandom éventuel de Swilvane avant de figer les notables `01-07`.
+**Tous les lots des 11 CDC sont livrés + Phase C régénérée (C-6 à C-11).** Boutiques 11/11 villes (étape 25), **6 villes régénérées (Archipel/Brokkheim/Duskarn/Granzam/Lioda/Penwether) — 160 boutiques, 1 128 articles, 0 Item_ID fabriqué, 0 doublon R2**, armures 5/5 slots (26-27), faune/flore/quêtes/tenues/micro-familles (28-31), index + résolutions (32). Il ne reste **aucune dette structurelle à l'intérieur d'un lot livré**.
 
-*(Lot 2.3 Alne clos : 100 fiches `NPC_ALN_00-99`, `QST_NEU_LESSIVE_01`, commandes §21/§14. Les K3 des PNJ méta 00/35/81/98/99 = réservés orchestrateur, jamais confirmés, 1 révélation méta max/session.)*
+**Dettes/chantiers restants (hors directive PE actuelle — à arbitrer par le PE)** :
+- **Boss d'axe vertical : ✅ APURÉ (étape 35)** — Yggdrasil `BOSS_YGG_001`, Jötunheimr `BOSS_JOT_001`, New Aincrad `BOSS_AIN_001/027/074/075/100` + gabarit paramétrique (index `_index_boss_axe_vertical.md`). 200 junk `boss_palier_*` archivés. Plus aucun `[TODO]` d'axe vertical.
+- **Récompenses de quêtes T5/légendaires non finement chiffrées** (EXP forfaitaire 5 000 / 8-10 000, pas de drop secondaire) — équilibrage économique possible.
+- Amendements items mineurs : gamme `CSM_NOU` à élargir si besoin ; arbitrage `ZONE_ROUTE_LUGRU` (non bloquant, cf. Point ouvert).
+- **Audit de conformité final** (gabarits D17/D67/D68, plages d'ID) et **équilibrage économique** (prix/drop rates) — chantiers transverses.
+
+**Dette de commandes : ✅ APURÉE** (étape 21) — étapes 33-34 n'ont introduit aucune commande (déblocage via `!learn_skill`/`SYS_GRANT_SPELL`/`SYS_GRANT_OSS`/`SYS_GRANT_ITEM`/`!titre_set`/`!forge` existants).
+
+*(Phase A COMPLÈTE — 12 rosters × 100 PNJ. Rappel : les K3 méta réservés orchestrateur, jamais confirmés, 1 révélation méta max/session.)*

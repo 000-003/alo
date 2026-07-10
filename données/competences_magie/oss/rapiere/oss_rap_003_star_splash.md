@@ -4,27 +4,31 @@
 - **Skill_ID** : `OSS_RAP_003`
 - **Catégorie** : Original Sword Skill (OSS)
 - **Type d'Arme** : Rapière
-- **Tier** : T3
+- **Tier** : T2 · **Rareté** : Peu commun
 
 ## Paramètres de Combat
 | Paramètre | Valeur |
 |---|---|
-| Coût MP | 140 |
-| Coût Stamina | 50% de la jauge |
-| Nombre de Hits | 8 |
-| Multiplicateur Total | x5.5 |
-| Post-Motion Delay | 2.5s (le joueur est vulnérable) |
-| Niveau Requis | 40 |
-| Déblocage | Maîtrise de l'arme au rang Avancé + Quête spéciale |
+| Coût MP | 20 |
+| Coût Stamina | 30% de la jauge |
+| Nombre de Hits | 3 |
+| Multiplicateur Total | x2.1 |
+| Post-Motion Delay | 1s (le joueur est vulnérable) |
+| Niveau Requis | 12 |
+| Déblocage | Maîtrise d’arme Rapière au rang **Confirmé** |
 
 ## Séquence d'Animation
-L'OSS est composé de 8 frappes enchaînées. Le système calcule chaque hit individuellement avec répartition des dégâts.
+Enchaînement de 3 frappe(s) calculées individuellement par le Système Cardinal (répartition des dégâts hit par hit). Le Post-Motion Delay croît avec le tier : plus l’OSS est puissant, plus la fenêtre de vulnérabilité finale est longue.
 
 ## Effet Spécial
-Les OSS ignorent 15% de la DEF ennemie. Si les 8 hits touchent tous, un bonus de dégâts "Perfect Chain" de +20% est appliqué.
+Les OSS ignorent **15% de la DEF** ennemie. Si tous les hits touchent, bonus **« Perfect Chain » +20%** de dégâts.
 
-## Lore
-Huit estocades qui s'enchaînent comme une pluie d'étoiles. Chaque hit cible un point vital différent de l'ennemi, rendant l'esquive quasi impossible si la première frappe touche. L'arme brille d'un éclat stellaire pendant l'exécution.
+## Acquisition (Maîtrise d'arme)
+- **Déblocage** : Maîtrise d’arme Rapière au rang **Confirmé**
+- **Commande** : `!learn_skill OSS_RAP_003` puis `!cast star_splash` en combat
+
+## Lore (Encyclopédie d'Argo)
+Une gerbe d’estocs éclaboussant la cible comme une pluie d’étoiles.
 
 ## Commande IA
 - `SYS_GRANT_OSS(Avatar_ID, 'OSS_RAP_003')`

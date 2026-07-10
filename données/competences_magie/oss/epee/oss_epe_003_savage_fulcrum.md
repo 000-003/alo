@@ -4,27 +4,31 @@
 - **Skill_ID** : `OSS_EPE_003`
 - **Catégorie** : Original Sword Skill (OSS)
 - **Type d'Arme** : Épée à une main
-- **Tier** : T3
+- **Tier** : T2 · **Rareté** : Peu commun
 
 ## Paramètres de Combat
 | Paramètre | Valeur |
 |---|---|
-| Coût MP | 120 |
-| Coût Stamina | 45% de la jauge |
+| Coût MP | 20 |
+| Coût Stamina | 30% de la jauge |
 | Nombre de Hits | 3 |
-| Multiplicateur Total | x4.5 |
-| Post-Motion Delay | 1.8s (le joueur est vulnérable) |
-| Niveau Requis | 35 |
-| Déblocage | Maîtrise de l'arme au rang Avancé + Quête spéciale |
+| Multiplicateur Total | x2.1 |
+| Post-Motion Delay | 1s (le joueur est vulnérable) |
+| Niveau Requis | 12 |
+| Déblocage | Maîtrise d’arme Épée à une main au rang **Confirmé** |
 
 ## Séquence d'Animation
-L'OSS est composé de 3 frappes enchaînées. Le système calcule chaque hit individuellement avec répartition des dégâts.
+Enchaînement de 3 frappe(s) calculées individuellement par le Système Cardinal (répartition des dégâts hit par hit). Le Post-Motion Delay croît avec le tier : plus l’OSS est puissant, plus la fenêtre de vulnérabilité finale est longue.
 
 ## Effet Spécial
-Les OSS ignorent 15% de la DEF ennemie. Si les 3 hits touchent tous, un bonus de dégâts "Perfect Chain" de +20% est appliqué.
+Les OSS ignorent **15% de la DEF** ennemie. Si tous les hits touchent, bonus **« Perfect Chain » +20%** de dégâts.
 
-## Lore
-Trois frappes en triangle — horizontale, verticale, diagonale — qui créent une onde de choc triangulaire. Les trois hits convergent vers le même point, ce qui garantit des dégâts maximaux si la première touche.
+## Acquisition (Maîtrise d'arme)
+- **Déblocage** : Maîtrise d’arme Épée à une main au rang **Confirmé**
+- **Commande** : `!learn_skill OSS_EPE_003` puis `!cast savage_fulcrum` en combat
+
+## Lore (Encyclopédie d'Argo)
+Un enchaînement montant-descendant brutal, pilier de l’escrime à une main.
 
 ## Commande IA
 - `SYS_GRANT_OSS(Avatar_ID, 'OSS_EPE_003')`

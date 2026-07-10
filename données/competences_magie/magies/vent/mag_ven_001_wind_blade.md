@@ -3,29 +3,34 @@
 ## Identification Cardinal
 - **Skill_ID** : `MAG_VEN_001`
 - **Catégorie** : Magie — Vent
-- **Tier** : T1
-- **Race Affinité** : Sylphe (+30% efficacité si cette race)
+- **Tier** : T1 · **Rareté** : Commun
+- **Race Affinité** : Sylph (+30% efficacité si cette race)
 
 ## Paramètres de Combat
 | Paramètre | Valeur |
 |---|---|
-| Coût MP | 30 |
-| Temps d'Incantation | 0.8s |
+| Coût MP | 40 |
+| Temps d'Incantation | 1.5s |
 | Cooldown | Aucun |
 | Niveau Requis | 5 |
 | Interruptible (Casting Break) | Oui (si dégâts > 5% Max HP reçus) |
 
 ## Effet
-Projette une lame d'air tranchante infligeant 100 + (INT * 0.35) dégâts de Vent. Portée : 25m.
+Inflige **130 + (INT × 0.4)** dégâts de Vent à la ou les cible(s) visée(s).
 
 ## Formule de Dégâts / Effet
-`Puissance = Base_Spell_Power * (INT * 0.6) * Elemental_Affinity_Multiplier`
+`Puissance = 130 + (INT × 0.4) × Elemental_Affinity_Multiplier`
 
-## Incantation (Pseudo-Vieux Norrois)
-*Le joueur doit taper la commande `!cast wind_blade` pour activer le sort.*
+## Incantation
+*Le joueur tape `!cast wind_blade` pour lancer le sort.*
+
+## Acquisition (Enseignement)
+- **Enseignant** : École du Vent de Swilvane, maître Zeph `NPC_SWI_71`
+- **Prix d'apprentissage** : 150 Yrds (≈ 50 % d’un équipement T1)
+- **Commande** : `!learn_skill MAG_VEN_001`
 
 ## Lore (Encyclopédie d'Argo)
-Rapide et invisible, la lame de vent est le sort parfait pour le harcèlement aérien. Les Sylphes la lancent en plein vol sans ralentir.
+La lame de vent des Sylphs : une bourrasque tranchante et silencieuse, presque invisible à l’œil.
 
 ## Commande IA
 - `SYS_GRANT_SPELL(Avatar_ID, 'MAG_VEN_001')`
