@@ -122,7 +122,7 @@ function parseMonsters() {
 
     const name = (content.match(/^#\s+(.+?)──?/)?.[1]?.trim() ||
                   content.match(/^#\s+(.+)/m)?.[1]?.replace(/`.*$/, '').trim() || mobId)
-                  .replace(/[\s─]+$/, '').trim();
+                  .replace(/^─+\s*/, '').replace(/\s*─+\s*$/, '').replace(/\s+$/, '').trim();
     const level = parseInt(content.match(/Niveau\s*[:]?\s*(\d+)/i)?.[1] ||
                            content.match(/niveau\s*:\s*(\d+)/i)?.[1] || 1);
     const family = content.match(/Famille\s*:\s*(.+)/i)?.[1]?.trim() || null;
@@ -152,8 +152,8 @@ function parseMonsters() {
 // 2b. Spawns → T_SPAWN_TABLES
 // ---------------------------------------------------------------------------
 const DIR_TO_ZONE = {
-  aincrad:    'ZONE_NEU_HUNT_001',
-  neutre:     'ZONE_NEU_HUNT_001',
+  aincrad:    'ZONE_SYL_HUNT_001',
+  neutre:     'ZONE_SYL_HUNT_001',
   air:        'ZONE_SYL_HUNT_001',
   sylphe:     'ZONE_SYL_HUNT_001',
   sylph:      'ZONE_SYL_HUNT_001',
@@ -168,9 +168,9 @@ const DIR_TO_ZONE = {
   leprechaun: 'ZONE_LEP_HUNT_001',
   lepre:      'ZONE_LEP_HUNT_001',
   spriggan:   'ZONE_SPR_HUNT_001',
-  jotun:      'ZONE_NEU_HUNT_001',
-  jotunheimr: 'ZONE_NEU_HUNT_001',
-  golden:     'ZONE_NEU_HUNT_001',
+  jotun:      'ZONE_SYL_HUNT_001',
+  jotunheimr: 'ZONE_SYL_HUNT_001',
+  golden:     'ZONE_SYL_HUNT_001',
 };
 
 function parseSpawns() {

@@ -33,7 +33,7 @@ export async function processMessage(db, text, playerId = null, groupId = null, 
 
   let response;
   try {
-    response = await executeIntent(db, routing, playerId);
+    response = await executeIntent(db, routing, playerId, phoneNumber);
   } catch (err) {
     logger.error('Erreur lors de l\'exécution de l\'intent', {
       intent: routing.intent,
@@ -59,7 +59,7 @@ export async function processMessage(db, text, playerId = null, groupId = null, 
   };
 }
 
-async function executeIntent(db, routing, playerId) {
+async function executeIntent(db, routing, playerId, phoneNumber = null) {
   switch (routing.intent) {
     case 'BUY':
       return economy.handleBuy(db, playerId, routing.entities);
@@ -130,7 +130,7 @@ async function executeIntent(db, routing, playerId) {
       return `📩 Message privé à **${routing.entities.target || 'inconnu'}** : ${routing.match?.[1] || ''}`;
 
     case 'SYS':
-      return handleSysCommand(db, routing, playerId, null);
+      return handleSysCommand(db, routing, playerId, phoneNumber);
 
     default:
       return null;
@@ -139,7 +139,6 @@ async function executeIntent(db, routing, playerId) {
 
 async function isGm(_db, _playerId, phoneNumber) {
   if (phoneNumber && config.game.gmPhones.includes(phoneNumber)) return true;
-  if (_playerId && config.game.gmPhones.some(p => _playerId.includes(p))) return true;
   return false;
 }
 

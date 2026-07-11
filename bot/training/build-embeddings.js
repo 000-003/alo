@@ -23,6 +23,18 @@ function chunkText(text, maxLen = 300) {
 async function build() {
   logger.info('Construction de l\'index vectoriel...');
 
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS t_embeddings (
+      id SERIAL PRIMARY KEY,
+      source_table VARCHAR(50) NOT NULL,
+      source_id VARCHAR(100) NOT NULL,
+      chunk_index INT DEFAULT 0,
+      chunk_text TEXT NOT NULL,
+      embedding FLOAT[] NOT NULL,
+      metadata JSONB DEFAULT '{}',
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
   await pool.query('TRUNCATE t_embeddings');
 
   const sources = [
@@ -63,16 +75,16 @@ async function build() {
     },
     {
       table: 't_races',
-      query: 'SELECT race_id, name, description FROM t_races',
+      query: 'SELECT race_id, name, lore_description FROM t_races',
       idCol: 'race_id',
-      textCols: ['name', 'description'],
+      textCols: ['name', 'lore_description'],
       meta: () => ({}),
     },
     {
       table: 't_monsters_dict',
-      query: 'SELECT monster_id, name, level, family, exp_yield FROM t_monsters_dict',
+      query: 'SELECT monster_id, name, level, family, exp_yield, lore_text FROM t_monsters_dict',
       idCol: 'monster_id',
-      textCols: ['name'],
+      textCols: ['name', 'lore_text'],
       meta: (r) => ({ level: r.level, family: r.family }),
     },
   ];

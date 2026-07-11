@@ -196,16 +196,26 @@ async function run() {
     const result = await pool.query(
       `SELECT m.monster_id, m.name FROM t_monsters_dict m
        JOIN t_spawn_tables s ON s.monster_id = m.monster_id
-       WHERE s.zone_id = 'ZONE_NEU_HUNT_001' LIMIT 1`
+       WHERE s.zone_id = 'ZONE_SYL_HUNT_001' LIMIT 1`
     );
-    if (!result.rows.length) throw new Error('Aucun monstre dans ZONE_NEU_HUNT_001');
+    if (!result.rows.length) throw new Error('Aucun monstre dans ZONE_SYL_HUNT_001');
     console.log(`      Ex: ${result.rows[0].name} (${result.rows[0].monster_id})`);
   });
 
-  await test('GM — isGm rejette téléphone inconnu', async () => {
-    const { default: msgHandler } = await import('../src/orchestrator/message-handler.js');
-    const result = await processMessage(pool, '!sys_help', '00000000-0000-0000-0000-000000000001', null, 'invalid_phone');
-    if (!result.response.includes('refusé')) throw new Error('Devrait refuser: ' + result.response);
+  await test('GM — !sys_grant_item rejeté sans phone GM', async () => {
+    const result = await processMessage(pool, '!sys_grant_item player_id=00000000-0000-0000-0000-000000000001 item_id=ITEM_POT_001 quantity=1',
+      '00000000-0000-0000-0000-000000000001', null, '33600000000');
+    if (!result.response || (!result.response.includes('refusé') && !result.response.includes('❌'))) {
+      throw new Error('Devrait refuser: ' + (result.response || 'pas de réponse'));
+    }
+  });
+
+  await test('GM — !sys_help accessible sans GM', async () => {
+    const result = await processMessage(pool, '!sys_help',
+      '00000000-0000-0000-0000-000000000001', null, '33600000000');
+    if (!result.response || !result.response.toLowerCase().includes('commande')) {
+      throw new Error('Devrait répondre: ' + (result.response || 'pas de réponse'));
+    }
   });
 
   console.log(`\n📊 Résultat : ${passed} passé(s), ${failed} échec(s)\n`);

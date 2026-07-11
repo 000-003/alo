@@ -22,7 +22,7 @@ const INTENT_PATTERNS = [
   { intent: 'HELP', pattern: /^(?:help|aide|commandes?|menu|\/help|\/aide|!aide|!help)$/i },
   { intent: 'EMOTE', pattern: /^(?:\/me|\/emote|\/do|\/it)(?:\s+(.+))?$/i },
   { intent: 'WHISPER', pattern: /^(?:\/w|\/whisper|\/tell)\s+(\w+)\s+(.+)/i },
-  { intent: 'SYS', pattern: /^!sys_(grant_item|advance_quest|npc_knowledge_unlock|set_env_hazard|shop_restock)\s+.+/i },
+  { intent: 'SYS', pattern: /^!sys_\w+/i },
 ];
 
 export function getAgentForIntent(intent) {
@@ -45,30 +45,50 @@ export async function routeMessage(text) {
   }
 
   const cleaned = text.trim();
-  const modelResult = await classifyIntent(cleaned);
-  let intent = modelResult.intent;
-  let confidence = modelResult.confidence;
 
-  if (confidence < 0.7) {
+  let intent;
+  let confidence;
+  let resultMatch = null;
+
+  if (cleaned.startsWith('!')) {
     for (const { intent: fi, pattern } of INTENT_PATTERNS) {
-      const match = cleaned.match(pattern);
-      if (match) {
-        const coverage = match[0].length / cleaned.length;
-        if (coverage > 0.5) {
-          intent = fi;
-          confidence = Math.min(1, coverage);
-          break;
-        }
+      const m = cleaned.match(pattern);
+      if (m && m.index === 0) {
+        intent = fi;
+        confidence = 0.95;
+        resultMatch = m;
+        break;
       }
     }
   }
 
-  if (intent === 'UNKNOWN') {
-    for (const { intent: fi, pattern } of INTENT_PATTERNS) {
-      if (cleaned.match(pattern)) {
-        intent = fi;
-        confidence = 0.5;
-        break;
+  if (!intent) {
+    const modelResult = await classifyIntent(cleaned);
+    intent = modelResult.intent;
+    confidence = modelResult.confidence;
+
+    if (confidence < 0.7) {
+      for (const { intent: fi, pattern } of INTENT_PATTERNS) {
+        const m = cleaned.match(pattern);
+        if (m) {
+          const coverage = m[0].length / cleaned.length;
+          if (coverage > 0.5) {
+            intent = fi;
+            confidence = Math.min(1, coverage);
+            resultMatch = m;
+            break;
+          }
+        }
+      }
+    }
+
+    if (intent === 'UNKNOWN') {
+      for (const { intent: fi, pattern } of INTENT_PATTERNS) {
+        if (cleaned.match(pattern)) {
+          intent = fi;
+          confidence = fi === 'SYS' || fi === 'EMOTE' || fi === 'WHISPER' ? 0.9 : 0.5;
+          break;
+        }
       }
     }
   }
@@ -89,11 +109,12 @@ export async function routeMessage(text) {
     if (atkMatch) entities.target = atkMatch[1].trim();
   }
 
-  let match = null;
-  for (const { intent: fi, pattern } of INTENT_PATTERNS) {
-    if (fi === intent) {
-      match = cleaned.match(pattern);
-      break;
+  if (!resultMatch) {
+    for (const { intent: fi, pattern } of INTENT_PATTERNS) {
+      if (fi === intent) {
+        resultMatch = cleaned.match(pattern);
+        break;
+      }
     }
   }
 
@@ -112,7 +133,7 @@ export async function routeMessage(text) {
     confidence,
     entities,
     agent,
-    match: match?.slice(1) || null,
+    match: resultMatch?.slice(1) || null,
   };
 }
 
