@@ -67,6 +67,11 @@ CREATE TABLE T_AVATARS (
     guild_uuid              UUID,
     guild_rank              VARCHAR(20),
     guild_joined_at         TIMESTAMP,
+
+    -- ═══ VIE SOCIALE (étape 43, D-SOC-*) ═══
+    marriage_uuid           UUID REFERENCES T_MARRIAGES(marriage_uuid),   -- mariage actif (NULL = célibataire)
+    home_property_uuid      UUID REFERENCES T_PROPERTIES(property_uuid),  -- logement principal (NULL = sans-abri)
+    job_id                  VARCHAR(50) REFERENCES T_JOBS_DICT(job_id),   -- emploi actif (NULL = sans emploi)
     
     -- ═══ ÉQUIPEMENT PORTÉ — 5 slots d'armure, PAS PLUS (directive PE, D44) ═══
     equip_head              UUID,               -- ARM_TET_*
@@ -156,6 +161,7 @@ Les armes sont **encombrantes** : elles ne tiennent ni dans le sac (`BAG_*` = it
 | A4 | **Dos exclusif** | `gear_back` = 1 seul item ; `back_type='BAG'` ⇒ conteneur d'items (jamais d'arme), `bag_quick_access`=VRAI ; `back_type='HRN'` ⇒ sangle d'armes (2-4 `WPN_*`), aucun stockage d'items. Basculer de l'un à l'autre vide/relit les slots concernés |
 | A5 | **Armes hors sac/virtuel** | aucune arme `WPN_*` ne peut occuper l'inventaire virtuel ni un sac ; le surplus va en `T_BANK` |
 | A6 | **Tenu/porté = possédé** | toute valeur `equip_*`/`hand_*`/`belt_*`/`gear_*` doit exister dans `T_INVENTORY` avec `is_equipped = VRAI` pour ce même avatar (anti-duplication) |
+| A7 | **Miroirs sociaux (D-SOC-13)** | `marriage_uuid`/`home_property_uuid`/`job_id` sont des **caches dénormalisés** (accès rapide `!profil`) ; la **source de vérité** reste `T_MARRIAGES`/`T_PROPERTIES`/`T_AVATAR_JOB`. Tenus à jour par trigger à chaque mariage/divorce, acquisition/expulsion de logement, embauche/démission |
 
 ### Équivalents commandes
 

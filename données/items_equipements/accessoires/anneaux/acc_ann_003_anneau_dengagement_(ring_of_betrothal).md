@@ -1,18 +1,7 @@
-# Anneau d'Engagement (Ring of Betrothal)
+# Anneau d'Engagement (Ring of Betrothal) — ⚠️ REDIRIGÉ
 
-## Identification Cardinal
-- **Item_ID** : `ACC_ANN_003`
-- **Type** : Accessoire — Anneau
-- **Tier** : T1
-- **Rareté** : Rare
-
-## Bonus Passif
-Permet d'utiliser `!propose`. Octroie +5% à toutes les stats lorsque le partenaire est dans la même zone.
-
-## Économie
-- **Prix Marchand** : 50000 Yrds
-- **Prix de Revente** : 20000 Yrds
-- **Source** : Bijoutier PNJ d'Alne uniquement
-
-## Lore
-Un anneau doré gravé de runes elfiques qui brillent au contact du partenaire. Sa magie ne s'active pleinement que lorsque les deux anneaux sont proches.
+> **Superseded (étape 43, décision PE).** L'Anneau d'Engagement n'est plus une bague à statistiques du lot accessoires : c'est désormais un **item de service dédié, sans stat de combat**.
+>
+> ➡️ **Source de vérité : `MSC_ENG_001`** — `données/items_equipements/service/msc_eng_001_anneau_dengagement.md`
+>
+> Motif : le `+5 % à toutes les stats` de cette version pré-générée était un accessoire de combat toujours actif (déséquilibré) attaché à un item censé être purement social. `ACC_ANN_003` est **déprécié** ; ne pas peupler `T_ITEMS_DICT` avec cet ID. Le prérequis de mariage (`T_MARRIAGES` M3) pointe sur `MSC_ENG_001`.

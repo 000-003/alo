@@ -1,7 +1,7 @@
 # 📜 Index du Lot — Quêtes (`QST_*`)
 
-> **Couverture** : **57 / 57** fiches de quêtes rédigées (33 de localité + **20 de titre T5** + **4 de légendaires**).
-> **Statut** : ✅ **CLOS** (étape 34, 2026-07-10). Dettes « 20 quêtes T5 skills » (§5) et « 4 quêtes de légendaires » (§6) **apurées**.
+> **Couverture** : **79 / 79** fiches de quêtes rédigées (33 de localité + **20 de titre T5** + **4 de légendaires** + **22 side-quests d'affinité SOC-2**, étape 43).
+> **Statut** : ✅ **CLOS**. Dettes T5/légendaires apurées (étape 34) ; lot social SOC-2 ajouté (étape 43, voir §7).
 
 ---
 
@@ -137,3 +137,11 @@ Chaque arme légendaire `WPN_LEG_001-004` (T5, **liée à l'âme**) est adossée
 | `QST_LEG_004` | `WPN_LEG_004` Crest of Yggdrasil | Forge unique canon | `NPC_CANON_LISBETH` | Forge Lisbeth · **prérequis titre `QST_T5_OSS_RAP_01`** (Mother's Rosario) + Cristal d'Eau Pur |
 
 > **Chaînage remarquable** : `QST_LEG_004` exige le titre « Épée Absolue » de `QST_T5_OSS_RAP_01` (étape 33) → la boucle Rapière T5 débouche sur la légendaire Undine (héritage canon Yuuki → Asuna). `QST_LEG_002`/`003` partagent le même raid (Thrym) — quêtes sœurs.
+
+---
+
+## 7. Side-quests d'affinité (`QST_<VILLE>_AFF_<NN>`) — 22 fiches (SOC-2, étape 43)
+
+Quêtes `side` **débloquées par la relation** avec un PNJ (mémoire `T_NPC_RELATIONS` + info `T_NPC_KNOWLEDGE_UNLOCKS`) : n'apparaissent au `!quest_board` du donneur que si `min_affinity_tier ≥ trusted` (11) ou `confidant` (11) **et** une QI K1/K2 débloquée ; 3 en surcondition `topic_flag`. 2 par capitale × 11 villes. Donneurs tous réels (vérifiés rosters Phase A). Garde-fou : jamais de K3 ni de résolution du fil rouge (D18/D43).
+
+> **Détail complet** : `_index_soc2_affinite.md` (sous-index de lot). `[BESOIN_*]` remontés arbitrés à l'étape 43 (voir `alo_progression.md` addendum 43-ter) : dague d'apprentie = `WPN_DAG_003` (existant), pelage = `MAT_CUI_*` (existant) ; 4 props narratifs (gage Sept-Doigts, relique de cendre, corde de Cordelia, pioche du doyen) = **items de quête liés type `KEY`** (pas de fiche économique) ; 2 titres créés (`TITLE_FILLEUL_FONTAINE`, `TITLE_GARDIEN_SILENCE`, cf. `table_t_titles.md`).

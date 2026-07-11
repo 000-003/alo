@@ -14,3 +14,10 @@ CREATE TABLE T_BANK_VAULTS (
 
 CREATE UNIQUE INDEX idx_bank_owner ON T_BANK_VAULTS(owner_type, owner_id);
 ```
+
+## Coffre conjugal (`owner_type='marriage'`, D-SOC-8)
+
+- `owner_id` = `T_MARRIAGES.marriage_uuid` ; créé à l'activation du mariage (M4).
+- `max_slots` **doublé** vs le coffre personnel (« inventaire commun donc doublé », PE) ; `access_level='all_members'` restreint aux deux conjoints.
+- Le **solde** `yrds_stored` est le « solde commun » dépensable par les deux (`!joint_pay`).
+- La **provenance** des dépôts n'est pas stockée ici mais dans `T_MARRIAGE_ASSETS` : c'est elle qui permet, au divorce, que « chacun reparte avec ce qu'il a apporté » (M5). Ce coffre est vidé puis clos à la séparation.

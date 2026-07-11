@@ -76,8 +76,9 @@
 - `!bounty_board` / `!bounty_claim` : Registre des assassins.
 
 ## 10. 🛡️ Guildes, Groupes & Politique
-- `!guilde_create` / `!guilde_invite` / `!guilde_kick` / `!guilde_bank`.
-- `!guilde_war [Nom_Guilde]` : Déclare une guerre de faction. Autorise le PK sans pénalité de Karma entre les deux guildes.
+- `!guild_create [Nom]` / `!guild_disband` / `!guild_leave` / `!guild_bank`.
+- **Rejoindre** : `!guild_invite [Num]` → `!guild_accept` (invitation) · `!guild_apply [Nom]` → `!guild_approve [Num]` (candidature) · `!guild_kick [Num]`. Un joueur = **une** guilde à la fois (`T_GUILDS` G5). Équivalents IA : `SYS_GUILD_INVITE`, `SYS_GUILD_JOIN`.
+- `!guild_war [Nom_Guilde]` : Déclare une guerre de faction. Autorise le PK sans pénalité de Karma entre les deux guildes.
 - `!party_create` / `!party_invite` / `!party_leave` / `!party_leader [Allié]`.
 - `!lord_vote` : Vote politique de la race.
 
@@ -112,15 +113,23 @@
 ## 15. 💍 Mariage & Housing
 *Commandes liées au système social avancé (cf. `marriage_housing_system.md`).*
 - `!propose [Num_WhatsApp]` : Envoie une demande de mariage (nécessite Ring of Betrothal).
-- `!accept_proposal` : Accepte la demande.
-- `!divorce` : Annule le mariage (pénalité : 50% du coffre partagé).
+- `!accept_proposal` : Accepte la demande. **Prérequis (D-SOC, `T_MARRIAGES` M3)** : les deux Niv ≥ 15, **homme + femme uniquement**, un Anneau d'Engagement chacun, et **au moins un foyer** (housing actif) entre les deux ; un seul mariage actif par personne.
+- `!divorce` : Sépare le couple. **Chacun repart avec ce qu'il a apporté** (restitution par provenance via `T_MARRIAGE_ASSETS`) + partage 50/50 des biens communs ; cooldown 30 j.
+- `!partner_status` : Statut du conjoint **en temps réel** (PV/PM/stamina/niveau/zone), sans coût, quelle que soit la zone.
 - `!whisper_partner [Message]` : Message privé au conjoint, peu importe la zone.
 - `!partner_locate` : Affiche la zone du conjoint.
-- `!partner_bank` : Accède au coffre partagé conjugal.
-- `!housing_buy [Type]` : Achète un logement (Chambre, Maison, Manoir, Château de Guilde).
-- `!home_storage` : Accède au stockage de la maison.
+- `!joint_bank` : Coffre conjugal commun (capacité **doublée**). *(ex-`!partner_bank`, alias conservé.)*
+- `!joint_pay [Montant]` : Dépense depuis le **solde commun** conjugal.
+- `!housing_list` : Affiche l'offre de logements de la ville (louer / acheter).
+- `!housing_rent [Type]` : **Loue** un logement (`inn_room`) — loyer récurrent, `!housing_pay [Cycles]` pour avancer le loyer.
+- `!housing_buy [Type]` : **Achète** un logement (`small_house`, `manor`, `estate`) — permanent, revente `!housing_sell` (50 %).
+- `!home_return` : Rappel vers son logement (checkpoint sûr, **hors combat**) ; `!rest` chez soi : regen 5 %/min + logout sans *Remain Light*.
+- `!home_storage` : Stockage domestique **massif** (armes admises, contrairement au sac).
 - `!home_invite [Num_WhatsApp]` / `!home_kick [Num_WhatsApp]` : Gère les invités du logement.
 - `!decorate [Item]` : Place un objet décoratif dans la maison (confère des buffs passifs).
+- `!housing_leave` : Résilie une location.
+
+> Équivalents GM/IA : `!sys_marry`/`!sys_divorce`/`!sys_grant_property`/`!sys_evict` · `SYS_GENERATE_CEREMONY`, `SYS_GENERATE_WEDDING_GIFT`, `SYS_DIVORCE_SETTLE`, `SYS_CREATE_HOME_GROUP`, `SYS_GRANT_PROPERTY`, `SYS_EVICT_TENANT`, `SYS_DESTROY_HOME` (cf. §10 orchestrateur). Détail : `system_mechanics/marriage_housing_system.md` (v2.0), tables `table_t_marriages.md` / `table_t_properties.md`.
 
 ## 16. 🎣 Pêche, Cuisine & Récolte Avancée
 *Commandes liées aux métiers secondaires (cf. `gathering_cooking_system.md`).*
@@ -174,6 +183,10 @@
 - `!parler [NPC_ID|Nom]` : Engage la conversation avec un PNJ présent dans la zone. Le bot ouvre le dialogue avec la réplique d'accueil, puis les réponses libres du joueur sont résolues contre l'enveloppe QI du PNJ.
 - `!demander [NPC_ID] [sujet]` : Interroge un PNJ sur un sujet précis. Hors enveloppe → ligne d'ignorance scriptée (aucun appel IA) ; secret K3 → ligne de déflection ; info conditionnelle K2 → le PNJ évoque sa condition (affinité, quête, paiement, titre).
 - `!pnj_list` : Liste les PNJ visibles dans la zone actuelle (les PNJ cachés `NPC_*_00` et les canoniques hors fenêtre n'y figurent JAMAIS).
+- `!relation [NPC_ID|Nom]` : Affiche la relation avec un PNJ — **nombre d'échanges**, palier d'**affinité** (`stranger`→`confidant`), sujets déjà abordés (`T_NPC_RELATIONS`). C'est la mémoire « ce joueur a parlé N fois à ce PNJ ».
+- `!offrir [Item_ID] [NPC_ID]` : Offre un cadeau à un PNJ ⇒ gain d'affinité (pondéré par la valeur de l'item). L'affinité ouvre remises, couches QI conditionnelles (K2) et **side-quests d'affinité** (`T_QUESTS_DICT.prerequisites`).
+
+> Équivalents GM/IA : `!sys_npc_relation`, `!sys_set_affinity` · `SYS_NPC_RELATION_GET`, `SYS_NPC_RELATION_TOUCH`, `SYS_SET_AFFINITY`. Détail : `table_t_npc_relations.md`.
 
 ## 21. 🌳 Services de Capitale Neutre — Alne (lot 2.3)
 *Commandes de service introduites par le roster d'Alne (`NPC_ALN_00-99`, `ZONE_NEU_CAP_001`). Règle de complétude (D) : chaque commande Joueur possède un équivalent GM (`!sys_*`) et IA (`SYS_*`, cf. §14 de `ai_orchestrator_commands.md`). Les commandes déjà couvertes par les sections 1-20 (`!parler`, `!shop_list`, `!repair`, `!forge`, `!enchant`, `!tame`, `!bank_depot/retrait`, `!mail_send`, `!outfit`, `!learn_skill`, `!bounty`, `!appraise`, `!perform`, `!bet`) sont réutilisées telles quelles.*
@@ -218,3 +231,14 @@
 | `!equiper [ID] ceinture\|dos` | Équipe une ceinture / un sac / une sangle (dos = sac XOR sangle) | `!sys_set_loadout` | `SYS_SET_LOADOUT` |
 | `!sew [Matériau]` | Coud un sac `BAG_*` ou une sangle `HRN_*` | — | — |
 | `!outfit` | Change de tenue (cosmétique / rachat tenue par défaut `OFT_*`) | `!sys_cosmetic` | `SYS_SET_COSMETIC` |
+
+## 23. 💼 Emploi salarié (D-SOC-11)
+
+> Métier salarié du joueur (aubergiste, garde, coursier…), distinct des skills de récolte/artisanat (§16). Un seul emploi actif à la fois. Détail : `cardinal_system_db/MLD_Logic/table_t_jobs.md`.
+
+| Commande Joueur | Rôle | GM | IA |
+|---|---|---|---|
+| `!jobs` | Liste les offres d'emploi de la ville | — | — |
+| `!apply_job [JOB_ID]` / `!quit_job` | Postuler / démissionner (`required_level` requis) | `!sys_assign_job` / `!sys_fire` | `SYS_ASSIGN_JOB` / `SYS_FIRE` |
+| `!work` | Accomplit un service (cooldown ; mini-jeu selon métier) ⇒ salaire + réputation | — | `SYS_JOB_EVENT` |
+| `!payslip` | Touche le salaire cumulé (`wage_accrued` → solde) | — | `SYS_PAY_WAGE` |

@@ -1139,7 +1139,149 @@ Axe vertical **bouclé** : Yggdrasil (Gardien du Dôme → Sommet), Jötunheimr 
 
 ---
 
-## ÉTAPE 37 — Équilibrage économique : prix, drop rates, récompenses 💰 ✅ CLOS (2026-07-10)
+## ÉTAPE 38 — Étude d'architecture IA « constellation de petites IA mono-tâche » (P3) 🧠 ✅ CLOS (2026-07-10)
+
+**Contexte** : à la demande du PE, étude approfondie de l'option « plusieurs petites IA faisant chacune une seule chose correctement » (dialogue/PNJ, combat, Game Master, tâches système), analysée sur performances / méthode / coûts / cohérence / pannes / sécurité / contrainte free tier Oracle. **Consultation P3 (implémentation technique), livrable markdown, zéro code.** *(Numérotation étape 38 + fichier `13_` : réconciliation avec une session parallèle ayant consommé « étape 37 » et le préfixe `12_` pour l'équilibrage économique — aucun écrasement.)*
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 38.1 | ➕ Créé — **Étude multi-IA** : définition des 3 implémentations d'une « petite IA » (prompt-spécialisé / modèle local / fine-tune LoRA) ; roster de **10 spécialistes** (S0-S9, contrat IN/OUT/modèle/état/fréquence/criticité) ; frontière déterministe absolue (combat/éco jamais neuronaux) ; dispatcher hybride ; analyses latence/débit/tokens/coût chiffrées ; grounding RAG + verrou D22 comme contrat de récupération ; dégradation gracieuse ; sécurité anti-injection ; répartition free tier ARM ; matrice modèle↔spécialiste ; tableau récap multi-paramètres. | `directives_generation/13_etude_architecture_multi_ia.md` |
+| 38.2 | ✏️ Modifié — Fichiers d'état. | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées (P3, sous réserve de feu vert d'implémentation PE)
+
+- **D-IA-1** : « petite IA » = prompt-spécialisé sur modèle partagé + RAG (défaut) ; modèle local 1B en fallback (routage/modération/embeddings) ; fine-tune LoRA différé (le RAG bat le fine-tune sur la factualité).
+- **D-IA-2** : dispatcher hybride règles→micro-classifieur, cible >70 % des messages routés sans LLM payant.
+- **D-IA-3** : frontière déterministe absolue — combat, économie, inventaire, déplacement (R0), jauges D11/D12, déblocages ne sont JAMAIS des IA ; l'IA propose `SYS_*`, le moteur L1 valide et écrit (seul écrivain de l'état, locking anti-dup persona §2.2).
+- **D-IA-4** : RAG = cerveau factuel partagé unique sur les ~3 400 fiches ; verrou méta D22 = contrat de récupération (K3 jamais injectés au LLM).
+- **D-IA-5** : génération narrative en API, tâches courtes/parallélisables en local (imposé par l'absence de GPU sur le free tier ; inférence CPU sérielle = goulot à l'échelle).
+- **D-IA-6** : tiering Haiku (défaut) / Sonnet (enjeu) / Opus (exceptionnel) + cache de prompt par lieu + Batch API pour le scribe mémoire.
+
+### État de sortie
+
+Étude complète livrée. La taxonomie de commandes existante (`!*`/`!sys_*`/`SYS_*`) identifiée comme **interface de tool-calling déjà en place**. Aucune donnée de jeu modifiée (étude P3 pure). **Complétude commandes** : rien à propager. Prochaine marche possible (si PE valide) : CDC du RAG (chunking par section de gabarit) → contrats des 10 spécialistes → spéc dispatcher → matrice de dégradation → (implémentation Node.js, décision PE séparée).
+
+---
+
+## ÉTAPE 39 — Étude détaillée : architecture hybride « Local + API gratuites + Fallback + RAG » prête à l'expansion (P3) 🌐 ✅ CLOS (2026-07-10)
+
+**Contexte** : à la demande du PE (« penser loin » — concevoir dès 300 joueurs pour éviter une refonte à l'expansion, désengorger les voies par décentralisation). Approfondissement de l'approche hybride. **Consultation P3, livrable markdown, zéro code.**
+
+### Correction conceptuelle actée (colonne vertébrale)
+
+- **Loi de conception** : décomposer en agents **ne réduit pas** le travail total (chaîner augmente même légèrement les tokens) — ça le **distribue**, le rend **sans état**, donc **extensible par ajout de capacité, jamais par réécriture**. Le gain réel = absence de goulot unique + expansion sans refonte, via **distribution + statelessness + cache + bon dimensionnement**. (Nuance apportée à la thèse PE « plus d'agents = moins de consommation ».)
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 39.1 | ➕ Créé — **Étude hybride détaillée** : cascade de 4 couches (C1 local / C2 API gratuites / C3 fallback payant / C4 dégradé déterministe) ; matrice rôle×backend (politique de backend par spécialiste) ; mécanisme de désengorgement (diversification de quotas + load-balancer *quota-aware* + circuit breaker + failover) ; dégradation gracieuse à 4 niveaux chiffrée ; RAG local partagé répliquable/shardable ; **statelessness stricte** = clé anti-refonte ; sharding par lieu (clé `ZONE_*`/`T_WA_GROUPS` existante) ; budget latence parallélisé ; modèle de consommation honnête 300→3k→30k ; interface agnostique `generate(role,prompt,contexte,politique)` ; comptabilité quotas/santé ; cohérence inter-modèles ; sécurité/données par fournisseur ; chemin d'expansion « tout par config/capacité, jamais réécriture ». | `directives_generation/14_architecture_hybride_orchestration.md` |
+| 39.2 | ✏️ Modifié — Fichiers d'état. | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées (P3, sous réserve de feu vert d'implémentation PE)
+
+- **D-IA-7** : échelle de départ ~300 joueurs, **conçue pour l'expansion** — « câble 10 rôles, déploie-en 4 » (coutures dimensionnées, déploiement réduit ; anti-YAGNI).
+- **D-IA-8** *(révisée — décision PE « 100 % gratuit »)* : cascade de 4 couches **entièrement gratuite** — C1 local / **C2 = 2 meilleures API gratuites (Groq + Gemini Flash)** / **C3 = pool des autres API gratuites (Cerebras, Cloudflare Workers AI, OpenRouter `:free`, Mistral, HuggingFace, GitHub Models)** / C4 dégradé déterministe. **Aucun palier payant** ; le payant reste une option de config (D-IA-11) désactivée par défaut, jamais une dépendance → réversible sans réécriture. Réserve actée : auditer les CGU (usage commercial / entraînement sur données) fournisseur par fournisseur avant lancement public.
+- **D-IA-9** : désengorgement par **diversification de quotas** (primaires sur fournisseurs distincts → budget gratuit effectif = Σ fournisseurs) + load-balancer *quota-aware* (seaux à jetons, bascule à 90 %) + circuit breaker + failover en cascade.
+- **D-IA-10** : **statelessness stricte** de tous les spécialistes (état exclusivement en L1/base MLD) → scale-out horizontal + sharding par lieu, **sans refonte**.
+- **D-IA-11** : **interface agnostique au fournisseur** `generate(role, prompt, contexte, politique)` = seule abstraction à figer dès le jour 1 ; changement fournisseur/échelle = configuration de politique.
+- **D-IA-12** : données sensibles (K3/D22, PII, modération) **jamais délocalisées** — restent en C1 ; fournisseurs gratuits ne voient que des IDs de jeu.
+
+### État de sortie
+
+Objectif PE atteint sur le papier : l'expansion (300→3k→30k) devient **additive** (config + capacité), jamais destructive, grâce à statelessness + agnosticisme fournisseur + sharding par clé de lieu déjà existante. Aucune donnée de jeu modifiée. **Complétude commandes** : rien à propager. Prochaine marche possible (si PE valide) : CDC du RAG → contrats des 4 spécialistes de départ + leurs politiques de backend → spéc de l'interface `generate` → spéc du load-balancer → matrice de dégradation → (implémentation Node.js, décision PE séparée).
+
+*(Note étape 39-bis : révision D-IA-8 → stack **100 % gratuit** décidé par le PE — C2 = 2 meilleures API gratuites (Groq + Gemini Flash), C3 = pool des autres gratuites (Cerebras, Cloudflare, OpenRouter `:free`, Mistral, HuggingFace, GitHub Models), C4 dégradé déterministe ; aucun palier payant, réversible par config ; réserve CGU à auditer.)*
+
+---
+
+## ÉTAPE 40 — CDC-RAG-01 : cahier des charges du RAG (cerveau factuel partagé) (P3) 📚 ✅ CLOS (2026-07-10)
+
+**Contexte** : à la demande du PE, production du CDC du RAG — fondation dont dépendent tous les spécialistes narratifs (13/14). **Livrable markdown, zéro code.**
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 40.1 | ➕ Créé — **CDC-RAG-01** : inventaire du corpus (~3 406 fiches, 15 types d'entité) ; **chunking par section de gabarit** (D13/D17/D67/D68/D69) ; schéma de métadonnées (clé = `entity_id` D71) ; **règles d'exclusion critiques** (K3/méta/secret jamais indexés = verrou D22 comme propriété de l'index) ; pipeline d'indexation (exclusion avant chunk) ; découpage par type ; **contrat de récupération borné par spécialiste** (filtres/top-k/budget) ; **gating K0/K1/K2** via état L1, K3 jamais ; format d'injection attribué `[entity_id · section]` ; fraîcheur incrémentale par hash ; stockage C1 local (embedding small CPU + `sqlite-vec`/`pgvector`) ; garde-fous anti-hallucination (grounding S7, seuil, validation ID aval L1) ; critères d'acceptation ; backlog (corpus SAO exclu du RAG primaire). | `directives_generation/15_cdc_rag.md` |
+| 40.2 | ✏️ Modifié — Fichiers d'état. | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées (P3, sous réserve de feu vert d'implémentation PE)
+
+- **D-RAG-1** : chunking par section de gabarit (jamais fenêtre aveugle) ; sous-découpage à chevauchement 15 % au-delà de ~400 tokens.
+- **D-RAG-2** : exclusion **à l'ingestion** des sections K3/méta/secret → verrou D22 = propriété de l'index, pas consigne de prompt.
+- **D-RAG-3** : schéma de métadonnées (clé `entity_id` canonique D71) → récupération chirurgicale filtres durs + sémantique.
+- **D-RAG-4** : gating K0/K1/K2 via état L1 (`SYS_NPC_KNOWLEDGE_UNLOCK`) ; K3 jamais indexé.
+- **D-RAG-5** : contrat de récupération borné par spécialiste (filtres/top-k/budget tokens) → prompts petits (cache + économie quota gratuit).
+- **D-RAG-6** : injection attribuée `[entity_id · section]` (grounding/citation) ; placement après système figé, avant volatil.
+- **D-RAG-7** : RAG exclusivement local C1, sans état, répliquable/shardable ; embedding small multilingue CPU + magasin vectoriel embarqué.
+- **D-RAG-8** : anti-hallucination (grounding S7 obligatoire, seuil de pertinence, « je ne sais pas » plutôt qu'inventer, validation ID aval par L1).
+- **D-RAG-9** : ré-indexation incrémentale par hash → changer une fiche = constellation à jour sans réentraînement.
+- **Complétude commandes** : `!sys_rag_reindex` / `SYS_RAG_REINDEX` spécifiés en `[BESOIN_COMMANDE]`, à propager **à l'implémentation** (couche bot P3, feu vert PE requis).
+
+### État de sortie
+
+CDC-RAG-01 complet et ancré sur les gabarits/verrous réels du corpus. Aucune donnée de jeu modifiée. Prochaine marche possible (si PE valide) : contrats des 4 spécialistes de départ + politiques de backend → spéc interface `generate` → spéc load-balancer *quota-aware* → matrice de dégradation → (implémentation Node.js, décision PE séparée).
+
+---
+
+## ÉTAPE 41 — CDC d'implémentation de la couche IA (NLU + spécialistes + orchestration + moteur déterministe) + intégration `etude_deepseek.md` (P3) 🧩 ✅ CLOS (2026-07-10)
+
+**Contexte** : à la demande du PE, production des CDC restants nécessaires à l'implémentation de la couche IA/bot, en **intégrant `etude_deepseek.md`** (racine projet) — apports concrets : runtime **ONNX**, **encodeurs** pour la compréhension, dialogue par **retrieval**, MLP de **comportement de mob**, plan de **bootstrapping**, budget RAM. **Livrables markdown, zéro code.**
+
+### Réconciliation des sources (mes études 13/14/15 × DeepSeek)
+
+- **Adopté de DeepSeek** : compréhension = **encodeurs ONNX** (MiniLM intent + BERT-tiny NER), pas de LLM 1B (5-25 ms vs 300-800 ms) ; **dialogue à 2 modes** (retrieval local ~90 % / génératif API ~10 %) ; **Template Engine** pour 90 % des réponses ; **comportement de mob = MLP/arbre** (comportement ≠ résolution) ; **bootstrapping** regex→BERT-tiny ; budget RAM ~4 Go/24.
+- **Ligne conservée** : frontière déterministe absolue ; RAG = cerveau factuel (15) ; stack 100 % gratuit (14) ; L1 seul écrivain de l'état.
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 41.1 | ➕ Créé — **CDC-NLU-01** : compréhension locale (Intent MiniLM + NER BERT-tiny via ONNX INT8), classes alignées sur les commandes `!*`, résolution d'entités en IDs canoniques (D71), regex jour-1 + bootstrapping, fallback, budget RAM. D-NLU-1→5. | `directives_generation/16_cdc_nlu_locale.md` |
+| 41.2 | ➕ Créé — **CDC-SPE-01** : contrats des spécialistes narratifs S2-S7 (IN/OUT, appel `retrieve()`, `SYS_*`, mode retrieval/génératif, politique de backend, gabarit C4), dialogue à 2 modes, Template Engine, grounding. D-SPE-1→5. | `directives_generation/17_cdc_specialistes_narratifs.md` |
+| 41.3 | ➕ Créé — **CDC-ORC-01** : interface agnostique `generate(role,prompt,contexte,politique)`, format de politique de backend, load-balancer *quota-aware* + circuit breaker + failover, dispatcher, boucle d'orchestration `SYS_*`, stack ONNX+Node+Redis, budget RAM consolidé, feuille de route P0-P6, observabilité. D-ORC-1→7. | `directives_generation/18_cdc_orchestration_runtime.md` |
+| 41.4 | ➕ Créé — **CDC-DET-01** : moteur déterministe L1 (combat/mouvement Dijkstra+R0/éco/inventaire/XP/quêtes/jauges) + **contrat d'exécution `SYS_*`** (validation 6 étapes, L1 seul écrivain, hallucination d'ID rejetée) + exception ML « comportement de mob » (MLP imitation learning / arbre, comportement ≠ résolution). D-DET-1→4. | `directives_generation/19_cdc_moteur_deterministe.md` |
+| 41.5 | ✏️ Modifié — Fichiers d'état. | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées (P3, sous réserve feu vert d'implémentation PE)
+
+- **D-NLU-1** : compréhension = encodeurs ONNX (jamais décodeur LLM). **D-SPE-1** : dialogue à 2 modes (retrieval défaut / génératif à enjeu). **D-SPE-2** : Template Engine = chemin nominal des tours triviaux + couche C4. **D-ORC-1** : interface agnostique `generate()` = seule abstraction figée jour-1. **D-ORC-4** : dispatcher > 70 % sans LLM payant. **D-ORC-7** : déterministe+RAG avant génératif. **D-DET-2** : contrat `SYS_*` validation 6 étapes, L1 seul écrivain. **D-DET-3** : comportement de mob ML autorisé (comportement ≠ résolution).
+- **Complétude commandes** : `SYS_RAG_REINDEX`, `SYS_GRANT_PASSIVE` en `[BESOIN_COMMANDE]` ; vérifier le registre `SYS_*` (`ai_orchestrator_commands.md`) à l'implémentation (couche bot P3).
+
+### État de sortie
+
+**Jeu de CDC d'implémentation complet** pour la couche IA : compréhension (16), génération (17), orchestration/runtime (18), moteur déterministe & contrat `SYS_*` (19) — au-dessus de la fondation RAG (15) et des études d'architecture (13/14). `etude_deepseek.md` intégré et réconcilié (encodeurs, retrieval, MLP mob, bootstrapping, ONNX). Aucune donnée de jeu modifiée. Ordre d'implémentation acté (P0-P6, `18_` §9) : L1 déterministe + RAG **avant** le génératif. Reste : décision PE d'implémentation (Node.js).
+
+---
+
+## ÉTAPE 42 — CDC-MOD-01 : sélection & comparaison des modèles (supersede les choix DeepSeek) (P3) 🔬 ✅ CLOS (2026-07-10)
+
+**Contexte** : à la demande du PE, comparaison tâche par tâche des modèles de `etude_deepseek.md` et proposition de meilleurs modèles gratuits. **Correction majeure identifiée** : les choix DeepSeek (BERT-tiny, MiniLM-L6-v2, DistilGPT2) sont **anglophones** alors que le corpus/joueurs sont **francophones**. **Livrable markdown, zéro code.**
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 42.1 | ➕ Créé — **CDC-MOD-01** : tableau comparatif tâche×modèle (DeepSeek vs meilleure proposition gratuite), détail par tâche (intent, NER, embeddings, comportement mob, génération), budget RAM/latence recalculé, ce qu'on garde de DeepSeek. Autoritatif sur le choix des modèles (supersede 15/16/17/19). | `directives_generation/20_cdc_selection_modeles.md` |
+| 42.2 | ✏️ Modifié — Fichiers d'état. | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées (P3)
+
+- **D-MOD-1** : **modèles multilingues/FR-natifs** partout (corpus francophone) — supersede les modèles anglophones de DeepSeek.
+- **D-MOD-2** : **`multilingual-e5-small` = embedding UNIQUE** partagé RAG+dialogue+intent ; magasin `sqlite-vec` unifié (`-base`/`BGE-M3` en option qualité).
+- **D-MOD-3** : **résolution d'entités = gazetteer (index nom→ID) primaire** + petit NER FR (DistilCamemBERT/spaCy) — plus juste/rapide que BERT-tiny sur le domaine (les entités sont les IDs inventés du jeu).
+- **D-MOD-4** : **comportement de mob = Behavior Tree / Utility AI *authored*** (contrôle designer D10/D11) ; LightGBM→ONNX en option ; jamais un MLP boîte-noire par défaut.
+- **D-MOD-5** : **génération narrative priorité FR** — Mistral (FR-natif) + Gemini Flash montent dans les politiques narratives ; repli local Qwen2.5-1.5B/Gemma-2-2B (≠ DistilGPT2).
+- **D-MOD-6** : ONNX Runtime + encodeurs-compréhension + bootstrapping + Template Engine **conservés** de DeepSeek.
+
+### État de sortie
+
+Sélection de modèles arrêtée et **francisée**. Budget local recalculé ~0,4 Go IA (~4-5 Go/24 total). Réserve : identifiants exacts + quotas gratuits à revérifier au lancement ; tout modèle substituable par config (interface agnostique `18_`, sans refonte). Aucune donnée de jeu modifiée.
+
+---
 
 **Objectif** : dernier chantier transverse — calibrer l'économie du jeu sur les prix réels des items, formaliser les drop rates, ajuster les récompenses de quêtes T5/légendaires, et mettre à jour le balance sheet.
 
@@ -1181,5 +1323,73 @@ Axe vertical **bouclé** : Yggdrasil (Gardien du Dôme → Sommet), Jötunheimr 
 ### État de sortie
 
 **28 fichiers modifiés** (1 balance sheet + 20 T5 + 4 légendaires + 1 index + 1 rapport + 1 état). **Tous les chantiers transverses sont clos.** Aucune dette structurelle résiduelle. Le projet ALO est intégralement livré : 11 CDC, audit de conformité, équilibrage économique.
+
+---
+
+## ÉTAPE 43 — Systèmes sociaux & mémoire relationnelle joueur↔PNJ 💍🏠💼 ✅ CLOS (2026-07-10)
+
+**Contexte** : requête PE en deux volets. (1) « Comment le programme sait-il qu'un joueur a discuté N fois avec un PNJ, et quelles infos il possède ? » + side-quests conditionnées au haut niveau d'information. (2) Nouveaux verbes de vie : acheter/louer une maison, créer/rejoindre une guilde, avoir un métier (aubergiste…), se marier (homme+femme, monogame, séparation équitable) — avec avantages listés. + « revois/mets à jour les CDC concernés » + « vérifie si le persona correspond à la direction du projet ». **Livrable markdown/SQL-DDL, zéro code.**
+
+### Constat d'entrée
+
+- `T_NPC_KNOWLEDGE_UNLOCKS` (infos débloquées par avatar) existait, **mais aucun compteur d'interaction ni affinité** ⇒ impossible de savoir « combien de fois ».
+- `T_BANK_VAULTS.owner_type` prévoyait déjà `'marriage'` — anticipé, jamais adossé à une table de mariage.
+- `system_mechanics/marriage_housing_system.md` = **legacy en prose** non conforme aux règles PE (deux joueurs quelconques, pas de genre, achat seul, divorce à 50 % forfaitaire, pas de prérequis de foyer).
+- Aucune table Housing / Marriage / Jobs. `T_GUILDS` sans mécanique « rejoindre ».
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 43.1 | ➕ **`T_NPC_RELATIONS`** — arête creuse joueur↔PNJ créée à la 1ʳᵉ interaction (D-SOC-1) : `interaction_count`, affinité [−100,+100]→5 paliers, `topic_flags` ; triggers R1-R5 ; commandes `!relation`/`!offrir` | `MLD_Logic/table_t_npc_relations.md` |
+| 43.2 | ➕ **`T_PROPERTIES`** — housing achat (`own`) **ou** location (`rent`) ; stockage massif, checkpoint sûr (`!home_return`/`!rest`), prérequis mariage ; grille 4 tiers ; triggers P1-P6 | `MLD_Logic/table_t_properties.md` |
+| 43.3 | ➕ **`T_MARRIAGES` + `T_MARRIAGE_ASSETS`** — homme+femme (M1), monogame (index partiels M2), prérequis foyer (M3), coffre doublé (M4), séparation par provenance (M5), cadeau selon moyenne de niveau (M6) | `MLD_Logic/table_t_marriages.md` |
+| 43.4 | ➕ **`T_JOBS_DICT` + `T_AVATAR_JOB`** — emploi salarié unique, 12 archétypes seed (aubergiste, garde…), salaire/service, promotion, réputation ; triggers J1-J5 | `MLD_Logic/table_t_jobs.md` |
+| 43.5 | ✏️ **`T_AVATARS`** — colonnes sociales `marriage_uuid`/`home_property_uuid`/`job_id` (caches dénormalisés) + contrat A7 | `MLD_Logic/table_t_avatars.md` |
+| 43.6 | ✏️ **`T_QUESTS_DICT`** — `prerequisites` étendu (`min_affinity_tier`/`qi_unlocked`/`topic_flag`/`requires_married`/`requires_home`) + trigger Q4 (side-quests sociales) | `MLD_Logic/table_t_quests_dict.md` |
+| 43.7 | ✏️ **`T_GUILDS`** — mécanique « rejoindre » (invitation/candidature, G5) + commandes | `MLD_Logic/table_t_guilds.md` |
+| 43.8 | ✏️ **`T_BANK`** — spéc coffre conjugal (doublé, provenance, clôture au divorce) | `MLD_Logic/table_t_bank.md` |
+| 43.9 | ✏️ **`marriage_housing_system.md` v2.0** — réécrit, supersede le legacy (annexe de correspondance v1→v2) ; §0 mémoire relationnelle | `system_mechanics/marriage_housing_system.md` |
+| 43.10 | ✏️ **Commandes propagées** — WA §15 (mariage/housing), §10 (rejoindre guilde), §20 (relations PNJ), **§23 nouvelle (emploi)** ; IA §10 (social étendu), §2 (relation-touch/get, affinité→table) | `whatsapp_commands_list.md`, `ai_orchestrator_commands.md` |
+| 43.11 | ➕ **CDC-SOC-01** — cadre du pilier social, D-SOC-1→14, quotas SOC-1→4, `[BESOIN_*]` | `directives_generation/21_cdc_systemes_sociaux.md` |
+| 43.12 | ✏️ **Persona amendé §5** (2026-07-10) — 3 filtres conservés ; ajout : phase data≠code, 4ᵉ pilier social, doctrine frontière déterministe | `system_persona_architecte.md` |
+| 43.13 | ✏️ Fichiers d'état | `alo_context.md`, `alo_progression.md` |
+
+### Décisions actées
+
+- **D-SOC-1→14** (cf. `21_cdc_systemes_sociaux.md` §2). Points saillants : mémoire PNJ = arête creuse *lazy* (jamais pré-matérialisée à l'inscription — 11 M lignes évitées, filtre Développeur) ; side-quests conditionnées via `prerequisites` (pas de table dédiée) ; mariage homme+femme monogame ; séparation « chacun reprend ses apports » via registre de provenance ; housing = checkpoint sûr adossé à R0 ; emploi salarié ≠ skills de récolte.
+
+### Vérification du persona (demande PE)
+
+**Verdict : les 3 filtres (Dev/Game Designer/Scénariste) restent le bon ADN — conservés.** 3 recollages amendés (§5) : (1) phase actuelle = **données, pas code** (le Node.js est une cible d'implémentabilité, pas un livrable) ; (2) **4ᵉ pilier social** (rétention par le lien) ; (3) **doctrine IA à frontière déterministe** (combat/éco/prérequis jamais neuronaux — L1 seul écrivain). Aucune contradiction de fond ; le persona était combat/éco/lore-centrique et muet sur data-only + social + multi-IA.
+
+### État de sortie
+
+**13 lots** (4 nouvelles tables MLD + 4 tables existantes amendées + spec v2.0 + 2 registres de commandes + CDC + persona + états). Dette de commande **nulle** (tout propagé à la clôture). Restent les quotas de contenu SOC-1→4 délégables. Aucune donnée de jeu existante cassée.
+
+### Addendum 43-bis — arbitrage PE sur les `[BESOIN_*]`
+
+- **✅ Anneau d'Engagement = item de service dédié** (décision PE). Créé **`MSC_ENG_001`** (`données/items_equipements/service/`, `item_type='MSC'`, **sans stat**, lié/non-revendable, **consommé à la cérémonie**, 50 000 Yrds chez un bijoutier `SERVICE`). L'ancienne bague à stats `ACC_ANN_003` (+5 % toutes stats, lot accessoires gelé) est **dépréciée/redirigée** vers `MSC_ENG_001`. Références mises à jour : `T_MARRIAGES` M3, `marriage_housing_system.md`, CDC-SOC §4. **`[BESOIN_ITEM]` résolu.**
+- **⏳ Auberge exploitable = backlog** (décision PE : reporté). `JOB_HOS_001` (Aubergiste) reste au service d'un aubergiste **PNJ** (`employer_type='npc'`) ; la boucle joueur-propriétaire-d'auberge ↔ location de `inn_room` n'est pas modélisée. `[BESOIN_ENTITE]` maintenu ouvert en backlog.
+- Nouveau dossier `données/items_equipements/service/` inauguré pour les items de service (jetons/actes) ; +1 fichier créé, 1 fichier redirigé.
+
+### Addendum 43-ter — délégation des quotas de contenu CDC-SOC (3 générateurs parallèles + orchestrateur)
+
+Sur demande PE, les quotas SOC-1→4 ont été **délégués** (protocole D37). **124 fiches créées** au total, aucune régression.
+
+| Lot | Livré | Emplacement | Générateur |
+|---|---|---|---|
+| SOC-1 Emplois | **66** (≥60) — 11/catégorie × 6, ≥5/ville × 11, ancrage racial, salaires 160-560 ¥ | `game_design/emplois/` + `_index_emplois.md` | délégué |
+| SOC-2 Side-quests d'affinité | **22** (≥20) — 2/capitale, déblocage `trusted`(11)/`confidant`(11) + `qi_unlocked`, donneurs réels vérifiés | `game_design/quetes/qst_*_aff_*` + `_index_soc2_affinite.md` | délégué |
+| SOC-3 Décorations | **36** (≥30) — 7 types (FUR/PLT/LGT/RUG/TRO/STA/FON), buffs ≤ +5 %, 9 races | `items_equipements/decoration/` + `_index_decoration.md` | délégué |
+| SOC-4 Cadeaux de noces | table de tirage (bandes niveau→tier, 3 pools, L1) | `system_mechanics/wedding_gift_table.md` | orchestrateur |
+
+**Préparation & réconciliation orchestrateur** :
+- ➕ `item_type='DEC'` ajouté à l'enum `T_ITEMS_DICT` + trigger I4 ; ✏️ `T_PROPERTIES` P7 (clés `deco_buffs` figées, plafond ±5 %/logement).
+- ✏️ `T_JOBS_DICT` §2 : pointeur vers le dictionnaire complet (66) ; ✏️ `_index_quetes.md` §7 + compteur **57→79** ; ➕ 2 titres honorifiques dans `T_TITLES` ; ✏️ CDC-SOC §3 (lots livrés) + §4-bis (arbitrage `[BESOIN_*]`).
+- **Arbitrage `[BESOIN_*]`** : dague/pelage → items existants (`WPN_DAG_003`/`MAT_CUI_*`) ; 4 props narratifs → items de quête liés `KEY` (sans fiche éco) ; 2 titres créés ; 2 aubergistes dédiés + 2 employeurs `guild` = backlog mineur (rattachements provisoires, aucun ID inventé) ; clés déco figées.
+- **Dette de commande nulle** (aucune commande nouvelle). **Aucune collision d'ID.**
+
+**État de sortie** : pilier social **entièrement instancié** — mécanique (4 tables + specs) **et** contenu (124 fiches). Restent en backlog mineur : auberge exploitable (`[BESOIN_ENTITE]`), 2 taverniers dédiés, peuplement `T_GUILDS` pour les employeurs guilde.
 
 ---

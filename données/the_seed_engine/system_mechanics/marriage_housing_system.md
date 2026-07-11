@@ -1,41 +1,87 @@
-# Système de Mariage et Housing (Social Bonding)
+# Systèmes Sociaux — Mariage, Housing, Emploi & Mémoire relationnelle PNJ
 
-## 1. Système de Mariage (Marriage Contract)
-Dans ALO comme dans SAO, deux joueurs peuvent se marier. Ce n'est pas cosmétique : le mariage a des effets mécaniques réels.
+> **v2.0 (étape 43, 2026-07-10)** — Spécification alignée sur la directive PE. Supersede la v1.0 (prose SAO générique : deux joueurs quelconques, sans genre, sans provenance de séparation, sans prérequis de foyer). **Source de vérité = les tables MLD** citées ci-dessous ; ce document est la spécification de comportement, pas le modèle de données.
 
-### 1.1 Mécanique
-- **Activation** : `!propose [Num_WhatsApp]` — Le joueur envoie une demande de mariage.
-- **Acceptation** : `!accept_proposal` — Le partenaire valide.
-- **Conditions** : Les deux joueurs doivent être au minimum Niveau 15 et posséder un *Anneau d'Engagement* (Ring of Betrothal), achetable chez un bijoutier PNJ pour 50 000 Yrds.
-- **Cérémonie** : L'IA génère une narration de cérémonie dans le groupe WhatsApp de la ville où les joueurs se trouvent.
+Tables adossées : `T_NPC_RELATIONS`, `T_PROPERTIES`, `T_MARRIAGES` (+ `T_MARRIAGE_ASSETS`), `T_JOBS_DICT` (+ `T_AVATAR_JOB`), `T_BANK_VAULTS` (`owner_type='marriage'`), `T_GUILDS` (rejoindre).
 
-### 1.2 Bonus de Mariage
-- **Telepathy** : Les deux époux peuvent communiquer via `!whisper_partner [Message]` peu importe la zone, sans coût.
-- **Partner Link** : Lorsqu'ils combattent dans la même Party, les dégâts combinés bénéficient d'un bonus de synergie de +10% (Combo Conjugal).
-- **Shared Storage** : `!partner_bank` — Coffre commun entre les deux joueurs.
-- **Location Tracking** : `!partner_locate` — Affiche la zone dans laquelle se trouve le partenaire.
+---
 
-### 1.3 Divorce
-- `!divorce` — Annule le contrat de mariage. Pénalité : division de 50% du Shared Storage. Cooldown de 30 jours avant un nouveau mariage.
+## 0. Mémoire relationnelle joueur ↔ PNJ (réponse à la question PE)
 
-## 2. Système de Housing (Player Home)
-Les joueurs peuvent acquérir une maison dans la capitale de leur race.
+**« Comment le programme sait qu'un joueur a discuté N fois avec un PNJ, et quelles infos il possède ? »**
 
-### 2.1 Acquisition
-- `!housing_buy [Type]` — Types : Chambre d'Auberge (5 000 Yrds), Petite Maison (50 000 Yrds), Manoir (500 000 Yrds), Château de Guilde (5 000 000 Yrds).
-- Le bot crée un groupe WhatsApp privé pour le logement du joueur. Seuls les joueurs invités peuvent y entrer.
+- **Combien de fois / affinité / sujets abordés** → `T_NPC_RELATIONS`, une **arête creuse créée à la 1ʳᵉ interaction** (jamais matérialisée à l'inscription : 10 000 joueurs × 1 100 PNJ = 11 M de lignes mortes — écarté au filtre du Développeur, D-SOC-1). Chaque `!parler` incrémente `interaction_count`.
+- **Quelles infos débloquées** → `T_NPC_KNOWLEDGE_UNLOCKS` (table existante) : l'enveloppe QI cochée par avatar. Le pare-feu K3 reste propriété de `T_NPC_KNOWLEDGE` (D18).
+- **Side-quests conditionnées au haut niveau d'info** → `T_QUESTS_DICT.prerequisites` interroge les deux tables (`min_affinity_tier`, `qi_unlocked`, `topic_flag`) : une quête secrète n'apparaît au `!quest_board` du PNJ que si le joueur a assez discuté / assez d'affinité / débloqué la bonne info (D-SOC-3).
 
-### 2.2 Fonctionnalités
-- **Repos** : Se reposer chez soi régénère 5% HP/MP par minute (au lieu de 1% en extérieur).
-- **Stockage Étendu** : La maison double la capacité de l'inventaire du joueur via `!home_storage`.
-- **Décoration** : `!decorate [Item]` — Les objets décoratifs trouvés en loot ou craftés donnent des buffs passifs (ex: Fontaine Elfique = +5% régénération MP quand dans la maison).
-- **Invitations** : `!home_invite [Num_WhatsApp]` / `!home_kick [Num_WhatsApp]`.
+L'affinité (−100…+100) se traduit en 5 paliers (`hostile`→`confidant`) qui portent les remises, l'ouverture des quêtes et l'accès aux couches QI conditionnelles.
 
-### 2.3 Housing de Guilde
-- `!guild_hall_upgrade [Tier]` — Le QG de guilde est un groupe WhatsApp permanent. Les upgrades ajoutent : Salle de Stratégie (+5% EXP en raid), Forge Privée (craft sans marchand), Infirmerie (regen x3).
+---
 
-## 3. Commandes IA Associées
-- `SYS_GENERATE_CEREMONY(Avatar_ID_1, Avatar_ID_2, Zone_ID)` : L'IA génère la narration de la cérémonie de mariage.
-- `SYS_CREATE_HOME_GROUP(Avatar_ID, House_Type)` : L'IA crée le groupe WhatsApp privé associé au logement.
-- `SYS_DESTROY_HOME(Avatar_ID, Reason)` : L'IA peut détruire la maison d'un joueur lors d'une invasion de mobs.
-- `SYS_INVADE_GUILD_HALL(Guild_ID, Attacker_Guild_ID)` : L'IA déclenche un siège sur le QG d'une guilde.
+## 1. Mariage (`T_MARRIAGES`)
+
+### 1.1 Règles dures (PE)
+- **Homme + femme uniquement** : exactement un `male` + un `female` (le `neutral` ne se marie pas). Trigger M1.
+- **Un seul mariage actif** par individu (monogamie stricte, index partiels M2).
+- **Prérequis** : les deux Niv ≥ 15, chacun un **Anneau d'Engagement** (`MSC_ENG_001`, item de service, consommé à la cérémonie), et **au moins un foyer** entre les deux (prérequis PE, M3 ↔ `T_PROPERTIES` P5).
+
+### 1.2 Avantages (PE)
+| Avantage | Face joueur | Table |
+|---|---|---|
+| Inventaire commun **doublé** | `!joint_bank` | coffre `owner_type='marriage'`, `max_slots` ×2 |
+| Solde commun | `!joint_pay` | `T_BANK_VAULTS.yrds_stored` du couple |
+| Statut de l'autre en temps réel (PV/PM…) | `!partner_status` | lecture directe `T_AVATARS` du conjoint |
+| Cadeau système aléatoire (selon moyenne de niveau) | (cérémonie) | `SYS_GENERATE_WEDDING_GIFT`, tier ∝ `avg_level_at_wedding` |
+| Télépathie / localisation / combo +10 % | `!whisper_partner`, `!partner_locate` | *(conservés v1)* |
+
+### 1.3 Séparation — « chacun repart avec ce qu'il a apporté »
+`!divorce` déclenche `SYS_DIVORCE_SETTLE` (transaction atomique) :
+- apports **individuels** (`T_MARRIAGE_ASSETS.is_joint_earned = FALSE`) **rendus au contributeur** ;
+- biens **communs** (cadeau système, gains non attribués) **partagés 50/50** ;
+- le **foyer** reste au propriétaire d'origine ; cooldown **30 j** ; coffre conjugal clos.
+
+---
+
+## 2. Housing (`T_PROPERTIES`) — acheter **ou** louer
+
+### 2.1 Modes & avantages (PE)
+- **Louer** (`inn_room`, 1 500 Yrds / 7 j) : loyer récurrent, expulsion sur défaut (grâce 7 j → `SYS_EVICT_TENANT`, biens en `T_MAIL` 30 j).
+- **Acheter** (`small_house` 50 k / `manor` 500 k / `estate` 3 M) : permanent, revente 50 %.
+- **Avantages** : (1) **stockage domestique massif** (`!home_storage`, +50 à +1 000 slots, armes admises) ; (2) **checkpoint sûr** — `!home_return` (rappel hors combat) + `!rest` (regen 5 %/min, logout sans *Remain Light*) ; (3) **prérequis de mariage**.
+
+### 2.2 Interaction protocole de déplacement (R0)
+`!home_return` = déplacement **sanctionné** vers le **groupe WhatsApp privé du logement** (comme un cristal de rappel) ; conforme à l'invariant R0 (`zone_movement_protocol.md`) : le joueur quitte son groupe LOCATION vers son groupe HOME, jamais le HUB/GUILD/PARTY. Interdit en combat (P4).
+
+---
+
+## 3. Emploi (`T_JOBS_DICT` / `T_AVATAR_JOB`)
+
+- Un **seul emploi actif** à la fois (`!apply_job` / `!quit_job`). Revenu par service (`!work`, cooldown), réputation de faction, promotion apprenti→compagnon→maître (×1→×1.5→×2).
+- **Aubergiste** (`JOB_HOS_001`) : à l'étape 43, au service d'un aubergiste **PNJ**. La variante joueur-propriétaire d'auberge (loue des `inn_room`) est en **backlog** (`[BESOIN_ENTITE]`).
+- Distinct des skills de récolte/artisanat (`gathering_cooking_system.md`), qui ne sont pas des emplois salariés.
+
+---
+
+## 4. Guildes (`T_GUILDS`) — créer & **rejoindre**
+Création/dissolution/coffre/taxe/QG déjà spécifiés. Ajout étape 43 : **rejoindre** par invitation (`!guild_invite` → `!guild_accept`) ou candidature (`!guild_apply` → `!guild_approve`) ; un joueur = une guilde à la fois (G5).
+
+---
+
+## 5. Commandes IA associées
+- `SYS_GENERATE_CEREMONY(A1, A2, Zone)` *(existant)* · `SYS_GENERATE_WEDDING_GIFT(Marriage_ID, avg_level)` · `SYS_DIVORCE_SETTLE(Marriage_ID)`
+- `SYS_CREATE_HOME_GROUP(Avatar, Type)` *(existant)* · `SYS_DESTROY_HOME(Avatar, Reason)` *(existant)* · `SYS_GRANT_PROPERTY` · `SYS_EVICT_TENANT`
+- `SYS_ASSIGN_JOB` · `SYS_FIRE` · `SYS_PAY_WAGE` · `SYS_JOB_EVENT`
+- `SYS_NPC_RELATION_TOUCH` · `SYS_SET_AFFINITY` · `SYS_NPC_RELATION_GET`
+- `SYS_GUILD_INVITE` · `SYS_GUILD_JOIN`
+
+---
+
+## Annexe — Correspondance v1.0 → v2.0 (ce qui change)
+| v1.0 (prose SAO) | v2.0 (PE) |
+|---|---|
+| Deux joueurs quelconques | **Homme + femme uniquement** |
+| (pas de limite explicite) | **Un mariage actif** par personne |
+| Divorce = 50 % du coffre, point | **Provenance** : chacun reprend ses apports + 50/50 du commun |
+| Maison = achat seul, « double l'inventaire » | **Achat *ou* location** ; stockage domestique massif chiffré ; **prérequis de mariage** |
+| — | **Emploi salarié** (aubergiste, garde…), pont vers le housing |
+| `!partner_bank` | renommé **`!joint_bank`** (+ `!joint_pay` pour le solde commun) |

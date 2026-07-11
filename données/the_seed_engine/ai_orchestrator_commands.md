@@ -14,7 +14,9 @@
 - `SYS_SET_ENV_HAZARD(Zone_ID, Param, Valeur)` : Pilote les jauges environnementales de zone/instance (`OXYGEN` — Apnée du Gouffre de Léviathan, `HEAT` — Surchauffe de la Caldeira d'Obsidienne, `DOT` — dégâts continus type Désolation de Magma). Équivalent GM : `!sys_env_set`.
 
 ## 2. 🎭 Manipulations PNJ, Factions & Narratives
-- `SYS_MODIFY_AFFINITY(Avatar_ID, NPC_ID, Valeur)` : Altère le respect d'un PNJ envers un joueur selon son Roleplay textuel.
+- `SYS_MODIFY_AFFINITY(Avatar_ID, NPC_ID, Valeur)` (alias `SYS_SET_AFFINITY`) : Altère le respect d'un PNJ envers un joueur selon son Roleplay textuel — **écrit `T_NPC_RELATIONS.affinity`** (clampé [−100,+100]), recalcule `affinity_tier` (D-SOC-2). Équivalent GM : `!sys_set_affinity`.
+- `SYS_NPC_RELATION_TOUCH(Avatar_ID, NPC_ID, Δaffinity)` : Enregistre une interaction — **crée la ligne à la volée** si absente (D-SOC-1), incrémente `interaction_count`, `last_talked_at`, applique le delta d'affinité. Appelé à chaque `!parler`/`!demander`.
+- `SYS_NPC_RELATION_GET(Avatar_ID, NPC_ID)` : Retourne la relation (nb d'échanges, affinité, sujets abordés) pour contextualiser une réplique. Équivalent GM : `!sys_npc_relation`.
 - `SYS_NPC_DIALOG_OVERRIDE(NPC_ID, Dialogue_Urgent)` : Force un PNJ marchand ou garde à relayer un message critique au lieu de son menu habituel.
 - `SYS_DECLARE_FACTION_WAR(Race_A, Race_B)` : L'IA détecte une tension diplomatique entre les joueurs de deux races et déclenche un état de guerre officiel (PK autorisé sans perte de Karma).
 - `SYS_ASSASSINATE_NPC(NPC_ID)` : L'IA décide de tuer un Lord PNJ pour relancer une quête d'élection diplomatique.
@@ -93,10 +95,18 @@
 - `SYS_PLANT_TREASURE(Zone_ID, Item_ID)` : L'IA cache un objet rare détectable par les Spriggans.
 - `SYS_TRIGGER_SACRIFICE(Avatar_ID, Damage_Radius)` : L'IA gère les conséquences d'un sort sacrificiel.
 
-## 10. 💍 Social, Mariage & Housing
-- `SYS_GENERATE_CEREMONY(Avatar_ID_1, Avatar_ID_2, Zone_ID)` : L'IA génère la narration de cérémonie de mariage.
-- `SYS_CREATE_HOME_GROUP(Avatar_ID, House_Type)` : L'IA crée le groupe WhatsApp privé du logement.
-- `SYS_DESTROY_HOME(Avatar_ID, Reason)` : L'IA peut détruire la maison d'un joueur (invasion).
+## 10. 💍 Social, Mariage, Housing & Emploi
+> Domaine étendu à l'étape 43 (D-SOC-*). Tables : `T_MARRIAGES`, `T_PROPERTIES`, `T_JOBS_DICT`, `T_NPC_RELATIONS`. **Frontière déterministe** : la validation des prérequis (genre, monogamie, foyer, provenance de séparation, plafonds) est faite par le **moteur déterministe L1** ; l'IA ne fait que la narration + l'émission de la commande. Toute violation ⇒ rejet L1.
+- `SYS_GENERATE_CEREMONY(Avatar_ID_1, Avatar_ID_2, Zone_ID)` : narration de cérémonie de mariage.
+- `SYS_GENERATE_WEDDING_GIFT(Marriage_ID, Avg_Level)` : tire le cadeau de noces (tier ∝ moyenne de niveau), déposé au coffre conjugal (`T_MARRIAGE_ASSETS.is_joint_earned=TRUE`).
+- `SYS_DIVORCE_SETTLE(Marriage_ID)` : règlement de séparation atomique — restitution par provenance + split 50/50 du commun (M5).
+- `SYS_CREATE_HOME_GROUP(Avatar_ID, House_Type)` : crée le groupe WhatsApp privé du logement.
+- `SYS_GRANT_PROPERTY(Avatar_ID, Type, Tenure)` : attribue un logement (achat/location).
+- `SYS_EVICT_TENANT(Property_UUID)` : expulse un locataire en défaut (biens → `T_MAIL` 30 j).
+- `SYS_DESTROY_HOME(Avatar_ID, Reason)` : détruit la maison d'un joueur (invasion).
+- `SYS_ASSIGN_JOB(Avatar_ID, JOB_ID)` / `SYS_FIRE(Avatar_ID)` : embauche / licenciement.
+- `SYS_PAY_WAGE(Avatar_ID)` : verse le salaire cumulé au solde. `SYS_JOB_EVENT(Zone_ID, Type)` : incident de service (rush d'auberge, alerte de garde…).
+- `SYS_GUILD_INVITE(Guild_ID, Avatar_ID)` / `SYS_GUILD_JOIN(Guild_ID, Avatar_ID)` : invitation / adhésion (G5).
 - `SYS_INVADE_GUILD_HALL(Guild_ID, Attacker_Guild_ID)` : L'IA déclenche un siège de QG de guilde.
 - `SYS_TRIGGER_ALLIANCE_EVENT(Race_A, Race_B, Type)` : L'IA déclenche un événement d'alliance.
 

@@ -24,3 +24,14 @@ CREATE TABLE T_PLAYER_TITLES (
 -- Contrainte : un seul titre actif par joueur
 CREATE UNIQUE INDEX idx_active_title ON T_PLAYER_TITLES(avatar_id) WHERE is_active = TRUE;
 ```
+
+## Titres sociaux (seed SOC-2, étape 43)
+
+Récompenses des side-quests d'affinité les plus intimes (`unlock_type = 'quest'`).
+
+| title_id | name | rarity | stat_bonus | unlock (quête donneuse) |
+|---|---|---|---|---|
+| `TITLE_FILLEUL_FONTAINE` | Filleul de la Fontaine | rare | `{}` (honorifique) | side-quest d'affinité Archipel d'Écume (Morgane `NPC_UND_11`) |
+| `TITLE_GARDIEN_SILENCE` | Gardien du Silence | epic | `{}` (honorifique) | side-quest d'affinité `confidant` (Archiviste Sans Nom `NPC_PEN_06`) |
+
+> Titres **honorifiques** (aucun bonus de stat — le prestige est narratif, cohérent avec la nature relationnelle du lot). Portés via `!titre_set` (existant). Référencés en `reward_title_id` par leurs fiches de quête SOC-2.
