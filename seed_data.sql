@@ -966,328 +966,328 @@ INSERT INTO T_ITEMS_DICT (item_id, name, item_type, subtype, rarity, tier, base_
 -- T_MONSTERS_DICT
 -- ============================================================
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
-('MOB_AIN_001', 'Chevalier d Argent —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_002', 'Automate Ancien —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_003', 'Gardien du Palier —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_004', 'Lumière Errant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_010', 'Chevalier d Or —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_011', 'Mage du Sommet —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_012', 'Ombre du Passé —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_013', 'Némésis Fantôme —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_020', 'Gardien du Trône —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_021', 'Chevalier Suprême —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_022', 'Dragon d Or —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_023', 'Titan du Palier —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_024', 'Avatar d Heathcliff —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIN_025', 'Kayaba (MINI-BOSS) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_AIN_026', 'Skuld (BOSS ZONE) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_AIR_001', 'Griffon des Routes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIR_002', 'Pégase —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIR_003', 'Wyverne —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIR_004', 'Dragonnet du Vent —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIR_005', 'Aigle Géant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_AIR_006', 'Vol d Ombres —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_001', 'Léopard des Plaines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_002', 'Loup des Savanes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_003', 'Lynx des Collines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_004', 'Serpent des Herbes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_010', 'Hyène —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_011', 'Sanglier des Steppes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_012', 'Épervier —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_013', 'Buse —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_020', 'Lion des Savanes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_021', 'Ours Brun —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_022', 'Bête des Marais —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_023', 'Chimère —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_024', 'Griffon —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_CAI_025', 'Roi des Bêtes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_CAI_026', 'Ragnar —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_CAI_030', 'Gardien de la Savane —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_031', 'Esprit de la Nature —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_032', 'Bête Ancestrale —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_033', 'Prédateur Alpha —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_CAI_034', 'Défenseur du Sanctuaire —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_GNO_001', 'Blaireau Roche —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_AIN_001', 'Chevalier d Argent', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_002', 'Automate Ancien', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_003', 'Gardien du Palier', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_004', 'Lumière Errant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_010', 'Chevalier d Or', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_011', 'Mage du Sommet', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_012', 'Ombre du Passé', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_013', 'Némésis Fantôme', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_020', 'Gardien du Trône', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_021', 'Chevalier Suprême', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_022', 'Dragon d Or', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_023', 'Titan du Palier', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_024', 'Avatar d Heathcliff', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIN_025', 'Kayaba (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_AIN_026', 'Skuld (BOSS ZONE)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_AIR_001', 'Griffon des Routes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIR_002', 'Pégase', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIR_003', 'Wyverne', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIR_004', 'Dragonnet du Vent', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIR_005', 'Aigle Géant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_AIR_006', 'Vol d Ombres', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_001', 'Léopard des Plaines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_002', 'Loup des Savanes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_003', 'Lynx des Collines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_004', 'Serpent des Herbes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_010', 'Hyène', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_011', 'Sanglier des Steppes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_012', 'Épervier', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_013', 'Buse', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_020', 'Lion des Savanes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_021', 'Ours Brun', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_022', 'Bête des Marais', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_023', 'Chimère', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_024', 'Griffon', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_CAI_025', 'Roi des Bêtes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_CAI_026', 'Ragnar', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_CAI_030', 'Gardien de la Savane', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_031', 'Esprit de la Nature', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_032', 'Bête Ancestrale', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_033', 'Prédateur Alpha', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_CAI_034', 'Défenseur du Sanctuaire', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_GNO_001', 'Blaireau Roche', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Creuse des terriers piégés. Charge droite. Défense élevée. Gronde pour alerter les alliés.'),
-('MOB_GNO_002', 'Marmotte Cuirassée —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_002', 'Marmotte Cuirassée', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Carapace rocheuse. Se roule en boule et percute. Très résistante mais lente.'),
-('MOB_GNO_003', 'Scarabée Granit —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_003', 'Scarabée Granit', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Carapace minérale. Attaque avec ses mandibules. Mort : explose en éclats de roche.'),
-('MOB_GNO_004', 'Golem Miniature —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_004', 'Golem Miniature', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Petit golem de pierre. Résiste aux sorts. Imite les gestes du joueur.'),
-('MOB_GNO_010', 'Taupe Géante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_010', 'Taupe Géante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Creuse sous terre et surgit. Griffes perforantes. Aveugle (sensible aux vibrations).'),
-('MOB_GNO_011', 'Ver des Cavernes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_011', 'Ver des Cavernes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Enfoui dans la roche. Avale les joueurs (dégâts internes). Régénération passive.'),
-('MOB_GNO_012', 'Chauve-Souris Géante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_012', 'Chauve-Souris Géante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Vol erratique. Sonar : détecte les invisibles. Cri supersonique étourdissant (1s).'),
-('MOB_GNO_013', 'Araignée des Mines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_013', 'Araignée des Mines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Tisse des toiles minérales (ralentissement). Venin minier (-10 PV/s pendant 8s).'),
-('MOB_GNO_020', 'Golem de Pierre —', 1, NULL, 100, 0, 10, 10, 10, NULL, 'Tranchant faible.', NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_020', 'Golem de Pierre', 1, NULL, 100, 0, 10, 10, 10, NULL, 'Tranchant faible.', NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Golem de défense. Frappe de zone. Immunisé aux Critiques. Faiblesse : Tranchant faible.') ON CONFLICT (monster_id) DO NOTHING;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
-('MOB_GNO_021', 'Golem de Mithril —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_021', 'Golem de Mithril', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Carapace de mithril. Résiste à la magie. Brille dans l''obscurité. Très difficile à percer.'),
-('MOB_GNO_022', 'Dragon des Cavernes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_022', 'Dragon des Cavernes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Dragon tellurique. Souffle de cristal (pétrification lente). Griffes brisant les armures.'),
-('MOB_GNO_023', 'Titan de la Terre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_023', 'Titan de la Terre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Géant de pierre. Piétinement zone. Lance des rochers. Se soigne en absorbant les minéraux.'),
-('MOB_GNO_024', 'Roi Taupe —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_024', 'Roi Taupe', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Se téléporte dans le sol. Attaque en meute (invoque 2 taupes). Griffes de mithril.'),
-('MOB_GNO_025', 'Mithrandur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_025', 'Mithrandur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
 MINI-BOSS — Golem de mithril ancestral. 2 phases : bouclier minéral, puis explosion tellurique.'),
-('MOB_GNO_026', 'Forgeprimordial —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_026', 'Forgeprimordial', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
 BOSS ZONE — Coeur vivant de la Mine de Mithril. 3 phases : forge, fusion, effondrement.'),
-('MOB_GNO_030', 'Cristal Animé —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_030', 'Cristal Animé', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Formation cristalline vivante. Tire des rayons lumineux. Réfléchit les sorts.'),
-('MOB_GNO_031', 'Forge-Âme —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_031', 'Forge-Âme', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Automate de forge ancien. Marteau-pilon. Brasero interne (brûle au contact).'),
-('MOB_GNO_032', 'Mineur Spectral —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_032', 'Mineur Spectral', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Fantôme de mineur. Sa pioche traverse les armures. Cherche le mithril. Ignore le joueur si porteur de minerai.'),
-('MOB_GNO_033', 'Veine de Mithril Vivante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_033', 'Veine de Mithril Vivante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Filon animé. Très résistante. Exploitable avec une pioche (farm passif). Libère des éclats.'),
-('MOB_GNO_034', 'Gardien du Filon —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_GNO_034', 'Gardien du Filon', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Protège les veines de mithril. Charge explosive. Invoque des éclats de roche.'),
-('MOB_IMP_001', 'Lutin des Ombres —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_002', 'Rat des Ténèbres —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_003', 'Chauve-Souris —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_004', 'Corbeau Noir —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_010', 'Spectre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_011', 'Goule —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_012', 'Zombie —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_013', 'Strige —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_IMP_020', 'Vampire —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_021', 'Banshee —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_022', 'Démon Mineur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_023', 'Araignée d''Ombre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_024', 'Chevalier Noir —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_025', 'Skreech —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_026', 'Umbralith —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_030', 'Hurleur des Profondeurs —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_031', 'Tisseur d''Ombre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_032', 'Fossile Animé —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_033', 'Prêtre de l''Ombre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_IMP_034', 'Roi des Hurlements —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_001', 'Loup des Glaces —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_002', 'Ours Polaire —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_003', 'Yeti —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_004', 'Pingouin Géant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_010', 'Frost Giant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_011', 'Valkyrie des Glaces —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_012', 'Serpent de Givre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_013', 'Wyrm de Glace —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_020', 'Dragon de Givre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_021', 'Géant de Pierre Glacée —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_022', 'Banshee des Neiges —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_023', 'Wendigo —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_024', 'Jötunn —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_JOT_025', 'Jörmungandr (MINI-BOSS) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_JOT_026', 'Thrym (BOSS ZONE) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_LEP_001', 'Salamandre Vapeur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_002', 'Crabe Bouilloire —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_003', 'Feu Follet —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_004', 'Automate Égaré —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_IMP_001', 'Lutin des Ombres', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_002', 'Rat des Ténèbres', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_003', 'Chauve-Souris', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_004', 'Corbeau Noir', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_010', 'Spectre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_011', 'Goule', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_012', 'Zombie', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_013', 'Strige', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_IMP_020', 'Vampire', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_021', 'Banshee', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_022', 'Démon Mineur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_023', 'Araignée d''''Ombre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_024', 'Chevalier Noir', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_025', 'Skreech', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_026', 'Umbralith', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_030', 'Hurleur des Profondeurs', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_031', 'Tisseur d''''Ombre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_032', 'Fossile Animé', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_033', 'Prêtre de l''''Ombre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_IMP_034', 'Roi des Hurlements', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_001', 'Loup des Glaces', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_002', 'Ours Polaire', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_003', 'Yeti', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_004', 'Pingouin Géant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_010', 'Frost Giant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_011', 'Valkyrie des Glaces', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_012', 'Serpent de Givre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_013', 'Wyrm de Glace', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_020', 'Dragon de Givre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_021', 'Géant de Pierre Glacée', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_022', 'Banshee des Neiges', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_023', 'Wendigo', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_024', 'Jötunn', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_JOT_025', 'Jörmungandr (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_JOT_026', 'Thrym (BOSS ZONE)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_LEP_001', 'Salamandre Vapeur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_002', 'Crabe Bouilloire', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_003', 'Feu Follet', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_004', 'Automate Égaré', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
-('MOB_LEP_010', 'Scarabée Métal —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_011', 'Chenille à Vapeur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_012', 'Mécachauve —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_013', 'Forgesouris —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_020', 'Golem de Scories —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_021', 'Automate de Guerre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_022', 'Araignée Mécanique —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_023', 'Golem d''Adamantium —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_024', 'Wyrm de Vapeur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_LEP_025', 'MK-0 —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_026', 'Forgemestre Ignis —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_030', 'Foreur des Abysses —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_031', 'Fumigène —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_032', 'Marteleur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_033', 'Chaudronnier —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_034', 'Titan des Forges —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_001', 'Colombe —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_002', 'Écureuil —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_003', 'Lapin —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_004', 'Renard —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_010', 'Gobelin —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_011', 'Squelette —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_012', 'Loup Gris —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_013', 'Ours Noir —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_020', 'Bandit —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_021', 'Chevalier errant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_022', 'Mage itinérant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_023', 'Centaure —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_024', 'Bête des Bois —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_025', 'Capitaine des Bandits —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_NEU_026', 'Seigneur des Terres —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_NEU_030', 'Gardien du Dôme —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_031', 'Chevalier Sacré —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_032', 'Sentinelle —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_NEU_033', 'Ange —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_NEU_034', 'Sphinx —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_PUC_001', 'Papillon Musique —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_PUC_002', 'Grillon —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_003', 'Abeille —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_004', 'Coccinelle —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
-('MOB_PUC_010', 'Cerf des Bois —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_011', 'Loup des Prairies —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_012', 'Oiseau-lyre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_013', 'Grenouille Géante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_020', 'Sanglier des Bois —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_021', 'Druide Fou —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_022', 'Dryade —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_023', 'Centaure Musicien —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_024', 'Dragon des Bois —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_025', 'Ondaro (MINI-BOSS) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_LEP_010', 'Scarabée Métal', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_011', 'Chenille à Vapeur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_012', 'Mécachauve', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_013', 'Forgesouris', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_020', 'Golem de Scories', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_021', 'Automate de Guerre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_022', 'Araignée Mécanique', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_023', 'Golem d''''Adamantium', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_024', 'Wyrm de Vapeur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_LEP_025', 'MK-0', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_026', 'Forgemestre Ignis', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_030', 'Foreur des Abysses', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_031', 'Fumigène', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_032', 'Marteleur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_033', 'Chaudronnier', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_LEP_034', 'Titan des Forges', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_001', 'Colombe', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_002', 'Écureuil', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_003', 'Lapin', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_004', 'Renard', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_010', 'Gobelin', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_011', 'Squelette', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_012', 'Loup Gris', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_013', 'Ours Noir', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_020', 'Bandit', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_021', 'Chevalier errant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_022', 'Mage itinérant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_023', 'Centaure', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_024', 'Bête des Bois', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_025', 'Capitaine des Bandits', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_NEU_026', 'Seigneur des Terres', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_NEU_030', 'Gardien du Dôme', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_031', 'Chevalier Sacré', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_032', 'Sentinelle', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_NEU_033', 'Ange', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_NEU_034', 'Sphinx', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_PUC_001', 'Papillon Musique', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_PUC_002', 'Grillon', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_003', 'Abeille', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_004', 'Coccinelle', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', ''),
+('MOB_PUC_010', 'Cerf des Bois', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_011', 'Loup des Prairies', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_012', 'Oiseau-lyre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_013', 'Grenouille Géante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_020', 'Sanglier des Bois', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_021', 'Druide Fou', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_022', 'Dryade', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_023', 'Centaure Musicien', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_024', 'Dragon des Bois', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_025', 'Ondaro (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
-('MOB_PUC_026', 'Écho Primordial (BOSS ZONE) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_PUC_030', 'Ombre Musicale —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_031', 'Golem de Son —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_032', 'Banshee du Tempo —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_033', 'Gardien du Silence —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_034', 'Spectateur Spectral —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_001', 'Lézard de Lave —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_002', 'Salamandre Pygmée —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_003', 'Cendreux —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_004', 'Ver de Braise —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_010', 'Rôdeur des Cendres —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_011', 'Scorpion Magmatique —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_012', 'Chien de lave —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_013', 'Élémentaire de Feu —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_020', 'Géant de Cendre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_021', 'Wyrm de Magma —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_022', 'Golem de la Fournaise —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_023', 'Salamandre Géante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_024', 'Dragonnet de Lave —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_025', 'Gardien du Brasier —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_SAL_026', 'Seigneur des Cendres —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_SAL_030', 'Spectre de la Fournaise —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_031', 'Élémentaire de Magma —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_032', 'Titan de Braise —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_033', 'Wyrm Ancien —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SAL_034', 'Gardien du Cœur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_SPR_001', 'Corbeau Spectral —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_PUC_026', 'Écho Primordial (BOSS ZONE)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_PUC_030', 'Ombre Musicale', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_031', 'Golem de Son', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_032', 'Banshee du Tempo', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_033', 'Gardien du Silence', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_PUC_034', 'Spectateur Spectral', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_001', 'Lézard de Lave', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_002', 'Salamandre Pygmée', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_003', 'Cendreux', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_004', 'Ver de Braise', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_010', 'Rôdeur des Cendres', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_011', 'Scorpion Magmatique', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_012', 'Chien de lave', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_013', 'Élémentaire de Feu', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_020', 'Géant de Cendre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_021', 'Wyrm de Magma', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_022', 'Golem de la Fournaise', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_023', 'Salamandre Géante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_024', 'Dragonnet de Lave', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_025', 'Gardien du Brasier', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_SAL_026', 'Seigneur des Cendres', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_SAL_030', 'Spectre de la Fournaise', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_031', 'Élémentaire de Magma', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_032', 'Titan de Braise', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_033', 'Wyrm Ancien', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SAL_034', 'Gardien du Cœur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_SPR_001', 'Corbeau Spectral', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Planage en cercle. Plonge sur les joueurs isolés. Son cri inflige -10% DEF (cumulable 3×).'),
-('MOB_SPR_002', 'Rat des Ruines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_002', 'Rat des Ruines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Se déplace en meute. Attaque depuis les gravats. Craint le feu.'),
-('MOB_SPR_003', 'Feu Follet Gris —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_003', 'Feu Follet Gris', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Flotte et esquive les coups physiques. Vulnérable à la Lumière. Lâche une trainée de cendres.'),
-('MOB_SPR_004', 'Statue Frémissante —', 1, NULL, 100, 0, 10, 10, 10, NULL, 'masses.', NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_004', 'Statue Frémissante', 1, NULL, 100, 0, 10, 10, 10, NULL, 'masses.', NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Immobile jusqu''au passage du joueur. Immunisée aux dégâts de recul. Faiblesse : masses.'),
-('MOB_SPR_010', 'Ombre Rampante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_010', 'Ombre Rampante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Fusionne avec l''obscurité. Attaque sournoise dans le dos des joueurs. Visible sous Lumière.'),
-('MOB_SPR_011', 'Squelette Maudit —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_011', 'Squelette Maudit', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Réanime si son crâne n''est pas détruit. Attaque à l''épée rouillée (hémorragie).'),
-('MOB_SPR_012', 'Goule des Ruines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_012', 'Goule des Ruines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Creuse les décombres. Griffes infectées (-30% soins). Se nourrit des cadavres pour se soigner.'),
-('MOB_SPR_013', 'Spectre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_013', 'Spectre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Intangible (50% chance d''ignorer les dégâts physiques). Hurlement paralysant (2s).'),
-('MOB_SPR_020', 'Chevalier Spectral —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_020', 'Chevalier Spectral', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Patrouille les salles de la Nécropole. Parade les attaques de face. Charge lointaine.'),
-('MOB_SPR_021', 'Banshee —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_021', 'Banshee', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Son hurlement inflige Fear (3s) zone d''effet. Téléportation aléatoire. Faible en mêlée.'),
-('MOB_SPR_022', 'Archéomage Dément —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_022', 'Archéomage Dément', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Lance des sorts aléatoires (boule d''ombre, invocation de squelette, confusion). Interruption requise.'),
-('MOB_SPR_023', 'Golem de Ruine —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_023', 'Golem de Ruine', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Immunisé aux altérations d''état. Frappe de zone (concussion). Points faibles : articulations.'),
-('MOB_SPR_024', 'Dragon Spectral —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_024', 'Dragon Spectral', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Souffle d''ombre (cône, zone). Vol intermittent. Invoque des ombres mineures.'),
-('MOB_SPR_025', 'Ombre de Pennroth —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_025', 'Ombre de Pennroth', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
 MINI-BOSS — S''invoque à l''approche du tombeau central. Copie les sorts du joueur. Phase 2 : double.'),
-('MOB_SPR_026', 'Roi des Cryptes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_026', 'Roi des Cryptes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
 BOSS ZONE — 3 phases. Phase 1 : épée longue. Phase 2 : invocation de piliers d''ombre. Phase 3 : métamorphose spectrale.'),
-('MOB_SPR_030', 'Zombie des Cryptes —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_030', 'Zombie des Cryptes', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Erreur de la Nécropole. Lent, mais ignore les sorts de sommeil. Attaque empoisonnée.'),
-('MOB_SPR_031', 'Momie Errante —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_031', 'Momie Errante', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Infecte les joueurs (malédiction : -20% soins). Vulnérable au feu. Bandages : résistance physique.'),
-('MOB_SPR_032', 'Liche Mineure —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_032', 'Liche Mineure', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Mage spectral. Lance Nova d''Ombre et Drain de Vie. Détruire le phylactère pour l''achever.'),
-('MOB_SPR_033', 'Chevalier de l''Ombre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_033', 'Chevalier de l''''Ombre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Ancien garde de la Nécropole. Combat en formation. B r i s e - g a r d e : perce les défenses.'),
-('MOB_SPR_034', 'Nécrophage —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SPR_034', 'Nécrophage', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Insecte géant des catacombes. Se nourrit des morts pour se régénérer. Immobilise avec ses mandibules.'),
-('MOB_SYL_001', 'Papillon Géant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_001', 'Papillon Géant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Butine les fleurs de la prairie. Passif, devient agressif si approché. Lâche de la poudre soporifique.'),
-('MOB_SYL_002', 'Colibri de Feu —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_002', 'Colibri de Feu', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Vol très rapide. Crache une petite boule de feu. Attire d''autres colibris en criant.'),
-('MOB_SYL_003', 'Écureuil Volant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_003', 'Écureuil Volant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Plane d''arbre en arbre. Rapide mais fragile. Lâche des fruits quand il est touché.'),
-('MOB_SYL_004', 'Oiseau Chanteur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_004', 'Oiseau Chanteur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Passif. Son chant régénère les PV des alliés (zone 10m). Ne fuit pas le combat.') ON CONFLICT (monster_id) DO NOTHING;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
-('MOB_SYL_010', 'Griffon Juvénile —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_010', 'Griffon Juvénile', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Chasse en couple. Piqué foudroyant. Attrape les petits joueurs pour les lâcher dans le vide.'),
-('MOB_SYL_011', 'Cheval Ailé —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', '(standard)
+('MOB_SYL_011', 'Cheval Ailé', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, TRUE, 10, 'passive', '(standard)
 Charge volante. Ruade étourdissante. Monture possible si dompté (quête).'),
-('MOB_SYL_012', 'Faucon —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_012', 'Faucon', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Agilité extrême. Attaque en série (3 coups). Perception accrue : détecte les joueurs cachés.'),
-('MOB_SYL_013', 'Serpent Volant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_013', 'Serpent Volant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Ondule dans les airs. Crache du venin aveuglant (écran flou 3s). S''enroule autour du joueur.'),
-('MOB_SYL_020', 'Dragonnet du Vent —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_020', 'Dragonnet du Vent', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Souffle de vent (repoussage). Vol stationnaire. Invoque des bourrasques qui ralentissent.'),
-('MOB_SYL_021', 'Sylphide —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_021', 'Sylphide', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Danse aérienne. Soigne les alliés. Lame de vent perforante. Devient invisible 2s.'),
-('MOB_SYL_022', 'Golem des Nuages —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_022', 'Golem des Nuages', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Corps vaporeux (résistance physique 50%). Frappe de zone. Absorbe la foudre pour se soigner.'),
-('MOB_SYL_023', 'Phoenix —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_023', 'Phoenix', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Renaît une fois en explosant (dégâts zone). Immunisé au feu. Plumes incandescentes.'),
-('MOB_SYL_024', 'Wyverne —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_024', 'Wyverne', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Grand prédateur du donjon. Queue empoisonnée. Souffle acide (dégâts sur la durée).'),
-('MOB_SYL_025', 'Tempête —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_025', 'Tempête', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
 MINI-BOSS — Cyclone vivant. Phase 1 : rafales. Phase 2 : tornade aspirante. Phase 3 : éclairs.'),
-('MOB_SYL_026', 'Sylphe Primordial —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_026', 'Sylphe Primordial', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '(standard)
 BOSS ZONE — Entité de vent originelle. 3 phases : rafale, oeil du cyclone, silence absolu (vol annulé).'),
-('MOB_SYL_030', 'Nuage Tempête —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_030', 'Nuage Tempête', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Flotte dans la Tour des Vents. Électrocute les joueurs proches. Se fragmente en petits nuages.'),
-('MOB_SYL_031', 'Élémentaire d''Air —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_031', 'Élémentaire d''''Air', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Tourbillon d''air comprimé. Lance des lames de vent. Immunisé aux dégâts de chute.'),
-('MOB_SYL_032', 'Aigle du Zénith —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_032', 'Aigle du Zénith', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Prédateur suprême des hauteurs. Vue perçante (détecte les embuscades). Serres acérées.'),
-('MOB_SYL_033', 'Djinn du Vent —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_033', 'Djinn du Vent', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Génie de l''air. Exauce des voeux trompeurs (effets aléatoires). Peut être négocié.'),
-('MOB_SYL_034', 'Tourbillon —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
+('MOB_SYL_034', 'Tourbillon', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Mini-tornade mobile. Aspire les projectiles et les renvoie. Zone de contrôle aérien.'),
-('MOB_UND_001', 'Poisson-Lumière —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_002', 'Méduse —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_003', 'Tortue Marine —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_004', 'Loutre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_010', 'Piranha —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_011', 'Raie —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_012', 'Pieuvre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_013', 'Serpent de Mer —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_020', 'Requin —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_021', 'Kraken Juvénile —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_022', 'Sirène —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_023', 'Dragon d''Eau —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_024', 'Baleine —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_025', 'Hydre —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_026', 'Brumaire —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_030', 'Gardien Abyssal —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_031', 'Prêtre des Abysses —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_032', 'Tourmenteur —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_033', 'Sirène Abyssale —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_UND_034', 'Léviathan des Abysses —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_001', 'Gardien de la Canopée —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_002', 'Singe des Racines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_003', 'Papillon Lumière —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_004', 'Oiseau-Monde —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_010', 'Chevalier des Branches —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_011', 'Dryade —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_012', 'Esprit de la Sève —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_013', 'Colibri Éternel —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_020', 'Dragon d Yggdrasil —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_021', 'Gardien des Racines —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_022', 'Banshee des Feuilles —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_023', 'Araignée des Sèves —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_024', 'Serpent-Monde —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_025', 'Gardien de la Canopée (MINI-BOSS) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_UND_001', 'Poisson-Lumière', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_002', 'Méduse', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_003', 'Tortue Marine', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_004', 'Loutre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_010', 'Piranha', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_011', 'Raie', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_012', 'Pieuvre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_013', 'Serpent de Mer', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_020', 'Requin', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_021', 'Kraken Juvénile', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_022', 'Sirène', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_023', 'Dragon d''''Eau', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_024', 'Baleine', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_025', 'Hydre', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_026', 'Brumaire', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_030', 'Gardien Abyssal', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_031', 'Prêtre des Abysses', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_032', 'Tourmenteur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_033', 'Sirène Abyssale', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_UND_034', 'Léviathan des Abysses', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_001', 'Gardien de la Canopée', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_002', 'Singe des Racines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_003', 'Papillon Lumière', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_004', 'Oiseau-Monde', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_010', 'Chevalier des Branches', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_011', 'Dryade', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_012', 'Esprit de la Sève', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_013', 'Colibri Éternel', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_020', 'Dragon d Yggdrasil', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_021', 'Gardien des Racines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_022', 'Banshee des Feuilles', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_023', 'Araignée des Sèves', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_024', 'Serpent-Monde', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_025', 'Gardien de la Canopée (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
-('MOB_YGG_026', 'Níðhöggr (BOSS ZONE) —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
-('MOB_YGG_030', 'Racine Primordiale — Vie —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_031', 'Racine Primordiale — Sagesse —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_032', 'Racine Primordiale — Puissance —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_033', 'Racine Primordiale — Vie Éternelle —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_034', 'Racine Primordiale — Néant —', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_00X', 'Wiki ALfheim Online - Le Gardien du Dôme (Boss de la Grand Quest d''Yggdrasil)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_YGG_026', 'Níðhöggr (BOSS ZONE)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
+('MOB_YGG_030', 'Racine Primordiale — Vie', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_031', 'Racine Primordiale — Sagesse', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_032', 'Racine Primordiale — Puissance', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_033', 'Racine Primordiale — Vie Éternelle', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_034', 'Racine Primordiale — Néant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
+('MOB_YGG_00X', 'Wiki ALfheim Online - Le Gardien du Dôme (Boss de la Grand Quest d''''Yggdrasil)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
 
 -- Monstres : 257 lignes
 -- ============================================================
@@ -1534,28 +1534,28 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_UND_HUNT_001', 'MOB_UND_032', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_UND_HUNT_001', 'MOB_UND_033', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_UND_HUNT_001', 'MOB_UND_034', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_001', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_002', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_003', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_004', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_010', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_011', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_012', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_013', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_020', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_021', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_022', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_023', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_025', 5, 1, 100, 1, 'always', 'any', TRUE);
+('ZONE_SYL_HUNT_001', 'MOB_YGG_001', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_002', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_003', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_004', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_010', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_011', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_012', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_013', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_020', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_021', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_022', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_023', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_024', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_025', 5, 1, 100, 1, 'always', 'any', TRUE);
 INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_level, max_concurrent, time_condition, weather_cond, is_boss) VALUES
-('ZONE_NEU_HUNT_001', 'MOB_YGG_026', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_030', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_031', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_032', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_033', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_034', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_NEU_HUNT_001', 'MOB_YGG_00X', 5, 1, 100, 1, 'always', 'any', TRUE);
+('ZONE_SYL_HUNT_001', 'MOB_YGG_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_030', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_031', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_032', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_033', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_034', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_SYL_HUNT_001', 'MOB_YGG_00X', 5, 1, 100, 1, 'always', 'any', TRUE);
 
 -- Spawns : 257 lignes
 -- ============================================================

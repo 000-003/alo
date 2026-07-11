@@ -122,7 +122,8 @@ function parseMonsters() {
 
     const name = (content.match(/^#\s+(.+?)──?/)?.[1]?.trim() ||
                   content.match(/^#\s+(.+)/m)?.[1]?.replace(/`.*$/, '').trim() || mobId)
-                  .replace(/^─+\s*/, '').replace(/\s*─+\s*$/, '').replace(/\s+$/, '').trim();
+                  .replace(/^[─—]+\s*/, '').replace(/\s*[─—]+\s*$/, '').replace(/\s+$/, '').trim()
+                  .replace(/'/g, "''");
     const level = parseInt(content.match(/Niveau\s*[:]?\s*(\d+)/i)?.[1] ||
                            content.match(/niveau\s*:\s*(\d+)/i)?.[1] || 1);
     const family = content.match(/Famille\s*:\s*(.+)/i)?.[1]?.trim() || null;
@@ -173,6 +174,18 @@ const DIR_TO_ZONE = {
   golden:     'ZONE_SYL_HUNT_001',
 };
 
+const KNOWN_ZONES = new Set([
+  'ZONE_CAI_HUNT_001','ZONE_CAI_HUNT_002',
+  'ZONE_GNO_HUNT_001','ZONE_GNO_HUNT_002',
+  'ZONE_IMP_HUNT_001','ZONE_IMP_HUNT_002',
+  'ZONE_LEP_HUNT_001','ZONE_LEP_HUNT_002',
+  'ZONE_PUC_HUNT_001','ZONE_PUC_HUNT_002',
+  'ZONE_SAL_HUNT_001','ZONE_SAL_HUNT_002',
+  'ZONE_SPR_HUNT_001','ZONE_SPR_HUNT_002',
+  'ZONE_SYL_HUNT_001','ZONE_SYL_HUNT_002',
+  'ZONE_UND_HUNT_001','ZONE_UND_HUNT_002',
+]);
+
 function parseSpawns() {
   const rows = [];
   const seen = new Set();
@@ -189,7 +202,11 @@ function parseSpawns() {
     seen.add(mobId);
     const isBoss = content.includes('BOSS') || content.includes('boss');
     const dirName = path.basename(path.dirname(f)).toLowerCase().replace(/[^a-z]/g, '');
-    const zone = DIR_TO_ZONE[dirName] || 'ZONE_NEU_HUNT_001';
+    const zone = DIR_TO_ZONE[dirName] || 'ZONE_SYL_HUNT_001';
+    if (!KNOWN_ZONES.has(zone)) {
+      console.error(`SKIP spawn ${mobId}: zone ${zone} inconnue`);
+      continue;
+    }
     rows.push([zone, mobId, isBoss ? 5 : 30, 1, 100, isBoss ? 1 : 5, 'always', 'any', isBoss ? 'TRUE' : 'FALSE']);
   }
   return rows;

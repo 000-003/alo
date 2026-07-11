@@ -75,8 +75,13 @@ async function executeIntent(db, routing, playerId, phoneNumber = null) {
       return movement.handleMove(db, playerId, routing.entities);
     }
 
-    case 'ATTACK':
+    case 'ATTACK': {
+      const activeCombat = combat.getCombatStatus(playerId);
+      if (activeCombat) {
+        return combat.handleCombatAction(db, playerId, routing.entities);
+      }
       return combat.handleAttack(db, playerId, routing.entities);
+    }
 
     case 'USE_SKILL': {
       const existingCombat = combat.getCombatStatus(playerId);
