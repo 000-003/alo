@@ -150,3 +150,42 @@ Le « NER » (`models/ner.js`) n'extrait que les IDs canoniques tapés littéral
 ---
 
 *Rapport établi en lecture seule (D-P3-1). Aucun fichier de `bot/` modifié. Les CDC 13-21 restent inchangés — aucun écart constaté ne justifie d'amendement du référentiel : sur chaque divergence, c'est le code qui doit converger vers le CDC, à l'exception d'aucune.*
+
+---
+
+# ADDENDUM 45-bis — Contre-audit après la vague corrective PE (2026-07-11, 13h37-13h40)
+
+> Le PE a appliqué une vague de correctifs dans `bot/` (13 fichiers modifiés, 3 supprimés, 1 créé — non commitée au moment du contre-audit) répondant à R1-R3 et M2/M4/M5/M6/M7/h3. Re-vérification par diff intégral contre l'état audité (`HEAD`).
+
+## 1. Re-verdict par finding
+
+| Finding | Re-verdict | Constat |
+|---|---|---|
+| **R1 verrou D22** | ⚠️ **PARTIEL + bug nR1** | Filtre `k_level` ajouté aux 2 lectures (`rag.js`, `dialogue.js`) ✅ dans l'intention… mais **bugué** (nR1 ci-dessous, fail-closed). **L'ingestion (`seed-generator.js`) et le CHECK du schéma sont inchangés** : le cœur du contrat (« le verrou est une propriété de l'index ») reste ouvert. Gating K2 codé en dur (`knowledgeLevel: 2` constant) — toujours pas lié à l'état de déblocage L1 (D-RAG-4) |
+| **R2 combat.onnx** | ✅ **CLOS** | `src/models/combat.js`, `training/train_combat.py`, `combat_feature_names.json` supprimés ; `combat.onnx` retiré de `models/` ; `loader.js` réduit à un stub explicite (« Modèles ONNX : désactivés — moteur déterministe uniquement ») ; `/health` ne ment plus. Résidus cosmétiques : `config.js:38` (`MODEL_COMBAT`), et **nR3** (run_all.sh cassé) |
+| **R3 anti-dup éco** | ✅ **CLOS** | `buyItem`/`sellItem` : `SELECT … FOR UPDATE` sur avatar **et** ligne d'inventaire, UPDATE/DELETE **conditionnels** (`AND yrd_balance >= $` / `AND quantity >= $`) avec test de `rowCount`, contrôles et crédit déplacés **dans** la transaction, ordre de verrouillage cohérent (avatar→inventaire, pas de deadlock). Conforme au contrat. Nit : `newBalance: total` dans le retour de vente (libellé trompeur, sans effet de jeu) |
+| **M2 `generate()`** | 🚧 avancé | **`generate(role, prompt, context, policy)` existe** avec table `ROLES` (priorité de backends par rôle — Mistral premier sur DIALOGUE/COMBAT ✓ D-MOD-5 — system prompt, température, gabarits C4 par rôle) + compteurs de quota et coupure sur 429. Manque : **Gemini toujours non câblé**, quotas fictifs sans rpm/rpd réels ni bascule à 90 %, et **bug nR2** |
+| **M3 grounding** | 🚧 structurel | Slot `context.ragContext` prévu dans `callProvider` (bloc « Contexte récupéré ») ✅ — mais **aucun appelant ne le renseigne** (`dialogue.js` appelle `enhanceDialogue` sans contexte). Pas d'anti-injection. Dormant (`USE_API=false`) |
+| **M4 R0/état** | 🚧 avancé | `handleMove` **écrit désormais `current_zone_id`** + débite les MP par UPDATE conditionnel (`mp_current >= coût`) ✅. Reste : aucun contrôle d'adjacence ni de temps de trajet (déplacement multi-sauts **instantané** vers toute zone atteignable), et la gestion des groupes WhatsApp (le R0 proprement dit) toujours absente |
+| **M5 gazetteer** | ✅ substantiel | **`services/gazetteer.js` créé** (index items/PNJ/zones chargé de la DB au démarrage, normalisation d'accents, appariement exact/inclusion/mots communs) et branché dans le NER (PNJ/zones systématiques, items derrière 3 mots-clés). Limites : pas de tolérance aux pluriels (« 3 potion**s** de soin » ne résout pas « Potion de soin » — il manque le fuzzy Levenshtein du CDC), monstres non couverts (le ILIKE global m6 demeure) |
+| **M6 ONNX morts** | ✅ clos (par retrait) | Le PE a tranché « débrancher » : loader stub, plus aucune inférence fantôme, `/health` honnête. Résidus inertes : `embed.js`/`intent.js` maison, artefacts `.npy`, dépendance `onnxruntime-node` dans package.json |
+| **M7 seuils/taxonomie** | ✅ largement | Seuil **0.7** appliqué aux deux endroits ✓ ; **`LORE_QUERY` ajouté et routé vers `retrieveLore`** avec repli « connaissances limitées » (esprit S7 ✓) ; `VAULT`/`MAIL`/`EQUIP` ajoutés (stubs assumés). `SYSTEM` manque encore (mineur) |
+| **h3 rebuild.sh** | ✅ clos | `echo 0000 \|` purgé (nit : `sudo -S` sans pipe lit stdin — un simple `sudo` suffirait) |
+| m1/m2/m3/m5/m6/m7/m8/h2, **m4** | ❌ inchangés | Notamment **m4** : `llama3-70b-8192` (décommissionné) figure encore 2× dans `ROLES`, et l'URL HF `api-inference` dépréciée demeure |
+
+## 2. 🐞 Régressions introduites par la vague corrective (nouvelles)
+
+### nR1 — Le filtre `k_level` compare un VARCHAR à `2` → il exclut TOUT, y compris K0/K1
+`k_level` est un `VARCHAR(2)` (`'K0'`…`'KX'`, schema.sql:725). Les nouvelles requêtes passent le paramètre **numérique `2`** (`rag.js` : `context.knowledgeLevel || 2` ; `dialogue.js` : `[npc.npc_id, 2]`). Postgres résout `k_level <= '2'` en comparaison **lexicographique** : `'K0' > '2'` dans toute collation courante (chiffres avant lettres) → **aucune ligne ne passe jamais le filtre**. Fail-closed pour D22 (rien ne fuite) mais la connaissance PNJ K0/K1/K2 ne sera **jamais servie** le jour où la table sera peuplée — panne silencieuse (aucune erreur SQL, résultat vide). **Correctif attendu** : `k_level IN ('K0','K1','K2')`, ou paramètre `'K2'` (l'ordre lexicographique `'K0'<'K1'<'K2'<'K3'<'KX'` fonctionne, lui).
+
+### nR2 — Les seaux de quota ne se remplissent jamais hors 429 → providers écartés définitivement
+`llm.js` : `quotaRemaining[name]` est **décrémenté à chaque succès** (l.103) mais n'est réinitialisé **que** par le `setTimeout` du chemin 429 (l.162). Après 60 appels Groq réussis **sans jamais** rencontrer de 429, Groq est écarté pour toujours (jusqu'au restart) — puis Mistral après 50, etc., jusqu'à la cascade complète vers les gabarits. Il manque le **réapprovisionnement périodique** du seau à jetons (D-ORC-3 : fenêtre rpm glissante).
+
+### nR3 — `training/run_all.sh` casse : il appelle `train_combat.py` supprimé
+`run_all.sh:26` + `set -euo pipefail` → le pipeline d'entraînement **s'arrête en erreur** avant `train_embed.py`. Retirer la ligne (et l'écho « Combat prediction... »).
+
+## 3. Bilan du contre-audit
+
+**2 des 3 rouges sont clos proprement (R2, R3) — travail conforme au contrat.** Le rouge restant est **R1** : la vague n'a traité que la lecture (et avec le bug nR1) ; l'exigence centrale — exclusion K3 **à l'ingestion** (`seed-generator.js`) + contrainte structurelle sur la table + gating K2 par l'état L1 — est intacte. Priorités suivantes recommandées : **nR1 → R1-ingestion/CHECK → nR2 → nR3**, puis reprise de l'ordre initial (M1 pipeline `SYS_*`, M3 grounding avant activation API, M4-R0 groupes WA, m4 IDs de modèles).
+
+*Contre-audit en lecture seule (D-P3-1) — `bot/` non modifié par l'ACP ; l'état contre-audité est le worktree PE non commité du 2026-07-11 13h40.*

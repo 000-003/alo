@@ -1444,3 +1444,14 @@ Gouvernance réalignée sur le terrain : phase données CLOSE (§10 ✅), phase 
 ### État de sortie
 
 Audit clos, `bot/` intact, CDC 13-21 inchangés (aucun écart ne justifie d'amendement du référentiel). **Ordre de correction recommandé au PE : R1 → R3 → R2 → M2 → M1/M4 → M5/M7 → M6.** Backlog documentaire inchangé (accessoires D39, auberge exploitable, `T_GUILDS`, `SYS_RAG_REINDEX`, `ZONE_ROUTE_LUGRU`, audit CGU API).
+
+### Addendum 45-bis — Contre-audit de la vague corrective PE (2026-07-11, 13h37-13h40)
+
+Sur « revérifie » du PE : le code `bot/` a changé entre l'audit et le contre-audit (13 fichiers modifiés, 3 supprimés, `gazetteer.js` créé — worktree non commité). Re-vérification par diff intégral, ajoutée en addendum au rapport 22.
+
+- **R2 ✅ CLOS** : chaîne `combat.onnx` supprimée (fichiers + modèle + loader ONNX désactivé « moteur déterministe uniquement », `/health` honnête).
+- **R3 ✅ CLOS** : éco verrouillée dans les règles (FOR UPDATE avatar+inventaire, UPDATE/DELETE conditionnels + rowCount, crédit en transaction, ordre de verrous cohérent).
+- **R1 ⚠️ PARTIEL + bug nR1** : filtre `k_level` ajouté aux lectures mais comparant VARCHAR à `2` → exclut TOUT (fail-closed mais panne silencieuse : K0/K1/K2 jamais servis) ; **ingestion seed-generator + CHECK schéma inchangés** (cœur du verrou D22 toujours ouvert) ; gating K2 codé en dur (pas lié à L1).
+- **Avancées** : M2 `generate(role,prompt,contexte,politique)` créé (priorités par rôle, Mistral premier en dialogue) ; M4 le déplacement écrit `current_zone_id` + MP conditionnels ; M5 gazetteer nom→ID branché au NER ; M6 clos par retrait ; M7 seuils 0.7 + `LORE_QUERY` routé ; h3 mot de passe sudo purgé.
+- **3 régressions nouvelles** : nR1 (filtre K varchar/int), nR2 (seaux de quota jamais réapprovisionnés hors 429 → providers écartés définitivement après épuisement du compteur), nR3 (`run_all.sh` appelle `train_combat.py` supprimé → pipeline d'entraînement casse).
+- **Priorités recommandées** : nR1 → R1-ingestion/CHECK → nR2 → nR3, puis M1 (`SYS_*`), M3 (grounding avant activation API), M4-R0 (groupes WA), m4 (IDs modèles périmés, `llama3-70b-8192` encore présent 2×).
