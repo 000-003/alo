@@ -278,3 +278,31 @@ Embeddings stockés en `FLOAT[]` jamais relus (`search()` ré-embedde à la vol�
 | **Restant prioritaire** | **nR13** (peupler `T_SPAWN_TABLES` — débloquant gameplay), **nR11** (GM par allowlist config ou colonne actée au MLD), `SYS_ADVANCE_QUEST` total en dur, nR12, source LLM='system' à restreindre (allowlist par source dédiée), M3-sanitizer FR, gating K2/L1 en lecture, P2 RAG réel (fiches+e5), parseur QI, D12 jauges |
 
 *Contre-audit exécuté en lecture seule sur `bot/` (D-P3-1) ; seule la suite de tests du PE et 3 sondes en lecture ont été exécutées contre la base de dev.*
+
+---
+
+# ADDENDUM 45-sexies — Contre-audit de la vague 4.2 PE (commit `b633101`, 14h32) — par diff + exécution
+
+> Vague annonçant « nR11-nR13 clos ». Vérifié : diff intégral + suite d'intégration (**27 ✅ / 3 ❌** — la suite est désormais honnête : 2 rouges = résidus réels, 1 rouge = test mal écrit) + sondes ACP.
+
+## 1. Re-verdict
+
+| Finding | Re-verdict | Preuve |
+|---|---|---|
+| **nR11 (GM)** | ⚠️ **moitié** | Refus fail-closed **propre** ✅ : sonde `!sys_grant_item` avec téléphone inconnu → *« ❌ Accès refusé »* (plus d'erreur SQL, plus de fuite). **Mais le chemin d'acceptation est cassé (nR11-b)** : `message-handler.js:133` appelle `handleSysCommand(db, routing, playerId, null)` — le `phoneNumber` reçu par `processMessage` n'est **jamais transmis** → même avec `GM_PHONES` configuré, aucun GM WhatsApp ne peut s'authentifier. Le repli `_playerId.includes(p)` ne matchera jamais un UUID — et il est **dangereux** : une entrée courte type `"0000"` dans `GM_PHONES` ferait matcher l'UUID de test tout-zéros (GM accidentel). `GM_PHONES` absent de `.env`/`.env.example` (non documenté) |
+| **nR12 (build-embeddings)** | ✅ code | `loot_table_id` retiré ; toutes les colonnes des 7 sources existent désormais dans le schéma. Exécution du build encore à faire (index vide) |
+| **nR13 (spawns)** | ✅ code / ❌ **non appliqué** | `parseSpawns()` correct (9 colonnes alignées, `spawn_id` en DEFAULT) — mais `seed_data.sql` **non régénéré** (0 ligne T_SPAWN_TABLES dedans) et base **non re-seedée** : la suite du PE échoue elle-même (« t_spawn_tables est vide — relancer seed-generator »). **Le combat reste inopérant tant que le re-seed n'est pas exécuté.** Qualité du mapping : tout mob → `HUNT_001` de son territoire (les plages D6 HUNT_002/donjons ne sont pas différenciées), `air` → SYL (D8 voudrait les 9 routes), `yggdrasil`/fichiers racine → NEU par défaut — fonctionnel pour débloquer, **non conforme D6/D8** (dette de données de 2ᵉ ordre) |
+| Reliquat quêtes | ✅ clos | `SYS_ADVANCE_QUEST` lit `total_steps` réel via JOIN `t_quests_dict` (défaut 10 si NULL) |
+| Reliquat sanitizer FR | ✅ posé | 4 motifs FR ajoutés (ignore/désormais/tiens pas compte/tu es maintenant) — couverture basique, mieux que rien |
+| Reliquat noms seed | ✅ | trailing `─`/espaces nettoyés dans `parseMonsters` |
+| Tests | ✅ honnêtes, 1 mal écrit | 3 tests ajoutés ; les 2 échecs spawn/combat pointent le vrai résidu. Le test GM échoue **pour une mauvaise raison** : il envoie `!sys_help`, que le classifieur mots-clés détourne en `HELP` (substring « help ») avant même le routage SYS — et `sys_help` early-return **avant** le contrôle GM de toute façon. À réécrire avec `!sys_grant_item …` + téléphone hors liste (le vrai chemin refuse correctement, vérifié par sonde) |
+
+## 2. Voie de sortie (actions courtes et exactes)
+
+1. **Appliquer nR13** : régénérer `seed_data.sql` (`node scripts/seed-generator.js`) + re-seed (`rebuild.sh`) → la suite passe au vert spawn/combat, **le combat démarre enfin**.
+2. **nR11-b** : passer `phoneNumber` à `handleSysCommand` (1 ligne, `message-handler.js:133` — le paramètre arrive déjà dans `processMessage`) ; **supprimer** le repli `_playerId.includes(p)` ; documenter `GM_PHONES` dans `.env.example`.
+3. Réécrire le test GM (`!sys_grant_item` + téléphone hors liste) ; ajouter un test « GM accepté » avec un téléphone de test dans l'allowlist.
+4. Lancer `build-embeddings.js` après re-seed (nR12 exécution).
+
+## 3. Fond restant après 4.2 (inchangé)
+Source LLM=`'system'` sur-privilégiée (allowlist par source dédiée) · gating K2 par `t_npc_knowledge_unlocks` jamais consulté en lecture · P2 RAG réel (chunking des fiches + e5, CDC 15) · parseur QI (T_NPC_KNOWLEDGE toujours vide) · jauges D12 (`OXYGEN`/`HEAT`/`DOT`) non modélisées · spawns conformes D6/D8 (2ᵉ passe) · API HTTP sans auth · Redis non câblé · HF `api-inference` déprécié · avatar fantôme universel · mot de passe DB défaut.

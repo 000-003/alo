@@ -1481,3 +1481,13 @@ Contre-audit par diff + exécution : suite d'intégration PE lancée (**27/27 �
 - Reliquats : `SYS_ADVANCE_QUEST` termine à `step>=10` en dur (≠ `total_steps` réel), source LLM='system' sur-privilégiée, sanitizer anglophone, gating K2/L1, artefacts de noms dans le seed (« Chevalier d Argent — »), angles morts des tests = exactement les 3 zones cassées.
 
 **Bilan cumulé : R1-R3 clos (vague 2) ; vague 3 apurée à ~80 % par la vague 4 ; restent nR13 (données) et nR11 (config/MLD) comme bloqueurs réels.** Rapport : addendum 45-quinquies du doc 22.
+
+### Addendum 45-sexies — Contre-audit vague 4.2 PE (commit `b633101`, 14h32) — diff + exécution
+
+Suite d'intégration : **27 ✅ / 3 ❌** (suite désormais honnête : 2 rouges = résidus réels). Sondes ACP à l'appui :
+- **nR11 ⚠️ moitié** : refus fail-closed propre ✅ (sonde : « Accès refusé », plus d'erreur SQL) ; **mais chemin d'acceptation cassé (nR11-b)** — `message-handler.js:133` passe `phoneNumber=null` → aucun GM ne peut s'authentifier même avec `GM_PHONES` ; repli `_playerId.includes(p)` à supprimer (dangereux : entrée courte type « 0000 » matcherait l'UUID de test) ; `GM_PHONES` non documenté.
+- **nR12 ✅ code** (colonnes alignées) — build à exécuter.
+- **nR13 ✅ code / ❌ NON APPLIQUÉ** : `parseSpawns()` correct mais `seed_data.sql` non régénéré, base non re-seedée (0 ligne, la suite PE échoue elle-même) → **combat toujours inopérant**. Mapping grossier tout→HUNT_001 (plages D6/D8 non respectées — dette 2ᵉ ordre).
+- Reliquats clos : `SYS_ADVANCE_QUEST` lit `total_steps` réel ✅, sanitizer FR posé ✅, noms monstres nettoyés ✅. Test GM mal écrit (`!sys_help` détourné en HELP par le classifieur ; sys_help early-return avant contrôle GM).
+
+**Voie de sortie** : (1) régénérer seed + re-seed → combat démarre ; (2) passer `phoneNumber` ligne 133 + supprimer repli UUID + documenter GM_PHONES ; (3) réécrire test GM ; (4) lancer build-embeddings. Rapport : addendum 45-sexies du doc 22.
