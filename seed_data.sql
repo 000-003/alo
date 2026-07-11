@@ -1024,7 +1024,7 @@ Vol erratique. Sonar : détecte les invisibles. Cri supersonique étourdissant (
 ('MOB_GNO_013', 'Araignée des Mines', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Tisse des toiles minérales (ralentissement). Venin minier (-10 PV/s pendant 8s).'),
 ('MOB_GNO_020', 'Golem de Pierre', 1, NULL, 100, 0, 10, 10, 10, NULL, 'Tranchant faible.', NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
-Golem de défense. Frappe de zone. Immunisé aux Critiques. Faiblesse : Tranchant faible.') ON CONFLICT (monster_id) DO NOTHING;
+Golem de défense. Frappe de zone. Immunisé aux Critiques. Faiblesse : Tranchant faible.') ON CONFLICT (monster_id) DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
 ('MOB_GNO_021', 'Golem de Mithril', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Carapace de mithril. Résiste à la magie. Brille dans l''obscurité. Très difficile à percer.'),
@@ -1086,7 +1086,7 @@ Protège les veines de mithril. Charge explosive. Invoque des éclats de roche.'
 ('MOB_LEP_001', 'Salamandre Vapeur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_LEP_002', 'Crabe Bouilloire', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_LEP_003', 'Feu Follet', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_LEP_004', 'Automate Égaré', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_LEP_004', 'Automate Égaré', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
 ('MOB_LEP_010', 'Scarabée Métal', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_LEP_011', 'Chenille à Vapeur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
@@ -1137,7 +1137,7 @@ INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, 
 ('MOB_PUC_022', 'Dryade', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_PUC_023', 'Centaure Musicien', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_PUC_024', 'Dragon des Bois', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_PUC_025', 'Ondaro (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_PUC_025', 'Ondaro (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
 ('MOB_PUC_026', 'Écho Primordial (BOSS ZONE)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
 ('MOB_PUC_030', 'Ombre Musicale', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
@@ -1212,7 +1212,7 @@ Vol très rapide. Crache une petite boule de feu. Attire d''autres colibris en c
 ('MOB_SYL_003', 'Écureuil Volant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Plane d''arbre en arbre. Rapide mais fragile. Lâche des fruits quand il est touché.'),
 ('MOB_SYL_004', 'Oiseau Chanteur', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
-Passif. Son chant régénère les PV des alliés (zone 10m). Ne fuit pas le combat.') ON CONFLICT (monster_id) DO NOTHING;
+Passif. Son chant régénère les PV des alliés (zone 10m). Ne fuit pas le combat.') ON CONFLICT (monster_id) DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
 ('MOB_SYL_010', 'Griffon Juvénile', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', '(standard)
 Chasse en couple. Piqué foudroyant. Attrape les petits joueurs pour les lâcher dans le vide.'),
@@ -1279,7 +1279,7 @@ Mini-tornade mobile. Aspire les projectiles et les renvoie. Zone de contrôle a�
 ('MOB_YGG_022', 'Banshee des Feuilles', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_YGG_023', 'Araignée des Sèves', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_YGG_024', 'Serpent-Monde', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_025', 'Gardien de la Canopée (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_YGG_025', 'Gardien de la Canopée (MINI-BOSS)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text;
 INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, base_atk, base_def, base_agi, element, weakness, resistance, immune, exp_yield, bounty_yrds, is_boss, is_flying, aggression_range, spawn_behavior, lore_text) VALUES
 ('MOB_YGG_026', 'Níðhöggr (BOSS ZONE)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', ''),
 ('MOB_YGG_030', 'Racine Primordiale — Vie', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
@@ -1287,28 +1287,28 @@ INSERT INTO T_MONSTERS_DICT (monster_id, name, level, family, base_hp, base_mp, 
 ('MOB_YGG_032', 'Racine Primordiale — Puissance', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_YGG_033', 'Racine Primordiale — Vie Éternelle', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
 ('MOB_YGG_034', 'Racine Primordiale — Néant', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, FALSE, FALSE, 10, 'passive', ''),
-('MOB_YGG_00X', 'Wiki ALfheim Online - Le Gardien du Dôme (Boss de la Grand Quest d''''Yggdrasil)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO NOTHING;
+('MOB_YGG_00X', 'Wiki ALfheim Online - Le Gardien du Dôme (Boss de la Grand Quest d''''Yggdrasil)', 1, NULL, 100, 0, 10, 10, 10, NULL, NULL, NULL, NULL, 50, 15, TRUE, FALSE, 10, 'passive', '') ON CONFLICT (monster_id) DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text;
 
 -- Monstres : 257 lignes
 -- ============================================================
 -- T_SPAWN_TABLES
 -- ============================================================
 INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_level, max_concurrent, time_condition, weather_cond, is_boss) VALUES
-('ZONE_SYL_HUNT_001', 'MOB_AIN_001', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_002', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_003', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_004', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_010', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_011', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_012', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_013', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_020', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_021', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_022', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_023', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_SYL_HUNT_001', 'MOB_AIN_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_001', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_002', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_003', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_004', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_010', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_011', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_012', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_013', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_020', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_021', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_022', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_023', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_024', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_AIN_HUB_001', 'MOB_AIN_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_SYL_HUNT_001', 'MOB_AIR_001', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SYL_HUNT_001', 'MOB_AIR_002', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SYL_HUNT_001', 'MOB_AIR_003', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1328,8 +1328,8 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_CAI_HUNT_001', 'MOB_CAI_022', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_CAI_HUNT_001', 'MOB_CAI_023', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_CAI_HUNT_001', 'MOB_CAI_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_CAI_HUNT_001', 'MOB_CAI_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_CAI_HUNT_001', 'MOB_CAI_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_CAI_DUN_001', 'MOB_CAI_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_CAI_DUN_001', 'MOB_CAI_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_CAI_HUNT_001', 'MOB_CAI_030', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_CAI_HUNT_001', 'MOB_CAI_031', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_CAI_HUNT_001', 'MOB_CAI_032', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1349,8 +1349,8 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_GNO_HUNT_001', 'MOB_GNO_022', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_GNO_HUNT_001', 'MOB_GNO_023', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_GNO_HUNT_001', 'MOB_GNO_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_GNO_HUNT_001', 'MOB_GNO_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_GNO_HUNT_001', 'MOB_GNO_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_GNO_DUN_001', 'MOB_GNO_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_GNO_DUN_001', 'MOB_GNO_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_GNO_HUNT_001', 'MOB_GNO_030', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_GNO_HUNT_001', 'MOB_GNO_031', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_GNO_HUNT_001', 'MOB_GNO_032', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1376,21 +1376,21 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_IMP_HUNT_001', 'MOB_IMP_032', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_IMP_HUNT_001', 'MOB_IMP_033', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_IMP_HUNT_001', 'MOB_IMP_034', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_001', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_002', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_003', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_004', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_010', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_011', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_012', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_013', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_020', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_021', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_022', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_023', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_SYL_HUNT_001', 'MOB_JOT_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_001', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_002', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_003', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_004', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_010', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_011', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_012', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_013', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_020', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_021', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_022', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_023', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_FLD_001', 'MOB_JOT_024', 30, 1, 100, 5, 'always', 'any', FALSE),
+('ZONE_JOT_RAID_001', 'MOB_JOT_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_JOT_RAID_001', 'MOB_JOT_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_LEP_HUNT_001', 'MOB_LEP_001', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_LEP_HUNT_001', 'MOB_LEP_002', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_LEP_HUNT_001', 'MOB_LEP_003', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1445,9 +1445,9 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_PUC_HUNT_001', 'MOB_PUC_022', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_PUC_HUNT_001', 'MOB_PUC_023', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_PUC_HUNT_001', 'MOB_PUC_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_PUC_HUNT_001', 'MOB_PUC_025', 5, 1, 100, 1, 'always', 'any', TRUE);
+('ZONE_PUC_DUN_001', 'MOB_PUC_025', 5, 1, 100, 1, 'always', 'any', TRUE);
 INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_level, max_concurrent, time_condition, weather_cond, is_boss) VALUES
-('ZONE_PUC_HUNT_001', 'MOB_PUC_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_PUC_DUN_001', 'MOB_PUC_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_PUC_HUNT_001', 'MOB_PUC_030', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_PUC_HUNT_001', 'MOB_PUC_031', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_PUC_HUNT_001', 'MOB_PUC_032', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1466,8 +1466,8 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_SAL_HUNT_001', 'MOB_SAL_022', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SAL_HUNT_001', 'MOB_SAL_023', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SAL_HUNT_001', 'MOB_SAL_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SAL_HUNT_001', 'MOB_SAL_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_SAL_HUNT_001', 'MOB_SAL_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SAL_DUN_001', 'MOB_SAL_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SAL_DUN_001', 'MOB_SAL_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_SAL_HUNT_001', 'MOB_SAL_030', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SAL_HUNT_001', 'MOB_SAL_031', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SAL_HUNT_001', 'MOB_SAL_032', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1486,8 +1486,8 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_SPR_HUNT_001', 'MOB_SPR_022', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SPR_HUNT_001', 'MOB_SPR_023', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SPR_HUNT_001', 'MOB_SPR_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SPR_HUNT_001', 'MOB_SPR_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_SPR_HUNT_001', 'MOB_SPR_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SPR_DUN_001', 'MOB_SPR_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SPR_DUN_001', 'MOB_SPR_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_SPR_HUNT_001', 'MOB_SPR_030', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SPR_HUNT_001', 'MOB_SPR_031', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SPR_HUNT_001', 'MOB_SPR_032', 30, 1, 100, 5, 'always', 'any', FALSE),
@@ -1507,8 +1507,8 @@ INSERT INTO T_SPAWN_TABLES (zone_id, monster_id, spawn_rate, min_level, max_leve
 ('ZONE_SYL_HUNT_001', 'MOB_SYL_022', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SYL_HUNT_001', 'MOB_SYL_023', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SYL_HUNT_001', 'MOB_SYL_024', 30, 1, 100, 5, 'always', 'any', FALSE),
-('ZONE_SYL_HUNT_001', 'MOB_SYL_025', 5, 1, 100, 1, 'always', 'any', TRUE),
-('ZONE_SYL_HUNT_001', 'MOB_SYL_026', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SYL_DUN_001', 'MOB_SYL_025', 5, 1, 100, 1, 'always', 'any', TRUE),
+('ZONE_SYL_DUN_001', 'MOB_SYL_026', 5, 1, 100, 1, 'always', 'any', TRUE),
 ('ZONE_SYL_HUNT_001', 'MOB_SYL_030', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SYL_HUNT_001', 'MOB_SYL_031', 30, 1, 100, 5, 'always', 'any', FALSE),
 ('ZONE_SYL_HUNT_001', 'MOB_SYL_032', 30, 1, 100, 5, 'always', 'any', FALSE),

@@ -39,9 +39,9 @@ function esc(val) {
   return `'${s.replace(/'/g, "''")}'`;
 }
 
-function batchInsert(table, columns, rows, chunk = 50, onConflict) {
+function batchInsert(table, columns, rows, chunk = 50, onConflict, onConflictAction = 'DO NOTHING') {
   const colList = columns.join(', ');
-  const conflict = onConflict ? ` ON CONFLICT ${onConflict} DO NOTHING` : '';
+  const conflict = onConflict ? ` ON CONFLICT ${onConflict} ${onConflictAction}` : '';
   let sql = '';
   for (let i = 0; i < rows.length; i += chunk) {
     const slice = rows.slice(i, i + chunk);
@@ -153,7 +153,7 @@ function parseMonsters() {
 // 2b. Spawns → T_SPAWN_TABLES
 // ---------------------------------------------------------------------------
 const DIR_TO_ZONE = {
-  aincrad:    'ZONE_SYL_HUNT_001',
+  aincrad:    'ZONE_AIN_HUB_001',
   neutre:     'ZONE_SYL_HUNT_001',
   air:        'ZONE_SYL_HUNT_001',
   sylphe:     'ZONE_SYL_HUNT_001',
@@ -169,21 +169,49 @@ const DIR_TO_ZONE = {
   leprechaun: 'ZONE_LEP_HUNT_001',
   lepre:      'ZONE_LEP_HUNT_001',
   spriggan:   'ZONE_SPR_HUNT_001',
-  jotun:      'ZONE_SYL_HUNT_001',
-  jotunheimr: 'ZONE_SYL_HUNT_001',
-  golden:     'ZONE_SYL_HUNT_001',
+  jotun:      'ZONE_JOT_FLD_001',
+  jotunheimr: 'ZONE_JOT_FLD_001',
+  golden:     'ZONE_YGG_DUN_001',
+};
+
+const DIR_TO_BOSS_ZONE = {
+  aincrad:    'ZONE_AIN_HUB_001',
+  neutre:     'ZONE_SYL_HUNT_001',
+  air:        'ZONE_SYL_DUN_001',
+  sylphe:     'ZONE_SYL_DUN_001',
+  sylph:      'ZONE_SYL_DUN_001',
+  salamander: 'ZONE_SAL_DUN_001',
+  salamandre: 'ZONE_SAL_DUN_001',
+  undine:     'ZONE_UND_DUN_001',
+  cait:       'ZONE_CAI_DUN_001',
+  caitsith:   'ZONE_CAI_DUN_001',
+  imp:        'ZONE_IMP_DUN_001',
+  gnome:      'ZONE_GNO_DUN_001',
+  puca:       'ZONE_PUC_DUN_001',
+  leprechaun: 'ZONE_LEP_DUN_001',
+  lepre:      'ZONE_LEP_DUN_001',
+  spriggan:   'ZONE_SPR_DUN_001',
+  jotun:      'ZONE_JOT_RAID_001',
+  jotunheimr: 'ZONE_JOT_RAID_001',
+  golden:     'ZONE_YGG_TOP_001',
 };
 
 const KNOWN_ZONES = new Set([
-  'ZONE_CAI_HUNT_001','ZONE_CAI_HUNT_002',
-  'ZONE_GNO_HUNT_001','ZONE_GNO_HUNT_002',
-  'ZONE_IMP_HUNT_001','ZONE_IMP_HUNT_002',
-  'ZONE_LEP_HUNT_001','ZONE_LEP_HUNT_002',
-  'ZONE_PUC_HUNT_001','ZONE_PUC_HUNT_002',
-  'ZONE_SAL_HUNT_001','ZONE_SAL_HUNT_002',
-  'ZONE_SPR_HUNT_001','ZONE_SPR_HUNT_002',
-  'ZONE_SYL_HUNT_001','ZONE_SYL_HUNT_002',
-  'ZONE_UND_HUNT_001','ZONE_UND_HUNT_002',
+  'ZONE_CAI_HUNT_001','ZONE_CAI_HUNT_002','ZONE_CAI_DUN_001',
+  'ZONE_GNO_HUNT_001','ZONE_GNO_HUNT_002','ZONE_GNO_DUN_001',
+  'ZONE_IMP_HUNT_001','ZONE_IMP_HUNT_002','ZONE_IMP_DUN_001',
+  'ZONE_LEP_HUNT_001','ZONE_LEP_HUNT_002','ZONE_LEP_DUN_001',
+  'ZONE_PUC_HUNT_001','ZONE_PUC_HUNT_002','ZONE_PUC_DUN_001',
+  'ZONE_SAL_HUNT_001','ZONE_SAL_HUNT_002','ZONE_SAL_DUN_001',
+  'ZONE_SPR_HUNT_001','ZONE_SPR_HUNT_002','ZONE_SPR_DUN_001',
+  'ZONE_SYL_HUNT_001','ZONE_SYL_HUNT_002','ZONE_SYL_DUN_001',
+  'ZONE_UND_HUNT_001','ZONE_UND_HUNT_002','ZONE_UND_DUN_001',
+  'ZONE_AIN_HUB_001',
+  'ZONE_JOT_FLD_001','ZONE_JOT_RAID_001',
+  'ZONE_YGG_DUN_001','ZONE_YGG_TOP_001',
+  'ZONE_ROUTE_CAI_ALN','ZONE_ROUTE_GNO_ALN','ZONE_ROUTE_IMP_ALN',
+  'ZONE_ROUTE_LEP_ALN','ZONE_ROUTE_PUC_ALN','ZONE_ROUTE_SAL_ALN',
+  'ZONE_ROUTE_SPR_ALN','ZONE_ROUTE_SYL_ALN','ZONE_ROUTE_UND_ALN',
 ]);
 
 function parseSpawns() {
@@ -200,9 +228,11 @@ function parseSpawns() {
                    [])[1];
     if (!mobId || seen.has(mobId)) continue;
     seen.add(mobId);
-    const isBoss = content.includes('BOSS') || content.includes('boss');
+    const isBoss = content.includes('BOSS') || content.includes('boss') || content.includes('raid');
     const dirName = path.basename(path.dirname(f)).toLowerCase().replace(/[^a-z]/g, '');
-    const zone = DIR_TO_ZONE[dirName] || 'ZONE_SYL_HUNT_001';
+    const zone = isBoss
+      ? (DIR_TO_BOSS_ZONE[dirName] || DIR_TO_ZONE[dirName] || 'ZONE_SYL_HUNT_001')
+      : (DIR_TO_ZONE[dirName] || 'ZONE_SYL_HUNT_001');
     if (!KNOWN_ZONES.has(zone)) {
       console.error(`SKIP spawn ${mobId}: zone ${zone} inconnue`);
       continue;
@@ -481,7 +511,7 @@ try {
     'monster_id','name','level','family','base_hp','base_mp','base_atk','base_def','base_agi',
     'element','weakness','resistance','immune','exp_yield','bounty_yrds',
     'is_boss','is_flying','aggression_range','spawn_behavior','lore_text'
-  ], monsters, 50, '(monster_id)'));
+  ], monsters, 50, '(monster_id)', 'DO UPDATE SET name = EXCLUDED.name, level = EXCLUDED.level, family = EXCLUDED.family, base_hp = EXCLUDED.base_hp, base_atk = EXCLUDED.base_atk, base_def = EXCLUDED.base_def, base_agi = EXCLUDED.base_agi, exp_yield = EXCLUDED.exp_yield, is_boss = EXCLUDED.is_boss, lore_text = EXCLUDED.lore_text'));
   console.log(`-- Monstres : ${monsters.length} lignes`);
 
   // Spawn tables
