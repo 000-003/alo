@@ -334,3 +334,26 @@ Source LLM=`'system'` sur-privilégiée (allowlist par source dédiée) · gatin
 
 ## 4. Bilan final au 2026-07-11 15h : ce qui reste ouvert (fond, inchangé)
 **Tous les rouges (R1-R3, nR5-nR8) et leurs suites (nR9-nR13) sont clos ou réduits à des reliquats mineurs ci-dessus.** Fond d'architecture restant : source LLM=`'system'` à restreindre · gating K2/L1 en lecture · P2 RAG réel (fiches+e5, CDC 15) · parseur QI · jauges D12 · spawns conformes D6/D8 (2ᵉ passe) · auth API HTTP · Redis · HF déprécié · avatar fantôme · flux création d'avatar · mot de passe défaut.
+
+---
+
+# ADDENDUM 45-octies — Contre-audit de la vague 4.4 PE (commit `df2f41a`, 14h53) — par diff + exécution
+
+> Vérifié : diff + sondes DB/gameplay. **Flux de tour de combat ✅ CLOS** (sonde : « attaque » en combat joue le tour — échange de dégâts observé). **nR13 ✅ 257/257 spawns**, FK-safe (`KNOWN_ZONES` + validation avant push), **Undine restaurée** (20). Deux découvertes en profondeur :
+
+## 1. ⚠️ L'axe vertical est déversé chez les Sylphes — avec des stats par défaut (nR14)
+
+Le re-mapping a résolu la FK en envoyant `aincrad`/`neutre`/`jotunheimr`/`golden`/`air`/`sylph` → **`ZONE_SYL_HUNT_001` = 97 mobs (38 % du bestiaire)**. Or les zones correctes **existent en base** (`ZONE_AIN_HUB_001`, `ZONE_JOT_FLD_001`/`ZONE_JOT_RAID_001`, `ZONE_YGG_DUN_001`/`ZONE_YGG_TOP_001`, routes D8) — c'est `KNOWN_ZONES` (restreint aux 18 HUNT) qui a forcé ce choix. Aggravation : **les fiches d'axe vertical ne suivent pas le gabarit mob standard** → le parseur leur met des **stats par défaut (niveau 1, 100 PV)**. Résultat vérifié par sonde : **Skuld, Kayaba, Jörmungandr — boss de raid canon — sont chassables en zone de chasse Sylphe T1, à niveau 1, 100 PV** (j'en ai battu un en 2 tours avec l'avatar de test). Fonctionnel, mais lore et difficulté cassés. **Correctif** : étendre `KNOWN_ZONES` aux zones d'axe vertical + mapper correctement ; **exclure les boss (`is_boss`) du spawn ouvert** (ils relèvent d'instances/raids) ; adapter le parseur aux gabarits boss (ou les exclure du seed en attendant).
+
+## 2. ⚠️ Le nettoyage des noms est correct dans le générateur… mais la base garde les vieux noms (nR15)
+
+`seed_data.sql` régénéré est **propre** (« Chevalier d Argent » sans tiret). Mais la base contient toujours « Chevalier d Argent — » (U+2014 vérifié aux codepoints) : les INSERT monstres sont en **`ON CONFLICT (monster_id) DO NOTHING`** → un re-run de seed **ne met jamais à jour** les lignes existantes. Seul un **`rebuild.sh` complet** (DROP/CREATE) applique les noms nettoyés. Par ailleurs, l'apostrophe manquante (« d Argent ») est **dans la fiche source elle-même** (`MOB_AIN_001.md` : titre déjà dégradé) — dette **corpus** (fiches d'axe vertical, étape 35), pas parseur : à réparer côté données (périmètre ACP, sur demande PE).
+
+## 3. État net après 4.4
+
+| Reliquat | Nature | Action |
+|---|---|---|
+| nR14 — axe vertical chez les Sylphes, boss niv 1 | données/mapping | étendre `KNOWN_ZONES`, exclure `is_boss` du spawn ouvert, gabarits boss |
+| nR15 — noms sales en base (générateur propre) | opération | `rebuild.sh` complet (ou UPDATE ciblé) |
+| Apostrophes perdues dans les fiches AIN/YGG | **corpus (ACP)** | passe de réparation des titres, sur demande PE |
+| Fond (§4 ci-dessus) | architecture | inchangé |
