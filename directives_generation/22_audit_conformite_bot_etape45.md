@@ -306,3 +306,31 @@ Embeddings stockés en `FLOAT[]` jamais relus (`search()` ré-embedde à la vol�
 
 ## 3. Fond restant après 4.2 (inchangé)
 Source LLM=`'system'` sur-privilégiée (allowlist par source dédiée) · gating K2 par `t_npc_knowledge_unlocks` jamais consulté en lecture · P2 RAG réel (chunking des fiches + e5, CDC 15) · parseur QI (T_NPC_KNOWLEDGE toujours vide) · jauges D12 (`OXYGEN`/`HEAT`/`DOT`) non modélisées · spawns conformes D6/D8 (2ᵉ passe) · API HTTP sans auth · Redis non câblé · HF `api-inference` déprécié · avatar fantôme universel · mot de passe DB défaut.
+
+---
+
+# ADDENDUM 45-septies — Contre-audit de la vague 4.3 PE (commit `ee57fd9`, 14h46) — par diff + exécution complète
+
+> Vérifié : diff + suite (**31/31 ✅**, exécutée) + 4 sondes ACP (GM accepté via env, distribution des spawns, **combat de bout en bout**).
+
+## 1. Re-verdict
+
+| Finding | Re-verdict | Preuve |
+|---|---|---|
+| **nR11-b (GM)** | ✅ **CLOS** | `phoneNumber` transmis (`message-handler.js:36→133`), repli UUID supprimé, `GM_PHONES` documenté dans `.env.example`. Sondes : téléphone hors liste → *« Accès refusé »* ✅ ; téléphone dans l'allowlist (env de test) → **authentifié puis refusé au D71 sur ID bidon** ✅ — le pipeline complet joue dans le bon ordre |
+| Routage `!` | ✅ | messages `!` routés par pattern **avant** le classifieur (conf 0.95, `m.index===0`), `SYS` élargi `^!sys_\w+` → plus de détournement HELP ; tests GM réécrits correctement (refus + `!sys_help` public) |
+| **nR12** | ✅ **APPLIQUÉ** | `t_embeddings` = **1 243 chunks** en base |
+| **nR13** | ⚠️ **appliqué à 78 %** | seed régénéré + re-seedé : **200/256 spawns**. Cause du manque : `DIR_TO_ZONE` cible **`ZONE_NEU_HUNT_001` qui n'existe pas** (Alne est un hub sans zone de chasse) → violations FK → **batchs de 50 lignes entiers perdus** : mobs `aincrad`/`neutre`/`jotunheimr`/`yggdrasil` sans spawn **et `ZONE_UND_HUNT_001` vide** (victime collatérale de batch). **Sonde décisive : le combat fonctionne de bout en bout** sur les 8 zones peuplées (`attaque <mob>` → engagement ✅) — **première fois depuis le début de l'audit** |
+
+## 2. Nouveaux findings (mineurs mais gameplay)
+
+- 🟡 **Flux de tour de combat** : une fois engagé, « attaque »/« lance attaque » est reclassé `ATTACK` → `handleAttack` répond *« Tu es déjà en combat ! »* au lieu de jouer le tour. Seul un phrasé routé `USE_SKILL` (« utilise… ») continue le combat. Correctif simple : dans le case `ATTACK`, si un combat est actif → `handleCombatAction` (symétrique du garde-fou déjà présent sur `MOVE`).
+- 🟡 **Nettoyage de noms incomplet** : la passe 4.2 supprime `─` (U+2500) mais le corpus contient `—` (U+2014) → *« Chevalier d Argent — »* persiste en base (+ apostrophes perdues : « d Argent »). Élargir aux tirets U+2013/2014 et préserver les apostrophes.
+
+## 3. Correctifs restants courts
+1. **Re-mapper `DIR_TO_ZONE` vers des zones existantes** (`jotunheimr`→`ZONE_JOT_FLD_001`, `aincrad`→`ZONE_AIN_HUB_001`, `yggdrasil`→`ZONE_YGG_DUN_001`, `air`→routes D8, `neutre`→à arbitrer) + re-seed → répare aussi Undine. Option robustesse : valider `zone_id` contre `T_ZONES` avant push (une mauvaise ligne ne doit plus tuer un batch de 50).
+2. Flux de tour de combat (case `ATTACK` → `handleCombatAction` si combat actif).
+3. Nettoyage tirets/apostrophes + re-seed.
+
+## 4. Bilan final au 2026-07-11 15h : ce qui reste ouvert (fond, inchangé)
+**Tous les rouges (R1-R3, nR5-nR8) et leurs suites (nR9-nR13) sont clos ou réduits à des reliquats mineurs ci-dessus.** Fond d'architecture restant : source LLM=`'system'` à restreindre · gating K2/L1 en lecture · P2 RAG réel (fiches+e5, CDC 15) · parseur QI · jauges D12 · spawns conformes D6/D8 (2ᵉ passe) · auth API HTTP · Redis · HF déprécié · avatar fantôme · flux création d'avatar · mot de passe défaut.
