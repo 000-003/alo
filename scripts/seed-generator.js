@@ -106,6 +106,63 @@ function parseItems() {
 // ---------------------------------------------------------------------------
 // 2. MONSTRES → T_MONSTERS_DICT
 // ---------------------------------------------------------------------------
+function parsePipeTableStats(content) {
+  let hp = 100, atk = 10, def = 10, agi = 10, exp = 50;
+  let element = null, weakness = null, resistance = null;
+  const lines = content.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i].trim();
+    if (!l.startsWith('|')) continue;
+    // Collect consecutive pipe rows (skip separator rows: all cells are dashes/spaces/colons)
+    const rows = [];
+    while (i < lines.length) {
+      const r = lines[i].trim();
+      if (!r.startsWith('|')) break;
+      const cells = r.split('|').map(c => c.trim()).filter(c => c);
+      if (!cells.every(c => /^[\s\-:]+$/.test(c))) rows.push(cells);
+      i++;
+    }
+    if (rows.length < 2) continue;
+    const hdr = rows[0].map(h => h.replace(/[*]/g, '').toLowerCase());
+    const data = rows[1];
+    const hpCol = hdr.findIndex(h => h === 'pv' || h === 'hp');
+    const atkCol = hdr.findIndex(h => h === 'atq' || h === 'atk');
+    const defCol = hdr.findIndex(h => h === 'def');
+    const agiCol = hdr.findIndex(h => h === 'vitesse' || h === 'agi');
+    const expCol = hdr.findIndex(h => h === 'xp');
+    if (hpCol >= 0 && data[hpCol]) {
+      const m = data[hpCol].match(/(\d+)/);
+      if (m) hp = parseInt(m[1]);
+    }
+    if (atkCol >= 0 && data[atkCol]) {
+      const m = data[atkCol].match(/(\d+)/);
+      if (m) atk = parseInt(m[1]);
+    }
+    if (defCol >= 0 && data[defCol]) {
+      const m = data[defCol].match(/(\d+)/);
+      if (m) def = parseInt(m[1]);
+    }
+    if (agiCol >= 0 && data[agiCol]) {
+      const m = data[agiCol].match(/(\d+)/);
+      if (m) agi = parseInt(m[1]);
+    }
+    if (expCol >= 0 && data[expCol]) {
+      const m = data[expCol].match(/(\d+)/);
+      if (m) exp = parseInt(m[1]);
+    }
+    // Format 1 extended rows: élément, faiblesse, résistance (rows 2+ in the same table)
+    for (let ri = 2; ri < rows.length; ri++) {
+      const row = rows[ri];
+      const label = row[0].replace(/[*]/g, '').toLowerCase();
+      if (label.includes('élément') && row[1]) element = row[1].replace(/[*]/g, '').trim();
+      if (label.includes('faiblesse') && row[1]) weakness = row[1].replace(/[*]/g, '').trim();
+      if (label.includes('résistance') && row[1]) resistance = row[1].replace(/[*]/g, '').trim();
+    }
+    if (hpCol >= 0) break; // found our stats table
+  }
+  return { hp, atk, def, agi, exp, element, weakness, resistance };
+}
+
 function parseMonsters() {
   const rows = [];
   const seen = new Set();
@@ -113,37 +170,32 @@ function parseMonsters() {
   for (const f of files) {
     if (path.basename(f).startsWith('_')) continue;
     const content = fs.readFileSync(f, 'utf-8');
-    const mobId = (content.match(/MOB_ID\s*:\s*(\S+)/i) ||
+    let mobId = (content.match(/MOB_ID\s*:\s*(\S+)/i) ||
                    content.match(/`(MOB_\w+)`/) ||
                    content.match(/(MOB_\w{3}_\d{3})/) ||
                    [])[1];
     if (!mobId || seen.has(mobId)) continue;
+    // Skip malformed IDs (numeric suffix must be pure digits)
+    const suffix = mobId.split('_').pop();
+    if (!/^\d{3}$/.test(suffix)) continue;
     seen.add(mobId);
 
     const name = (content.match(/^#\s+(.+?)──?/)?.[1]?.trim() ||
                   content.match(/^#\s+(.+)/m)?.[1]?.replace(/`.*$/, '').trim() || mobId)
-                  .replace(/^[─—]+\s*/, '').replace(/\s*[─—]+\s*$/, '').replace(/\s+$/, '').trim()
-                  .replace(/'/g, "''");
-    const level = parseInt(content.match(/Niveau\s*[:]?\s*(\d+)/i)?.[1] ||
+                  .replace(/^[─—]+\s*/, '').replace(/\s*[─—]+\s*$/, '').replace(/\s+$/, '').trim();
+    const level = parseInt(content.match(/\*?Niveau\*?[^0-9]*(\d+)/i)?.[1] ||
                            content.match(/niveau\s*:\s*(\d+)/i)?.[1] || 1);
     const family = content.match(/Famille\s*:\s*(.+)/i)?.[1]?.trim() || null;
-    const hp = parseInt(content.match(/PV\s*[|]\s*([\dD]+)/)?.[1] || '100');
-    const atk = parseInt(content.match(/ATQ\s*[|]\s*([\dD]+)/)?.[1] || '10');
-    const def = parseInt(content.match(/DEF\s*[|]\s*([\dD]+)/)?.[1] || '10');
-    const agi = parseInt(content.match(/Vitesse\s*[|]\s*(\d+)/)?.[1] || '10');
-    const expYield = parseInt(content.match(/XP\s*[|]\s*([\dD]+)/)?.[1] || '50');
-    const bounty = Math.floor(expYield * 0.3);
-    const element = content.match(/[Ee]lément\s*:\s*(.+)/i)?.[1]?.trim() || null;
-    const weakness = content.match(/[Ff]aiblesse\s*:\s*(.+)/i)?.[1]?.trim() || null;
-    const resistance = content.match(/[Rr]ésistance\s*:\s*(.+)/i)?.[1]?.trim() || null;
+    const stats = parsePipeTableStats(content);
+    const bounty = Math.floor(stats.exp * 0.3);
     const isBoss = content.includes('BOSS') || content.includes('boss') ? 'TRUE' : 'FALSE';
     const isFlying = content.includes('volant') || content.includes('ailé') || content.includes('aile') ? 'TRUE' : 'FALSE';
     const lore = (content.match(/Comportement\/Loot\/Bot\s*(.+?)(?:\n\n|\n#|$)/s)?.[1] || '').trim().slice(0, 500);
 
-    rows.push([mobId, name, level, family, isNaN(hp) ? 100 : hp, 0,
-               isNaN(atk) ? 10 : atk, isNaN(def) ? 10 : def, isNaN(agi) ? 10 : agi,
-               element, weakness, resistance, null,
-               isNaN(expYield) ? 50 : expYield, bounty,
+    rows.push([mobId, name, level, family, stats.hp, 0,
+               stats.atk, stats.def, stats.agi,
+               stats.element, stats.weakness, stats.resistance, null,
+               stats.exp, bounty,
                isBoss, isFlying, 10, 'passive', lore]);
   }
   return rows;
@@ -171,12 +223,13 @@ const DIR_TO_ZONE = {
   spriggan:   'ZONE_SPR_HUNT_001',
   jotun:      'ZONE_JOT_FLD_001',
   jotunheimr: 'ZONE_JOT_FLD_001',
+  yggdrasil:  'ZONE_YGG_DUN_001',
   golden:     'ZONE_YGG_DUN_001',
 };
 
 const DIR_TO_BOSS_ZONE = {
   aincrad:    'ZONE_AIN_HUB_001',
-  neutre:     'ZONE_SYL_HUNT_001',
+  neutre:     'ZONE_SYL_DUN_001',
   air:        'ZONE_SYL_DUN_001',
   sylphe:     'ZONE_SYL_DUN_001',
   sylph:      'ZONE_SYL_DUN_001',
@@ -193,6 +246,7 @@ const DIR_TO_BOSS_ZONE = {
   spriggan:   'ZONE_SPR_DUN_001',
   jotun:      'ZONE_JOT_RAID_001',
   jotunheimr: 'ZONE_JOT_RAID_001',
+  yggdrasil:  'ZONE_YGG_DUN_001',
   golden:     'ZONE_YGG_TOP_001',
 };
 
@@ -227,9 +281,17 @@ function parseSpawns() {
                    content.match(/(MOB_\w{3}_\d{3})/) ||
                    [])[1];
     if (!mobId || seen.has(mobId)) continue;
+    const suffix = mobId.split('_').pop();
+    if (!/^\d{3}$/.test(suffix)) continue;
     seen.add(mobId);
     const isBoss = content.includes('BOSS') || content.includes('boss') || content.includes('raid');
-    const dirName = path.basename(path.dirname(f)).toLowerCase().replace(/[^a-z]/g, '');
+    let dirName = path.basename(path.dirname(f)).toLowerCase().replace(/[^a-z]/g, '');
+    // Root-level standalone files (golden_knights, thrym)
+    if (dirName === 'monstres') {
+      const fn = path.basename(f).toLowerCase();
+      if (fn.includes('golden') || fn.includes('yggdrasil')) dirName = 'golden';
+      else if (fn.includes('thrym') || fn.includes('geants')) dirName = 'jotunheimr';
+    }
     const zone = isBoss
       ? (DIR_TO_BOSS_ZONE[dirName] || DIR_TO_ZONE[dirName] || 'ZONE_SYL_HUNT_001')
       : (DIR_TO_ZONE[dirName] || 'ZONE_SYL_HUNT_001');
