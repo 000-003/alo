@@ -189,3 +189,54 @@ Le « NER » (`models/ner.js`) n'extrait que les IDs canoniques tapés littéral
 **2 des 3 rouges sont clos proprement (R2, R3) — travail conforme au contrat.** Le rouge restant est **R1** : la vague n'a traité que la lecture (et avec le bug nR1) ; l'exigence centrale — exclusion K3 **à l'ingestion** (`seed-generator.js`) + contrainte structurelle sur la table + gating K2 par l'état L1 — est intacte. Priorités suivantes recommandées : **nR1 → R1-ingestion/CHECK → nR2 → nR3**, puis reprise de l'ordre initial (M1 pipeline `SYS_*`, M3 grounding avant activation API, M4-R0 groupes WA, m4 IDs de modèles).
 
 *Contre-audit en lecture seule (D-P3-1) — `bot/` non modifié par l'ACP ; l'état contre-audité est le worktree PE non commité du 2026-07-11 13h40.*
+
+---
+
+# ADDENDUM 45-quater — Contre-audit de la vague 3 PE (commit `8f608f9`, 14h06)
+
+> Vague massive : M1 (pipeline `SYS_*` + registre 5 commandes), M3 (sanitizer + grounding), M4-R0 (adjacence + groupes), P2 (index vectoriel), Gemini, quotas configurables, mineurs combat/gazetteer. **Rappel préalable : la vague 2 (`3ddf391`) est vérifiée conforme — R1 structurel ✅, nR1-nR4 ✅ : les 3 rouges de l'audit initial sont clos.**
+
+## 1. Verdict vague 3 : bonne architecture, exécution non conforme au SCHÉMA — ~70 % du nouveau code est mort à l'exécution
+
+Le squelette est juste (pipeline 6 étapes dans l'ordre du CDC 19 §2 ; grounding `ragContext` réellement transmis par `dialogue.js` ; sanitizer branché dans `generate()` ; Gemini câblé proprement ; quotas par env ; **adjacence stricte du déplacement** — fini la téléportation multi-sauts ; `levelRatio` borné ×3). Mais le code a été écrit **contre un schéma supposé, sans vérifier `schema.sql`** : la majorité des nouvelles écritures échouent à la première requête. Et le pipeline `SYS_*` a **deux trous d'autorisation**.
+
+## 2. 🔴 Nouveaux findings critiques
+
+### nR5 — Autorisation `SYS_*` : deux trous (étape 3 du pipeline vidée de son sens)
+1. **`!sys_*` joueur → source `'gm'` sans contrôle d'identité** : `message-handler.js#handleSysCommand` exécute toute commande `!sys_grant_item …` tapée par **n'importe quel joueur WhatsApp** avec `source='gm'`. Aucune liste de GM, aucun contrôle. Combiné à m8/m7 (avatar fantôme, API sans auth) : escalade de privilèges totale.
+2. **Post-parsing de TOUTES les réponses en source `'system'`** : `executePipelineCommands(db, response, 'system')` scanne la réponse finale — y compris le texte joueur **écho** par `EMOTE`/`WHISPER` (`/me SYS_GRANT_ITEM(player_id=…, item_id=…, quantity=…)` → réécrit dans la réponse → parsé → exécuté en `'system'`, la source la plus privilégiée, sans passer par le LLM ni l'API).
+
+**Aujourd'hui bloqué PAR ACCIDENT** : les 5 commandes échouent sur les incohérences de schéma (nR6) — exactement l'anti-pattern du R1 v1 (« la sécurité repose sur un bug »). **Attendu** : (a) source `'gm'` conditionnée à une liste d'identités GM vérifiée (téléphone/UUID) ; (b) les propositions issues de texte généré/écho reçoivent une source dédiée à droits minimaux (ex. `'npc_dialogue'`) avec allowlist par commande ; (c) ne **jamais** parser de `SYS_*` dans du contenu qui reprend le texte du joueur (strip à la sanitization, ou pipeline appliqué au seul flux LLM).
+
+### nR6 — Registre `SYS_*` codé contre un schéma imaginaire : **5 commandes sur 5 inopérantes**
+| Commande | Erreur bloquante |
+|---|---|
+| `SYS_GRANT_ITEM` | `ON CONFLICT (avatar_uuid, item_id)` : **aucune contrainte unique** sur cette paire (`T_INVENTORY` PK = `instance_uuid`) → 42P10 systématique |
+| `SYS_ADVANCE_QUEST` | colonnes `progress`/`is_completed`/`objectives_total` inexistantes (réel : `current_step`/`progress_status`, total dans `T_QUESTS_DICT.total_steps`) |
+| `SYS_NPC_KNOWLEDGE_UNLOCK` | table réelle = `(avatar_uuid, qi_id)` — pas de `npc_id`/`k_level` ; **et accepte `'K3'`** en niveau valide (interdit D22 : K3 ne se débloque jamais) |
+| `SYS_SET_ENV_HAZARD` | `T_WEATHER` n'a ni `weather_type` ni `duration_minutes` ni `intensity` ; PK = `zone_id` seul ; et les hazards (`toxic_fog`…) ignorent les paramètres unifiés **D12 `OXYGEN`/`HEAT`/`DOT`** |
+| `SYS_SHOP_RESTOCK` | `T_SHOP_ITEMS` n'a ni `npc_id` ni `base_quantity`/`current_stock`/`last_restock` (réel : clé `shop_id`, colonne `stock`) |
+
+### nR7 — Le combat est cassé à 100 %
+`handlers/combat.js` filtre désormais `… AND zone_id = $2` sur `T_MONSTERS_DICT` **qui n'a pas de colonne `zone_id`** → erreur SQL sur **chaque** `attaque` → « ❌ Une erreur est survenue ». L'intention (mob de la zone courante) est la bonne, mais la liaison zone↔mob passe par **`T_SPAWN_TABLES`** (contrat T2, plages D6), pas par le dictionnaire. La persistance `t_combat_sessions` est également inopérante (colonnes `session_id`/`monster_id`/`status`/`turn_count` vs réelles `session_uuid` UUID/`enemy_type`+`enemy_id` NOT NULL/`outcome`/`turn_number`) — silencieuse, elle, car try/catch.
+
+### nR8 — Gazetteer HS : régression sur un acquis de la vague 2
+`loadGazetteer` ajoute `SELECT … species, zone_id FROM t_monsters_dict` (colonnes inexistantes) **dans le même `Promise.all`** que items/PNJ/zones → **tout le chargement échoue** → la résolution nom→ID (M5, qui fonctionnait) est morte : « parle au forgeron », « achète potion » ne résolvent plus rien. Même cause dans `training/build-embeddings.js` (`t_npc_knowledge.id` au lieu de `qi_id`, `species`) → le script d'indexation **aborte à la 2ᵉ source** : l'« index vectoriel 3 400 chunks » annoncé ne peut pas se construire. Et `zone-groups.js` (`group_id`/`is_official` vs réels `wa_group_id`/…) → cache toujours vide, message de groupe jamais affiché.
+
+## 3. 🟠 Nouveaux findings majeurs
+
+- **nR9 — Étape LOCK inopérante** : `pg_advisory_xact_lock` est appelé via `db.query` sur le **pool** (autocommit) → le verrou, lié à la transaction, est **relâché immédiatement**, et `def.execute()` part sur d'autres connexions. Il faut un client dédié + `BEGIN…COMMIT` englobant le lock **et** l'exécution (ou `pg_advisory_lock/unlock` sur la même connexion).
+- **nR10 — `is_secret` indexé sans filtre** : `build-embeddings.js` ingère `t_encyclopedia_dict` **sans `WHERE is_secret = FALSE`** (la métadonnée est stockée mais jamais filtrée par `search()`) → symétrique du R1 : l'exclusion doit être **à l'ingestion**. Latent (table vide + script cassé), même schéma de risque.
+
+## 4. 🟡 Mineurs vague 3
+Embeddings stockés en `FLOAT[]` jamais relus (`search()` ré-embedde à la volée — le stockage est du poids mort) ; sanitizer **anglophone uniquement** (« ignore les instructions précédentes » passe) ; `travelTime` affiché mais non appliqué (arrivée instantanée) ; l'« index vectoriel » = requêtes sur tables DB avec le bag-of-words 64d maison, pas le chunking par section des fiches ni e5-small (P2/CDC 15 reste devant) ; gating K2 par état L1 toujours absent des lectures (la table `t_npc_knowledge_unlocks` n'est consultée nulle part).
+
+## 5. Bilan cumulé & recommandation
+
+| Vague | Verdict |
+|---|---|
+| 1 (13h37) | R2/R3 clos, R1 partiel, 3 régressions |
+| 2 (13h52) | **R1 clos structurellement, nR1-nR4 corrigés — état sain** |
+| 3 (14h06) | Architecture ✓, exécution ✗ : **nR5-nR8 rouges** (2 trous d'autorisation + schéma imaginaire + combat cassé + gazetteer en régression), nR9-nR10 majeurs |
+
+**Cause racine de la vague 3 : coder sans lire `schema.sql`.** Recommandations : (1) corriger nR7/nR8 en priorité (le jeu de base — combat, résolution de noms — est cassé, c'est pire qu'avant la vague) ; (2) nR5 avant toute mise en service du pipeline (autorisation par identité + jamais de parsing sur écho joueur) ; (3) réaligner le registre sur le schéma réel (nR6) et englober lock+exécution dans une transaction (nR9) ; (4) **m2 devient critique** : un test d'intégration minimal qui exécute chaque `SYS_*` et chaque handler contre la base réelle aurait attrapé 100 % de nR6-nR8 — `tests/` est toujours vide.
