@@ -1,90 +1,100 @@
 # ⚔️ ALO — ALfheim Online sur WhatsApp
 
-MMORPG textuel inspiré de **Sword Art Online : ALfheim Online**, joué intégralement via des groupes WhatsApp
-pilotés par un bot (Système Cardinal). **Principe fondateur : un lieu = un groupe WhatsApp** — se déplacer
-dans le monde, c'est changer de groupe.
+MMORPG textuel inspiré de **Sword Art Online : ALfheim Online**, joué via des groupes WhatsApp
+pilotés par le Système Cardinal (bot Node.js + LLM).
 
-> 📌 **Phase actuelle** : établissement des données. Le dépôt ne contient **aucun code** — uniquement la base
-> de données du monde en markdown structuré et les spécifications. Toute exécution est gouvernée par
-> [`system_persona_architecte.md`](system_persona_architecte.md).
+> **Principe fondateur : un lieu = un groupe WhatsApp** — se déplacer dans le monde, c'est changer de groupe.
+> La limite des 100 groupes par communauté WhatsApp impose un design par **territoires** (13 groupes de zone,
+> 16 groupes permanents, 71 slots libres pour dynamiques).
 
 ---
 
-## 🧭 Documents Maîtres
-
-| Document | Rôle |
-|---|---|
-| [`system_persona_architecte.md`](system_persona_architecte.md) | Persona de gouvernance — conditionne toute production |
-| [`cahier_des_charges.md`](cahier_des_charges.md) | Spécification du projet, décisions actées, backlog |
-| [`données/cartographie/atlas_monde_liaisons.md`](données/cartographie/atlas_monde_liaisons.md) | **Atlas maître** : découpage du monde, ID de zones, graphe de liaisons complet |
-| [`données/the_seed_engine/system_mechanics/zone_movement_protocol.md`](données/the_seed_engine/system_mechanics/zone_movement_protocol.md) | Protocole de déplacement inter-groupes (invariant « 1 joueur = 1 lieu ») |
-| [`données/the_seed_engine/whatsapp_commands_list.md`](données/the_seed_engine/whatsapp_commands_list.md) | Registre des commandes Joueur & GM |
-| [`données/the_seed_engine/ai_orchestrator_commands.md`](données/the_seed_engine/ai_orchestrator_commands.md) | Registre des commandes IA (Function Calling `SYS_*`) |
-
-## 🗂️ Arborescence
+## 🏗️ Architecture
 
 ```
 alo/
-├── system_persona_architecte.md      # Gouvernance (Architecte Créateur Primaire)
-├── cahier_des_charges.md             # Spécification projet
-├── portail_worldbuilding.html        # Portail de consultation
-├── données/                          # ★ BASE DE DONNÉES DU MONDE
-│   ├── cartographie/                 #   Atlas maître, territoires raciaux, routes aériennes
-│   ├── cardinal_system_db/           #   Modèle de données : MCD_Concept/ → MLD_Logic/
-│   ├── the_seed_engine/              #   Moteur : mécaniques, scaling, registres de commandes
-│   ├── personnages_bestiaire/        #   200 boss New Aincrad, mobs, monstres, PNJ
-│   ├── items_equipements/            #   Armes légendaires, consommables, cristaux
-│   ├── competences_magie/            #   Sorts, OSS (Original Sword Skills)
-│   └── lore_mecaniques/              #   Règles du monde (vol, PK, respawn), villes, flore
-├── ressources/                       # Light novels SAO convertis (matière canon)
-└── ressources_brutes/                # PDF/EPUB sources + guides de worldbuilding
+├── bot/                            # ★ CODE DU BOT (Node.js)
+│   ├── src/
+│   │   ├── index.js                # Point d'entrée, initialisation
+│   │   ├── orchestrator/           # Message handler, routage d'intention
+│   │   ├── handlers/               # movement, combat, economy, player, dialogue
+│   │   ├── services/               # whatsapp, zone-groups, player, template, rag
+│   │   ├── agents/                 # router (classifieur d'intention), models
+│   │   └── engine/                 # movement (graphe de zones), combat engine
+│   ├── tests/integration.mjs       # 31 tests d'intégration
+│   └── .env.example
+├── scripts/
+│   └── seed-generator.js           # Convertit les fiches markdown en SQL
+├── schema.sql                      # Modèle de données PostgreSQL (46 tables)
+├── seed_data.sql                   # Données générées (items, monstres, PNJ, etc.)
+├── données/                        # ★ FICHES DU MONDE (markdown structuré)
+│   ├── cartographie/               # Atlas, territoires, routes
+│   ├── personnages_bestiaire/      # Monstres (257), PNJ (300+), boss
+│   ├── items_equipements/          # 851 items
+│   ├── competences_magie/          # Sorts, OSS, passifs
+│   └── the_seed_engine/            # Mécaniques, scaling, registres de commandes
+├── system_persona_architecte.md    # Gouvernance
+└── cahier_des_charges.md           # Spécification projet
 ```
 
-## 🌍 Le Monde en Bref
+## 📱 Architecture Communautaire WhatsApp
 
-- **9 races jouables** (Sylph, Salamander, Cait Sith, Undine, Imp, Gnome, Puca, Spriggan, Leprechaun),
-  chacune avec son territoire : capitale (safe), zones de chasse, donjon, route aérienne vers Alne.
-- **Alne**, capitale neutre au pied d'**Yggdrasil** ; **Jötunheimr** dans les abysses ; **New Aincrad**
-  (100 paliers, 2 boss par palier) flottant dans le ciel.
-- Disposition radiale et frontières : voir l'atlas (§3–§5).
+La limite de **100 groupes par communauté** a conduit à un design en 3 couches :
 
-## 🚪 Déplacement = Groupes WhatsApp
+| Couche | Groupes | Rôle |
+|--------|---------|------|
+| **Communauté** | 4 | 📢 Annonces, 📋 Enregistrement, 💬 Général, 🤝 LFG |
+| **Raciaux** | 9 | 🏛️ Un par peuple (jamais quitté) |
+| **Territoires** | 13 | 🌿 Terres Sylphes, 🔥 Terres Salamanders, … (auto-switch au déplacement) |
 
-1. `!enter_zone [Zone]` : le bot ajoute le joueur au groupe de la zone **et le retire de tous les autres
-   groupes de type lieu/instance** (opération atomique).
-2. Exception fondatrice : le **groupe de chat communautaire (HUB)**, les groupes de **guilde** et de
-   **party** ne sont jamais quittés automatiquement.
-3. Déplacement uniquement vers une zone **adjacente** (graphe de l'atlas), sauf `!portal` / `!fast_travel` /
-   `SYS_FORCE_TELEPORT`.
+**13 territoires** couvrent les 52 zones du jeu (9 raciaux × 5 zones + Alne + Aincrad + Jotunheimr + Yggdrasil).
+Quand un joueur se déplace, `syncPlayerGroups()` retire les groupes de territoire non autorisés
+et le rejoint dans le bon — sans toucher aux groupes permanents.
 
-Détails, machine à états et cas limites : `zone_movement_protocol.md`.
+**29 groupes permanents** — il reste **71 slots** pour guildes, instances et parties.
 
-## 📐 Conventions
+## 🏛️ Guilde d'Alne
 
-| Élément | Convention | Exemple |
-|---|---|---|
-| Zone | `ZONE_<SECTEUR>_<TYPE>_<NNN>` | `ZONE_SYL_CAP_001` |
-| PNJ | `NPC_<VILLE>_<NN>` | `NPC_ALN_01` |
-| Mob | `MOB_<SECTEUR>_<NNN>` | `MOB_SYL_002` |
-| Groupe WhatsApp (lieu) | `🗺️ ALO — <Nom Zone>` | `🗺️ ALO — Swilvane` |
-| Monnaie | Yrd | `500 Yrd` |
+Le **Hall de la Guilde** à Alne (ZONE_NEU_CAP_001) accueille 4 PNJ :
 
-**Règles d'or pour contribuer** :
-1. Toute nouvelle zone est d'abord enregistrée dans l'**atlas** (ID + liaisons), ensuite détaillée en fiche.
-2. Toute mécanique ajoutée reçoit ses **équivalents commande** (Joueur `!*`, GM `!sys_*`, IA `SYS_*`).
-3. Toute modification est **propagée dans toutes les couches** où l'élément est référencé (atlas ↔ fiche ↔ MLD ↔ commandes).
-4. Le graphe de liaisons reste **symétrique** (si A→B alors B→A).
+- **Aldric** `NPC_ALN_100` — Maître de Guilde (orientation, création de guilde)
+- **Bryn** `NPC_ALN_101` — Forgeronne (vente d'armes/armures, réparation)
+- **Élara** `NPC_ALN_102` — Quétatrice (4 quêtes de guilde)
+- **Selma** `NPC_ALN_103` — Greffière (inscriptions, registres, annuaire)
+
+## 🧠 Pipeline d'exécution
+
+1. Message WhatsApp entrant → `whatsapp.js`
+2. `processMessage()` dans `message-handler.js` → classification d'intention
+3. Routage vers le handler approprié (movement, combat, economy, player, dialogue)
+4. Si commande GM (`!sys_*`) → pipeline SYS en 6 étapes (D71 → prérequis → autorisation → lock advisory → exécution → résultat)
+5. Si LLM nécessaire → cascade de providers (Groq → Mistral → OpenRouter → HuggingFace → Gemini)
+
+## 🧪 Tests
+
+```bash
+node bot/tests/integration.mjs
+```
+
+31 tests couvrent : handler STATUS/INVENTORY/QUESTS/BUY/SELL/TALK, pipeline SYS (6 commandes),
+processMessage (9 cas), spawn/combat, routage GM.
 
 ## 📊 État d'Avancement
 
 | Chantier | Statut |
 |---|---|
-| Persona & gouvernance | ✅ |
-| Modèle de données (14 entités MCD, 18 tables MLD dont `T_WA_GROUPS`, `T_ZONE_LINKS`, `T_SPAWN_TABLES`, `T_NPC`) | ✅ |
-| Atlas & graphe des zones (9 territoires + axe vertical, 80 liaisons seed) | ✅ |
-| Protocole de déplacement | ✅ |
-| Registres de commandes | ✅ |
-| Bestiaire New Aincrad (200 boss) | ✅ |
-| Fiches détaillées zones (9 territoires complets + 9 routes aériennes ; capitale Undine = fiche lore `geographie_villes`) | ✅ Étape 3 (2026-07-07) |
-| Registres PNJ de capitales (`NPC_<VILLE>_01-07` pour les 10 villes, dont `NPC_GAT_*` acté à l'étape 3) | ✅ |
-| Bot Node.js | ⏳ Hors périmètre de la phase données |
+| Architecture & gouvernance | ✅ |
+| Base de données (46 tables, schéma complet) | ✅ |
+| Atlas & graphe des zones (52 zones, 13 territoires) | ✅ |
+| Bestiaire (257 monstres, stats réelles parsées) | ✅ |
+| Items (851, dont armes/armures/matériaux) | ✅ |
+| PNJ (300+, noms et rôles corrects) | ✅ |
+| Bot Node.js (whatsapp-web.js, orchestration, handlers) | ✅ |
+| Combat (recherche monstre, tours, dégâts nivelés) | ✅ |
+| Pipeline SYS (5 commandes d'administration) | ✅ |
+| Index vectoriel RAG (1243 chunks, 7 sources) | ✅ |
+| Audit CDC (R1-R3, nR5-nR15 — 100% clos) | ✅ |
+| Guilde d'Alne & PNJ associés | ✅ |
+| Architecture WA par territoires | ✅ |
+| Guildes joueurs, groupes sociaux, instances | ⏳ À venir |
+| ML ONNX (classifieur d'intention neuronal) | ⏳ Modèle chargé, non branché |
