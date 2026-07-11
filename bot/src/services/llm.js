@@ -1,16 +1,23 @@
 import config from '../config.js';
 import logger from '../utils/logger.js';
+import { sanitizeForLlm } from './sanitizer.js';
 
 let apiAvailable = false;
-let quotaRemaining = { groq: 60, mistral: 50, openrouter: 200, huggingface: 100 };
+const QUOTAS = {
+  groq: { max: parseInt(config.api.groqQuota || '60', 10), perTick: parseInt(config.api.groqPerTick || '10', 10) },
+  mistral: { max: parseInt(config.api.mistralQuota || '50', 10), perTick: parseInt(config.api.mistralPerTick || '10', 10) },
+  openrouter: { max: parseInt(config.api.openrouterQuota || '200', 10), perTick: parseInt(config.api.openrouterPerTick || '20', 10) },
+  huggingface: { max: parseInt(config.api.hfQuota || '100', 10), perTick: parseInt(config.api.hfPerTick || '10', 10) },
+  gemini: { max: parseInt(config.api.geminiQuota || '60', 10), perTick: parseInt(config.api.geminiPerTick || '10', 10) },
+};
+let quotaRemaining = {};
+for (const [k, v] of Object.entries(QUOTAS)) quotaRemaining[k] = v.max;
 const QUOTA_RESET_MS = 60 * 1000;
 
 setInterval(() => {
   for (const key of Object.keys(quotaRemaining)) {
-    quotaRemaining[key] = Math.min(
-      { groq: 60, mistral: 50, openrouter: 200, huggingface: 100 }[key] || 50,
-      quotaRemaining[key] + 10
-    );
+    const q = QUOTAS[key] || { max: 50, perTick: 10 };
+    quotaRemaining[key] = Math.min(q.max, quotaRemaining[key] + q.perTick);
   }
 }, QUOTA_RESET_MS);
 
@@ -38,33 +45,46 @@ const PROVIDERS = {
     key: () => config.api.hfKey,
     format: (prompt) => ({ inputs: `<s>[INST] ${prompt} [/INST]` }),
   },
+  gemini: {
+    url: (key) => `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,
+    key: () => config.api.geminiKey,
+    format: (prompt, roleConfig) => ({
+      contents: [{ parts: [{ text: prompt }] }],
+      systemInstruction: { parts: [{ text: roleConfig?.system || SYSTEM_PROMPT }] },
+      generationConfig: {
+        maxOutputTokens: roleConfig?.maxTokens || 200,
+        temperature: roleConfig?.temperature || 0.7,
+      },
+    }),
+    transform: (data) => data?.candidates?.[0]?.content?.parts?.[0]?.text || null,
+  },
 };
 
 const ROLES = {
   NARRATIVE: {
     model: 'llama-3.3-70b-versatile',
-    priority: ['groq', 'mistral', 'openrouter'],
+    priority: ['groq', 'mistral', 'openrouter', 'gemini'],
     system: 'Tu es le Système Cardinal du MMORPG ALfheim Online. Produis une narration immersive en français (max 3 phrases).',
     temperature: 0.8,
     maxTokens: 300,
   },
   DIALOGUE: {
     model: 'mistral-small-latest',
-    priority: ['mistral', 'groq', 'openrouter'],
+    priority: ['mistral', 'groq', 'openrouter', 'gemini'],
     system: 'Tu es un PNJ d\'ALfheim Online. Réponds en restant dans ton rôle, en français (max 2 phrases).',
     temperature: 0.7,
     maxTokens: 200,
   },
   LORE: {
     model: 'llama-3.3-70b-versatile',
-    priority: ['groq', 'mistral', 'openrouter'],
+    priority: ['groq', 'mistral', 'openrouter', 'gemini'],
     system: 'Tu es l\'encyclopédie d\'ALfheim Online. Réponds avec des faits précis, en français (max 4 phrases). Si tu ne sais pas, dis-le.',
     temperature: 0.4,
     maxTokens: 400,
   },
   COMBAT: {
     model: 'mistral-small-latest',
-    priority: ['mistral', 'groq', 'openrouter'],
+    priority: ['mistral', 'groq', 'openrouter', 'gemini'],
     system: 'Tu es le narrateur de combat d\'ALfheim Online. Décris l\'action de manière dynamique en français (1-2 phrases).',
     temperature: 0.7,
     maxTokens: 150,
@@ -93,6 +113,10 @@ const FALLBACK_TEMPLATES = {
 export async function generate(role, prompt, context = {}, policy = {}) {
   const roleConfig = ROLES[role];
   if (!roleConfig) return prompt;
+
+  prompt = sanitizeForLlm(prompt);
+  if (context.playerMessage) context.playerMessage = sanitizeForLlm(context.playerMessage);
+  if (context.query) context.query = sanitizeForLlm(context.query);
 
   if (!config.api.useApi) {
     return generateFallback(role, prompt, context);
@@ -137,15 +161,20 @@ async function callProvider(name, prov, prompt, roleConfig, context) {
 
   const system = systemPrompts.join('\n');
 
+  const apiKey = prov.key();
+  const url = typeof prov.url === 'function' ? prov.url(apiKey) : prov.url;
+
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${prov.key()}`,
+    ...(apiKey && name !== 'gemini' ? { 'Authorization': `Bearer ${apiKey}` } : {}),
     ...(prov.headers ? prov.headers() : {}),
   };
 
   let body;
   if (name === 'huggingface' && prov.format) {
     body = prov.format(`${system}\n\n${prompt}`);
+  } else if (name === 'gemini' && prov.format) {
+    body = prov.format(prompt, roleConfig);
   } else {
     body = {
       model: roleConfig.model || prov.model,
@@ -158,7 +187,7 @@ async function callProvider(name, prov, prompt, roleConfig, context) {
     };
   }
 
-  const response = await fetch(prov.url, {
+  const response = await fetch(url, {
     method: 'POST',
     headers,
     body: JSON.stringify(body),

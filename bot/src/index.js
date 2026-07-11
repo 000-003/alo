@@ -9,6 +9,8 @@ import { processMessage } from './orchestrator/message-handler.js';
 import { initWhatsApp } from './services/whatsapp.js';
 import { loadModels } from './models/loader.js';
 import { loadGazetteer } from './services/gazetteer.js';
+import { loadWaGroups } from './services/zone-groups.js';
+import { loadVectorIndex } from './services/vector-index.js';
 
 const app = express();
 app.use(express.json());
@@ -47,6 +49,18 @@ async function initialize() {
     await loadGazetteer(pool);
   } catch (err) {
     logger.warn('Impossible de charger le gazetteer', { error: err.message });
+  }
+
+  try {
+    await loadWaGroups(pool);
+  } catch (err) {
+    logger.warn('Impossible de charger les groupes WhatsApp', { error: err.message });
+  }
+
+  try {
+    await loadVectorIndex(pool);
+  } catch (err) {
+    logger.warn('Impossible de charger l\'index vectoriel', { error: err.message });
   }
 
   try {

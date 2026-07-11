@@ -22,6 +22,7 @@ const INTENT_PATTERNS = [
   { intent: 'HELP', pattern: /^(?:help|aide|commandes?|menu|\/help|\/aide|!aide|!help)$/i },
   { intent: 'EMOTE', pattern: /^(?:\/me|\/emote|\/do|\/it)(?:\s+(.+))?$/i },
   { intent: 'WHISPER', pattern: /^(?:\/w|\/whisper|\/tell)\s+(\w+)\s+(.+)/i },
+  { intent: 'SYS', pattern: /^!sys_(grant_item|advance_quest|npc_knowledge_unlock|set_env_hazard|shop_restock)\s+.+/i },
 ];
 
 export function getAgentForIntent(intent) {
@@ -33,6 +34,7 @@ export function getAgentForIntent(intent) {
     CRAFT: 'economy', LORE_QUERY: 'lore', VAULT: 'economy',
     MAIL: 'social', EQUIP: 'player',
     HELP: 'system', EMOTE: 'social', WHISPER: 'social',
+    SYS: 'system',
   };
   return map[intent] || 'fallback';
 }

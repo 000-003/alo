@@ -33,15 +33,22 @@ export async function handleTalk(db, playerId, entities) {
 
   let dialogue = getDialogueResponse(npc, npcName);
 
+  let knowledge;
   if (!dialogue) {
-    const knowledge = await retrieveKnowledge(db, npcName, { npcId: npc.npc_id });
+    knowledge = await retrieveKnowledge(db, npcName, { npcId: npc.npc_id });
     if (knowledge?.content) {
       dialogue = knowledge.content;
     }
   }
 
   if (!dialogue) {
-    const enhanced = await enhanceDialogue(npc.npc_id, npc.display_name, npc.role_type, npcName);
+    const ctx = {
+      npcId: npc.npc_id,
+      zoneId: npc.zone_id,
+      ragContext: knowledge?.content || '',
+      playerMessage: npcName,
+    };
+    const enhanced = await enhanceDialogue(npc.npc_id, npc.display_name, npc.role_type, npcName, ctx);
     if (enhanced) {
       dialogue = enhanced;
     }

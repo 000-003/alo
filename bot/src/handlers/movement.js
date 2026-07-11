@@ -1,6 +1,7 @@
-import { findShortestPath, zoneExists, getGraph } from '../engine/movement.js';
+import { zoneExists, getGraph, getNeighbors } from '../engine/movement.js';
 import { getPlayer } from '../services/player.js';
 import { render } from '../services/template.js';
+import { getGroupForZone } from '../services/zone-groups.js';
 import logger from '../utils/logger.js';
 
 export async function handleMove(db, playerUuid, entities) {
@@ -32,12 +33,16 @@ export async function handleMove(db, playerUuid, entities) {
     return `📍 Tu es déjà à **${targetZone}**.`;
   }
 
-  const path = findShortestPath(fromZone, targetZone, true);
-  if (!path) {
-    return `❌ Aucun chemin trouvé entre ${fromZone} et ${targetZone}.`;
+  const neighbors = getNeighbors(fromZone);
+  const isAdjacent = neighbors.some(n => n.zone === targetZone);
+  if (!isAdjacent) {
+    const exits = neighbors.map(n => n.zone).slice(0, 8).join(', ');
+    return `🚫 **${targetZone}** n'est pas accessible directement depuis **${fromZone}**.\n📌 Sorties : ${exits}`;
   }
 
-  const cost = path.totalCost || 0;
+  const edge = neighbors.find(n => n.zone === targetZone);
+  const cost = edge.mpCost || 0;
+  const travelTime = edge.travelTime || 0;
 
   try {
     const upd = await db.query(
@@ -49,19 +54,22 @@ export async function handleMove(db, playerUuid, entities) {
       return `❌ MP insuffisants pour ce déplacement (coût : ${cost} MP, disponible : ${player.mp_current}).`;
     }
 
-    logger.info('Déplacement effectué', { playerUuid, fromZone, targetZone, cost });
+    logger.info('Déplacement effectué', { playerUuid, fromZone, targetZone, cost, travelTime });
   } catch (err) {
     logger.error('Erreur lors du déplacement', { error: err.message, playerUuid });
     return `❌ Erreur lors du déplacement.`;
   }
 
+  const zoneGroup = getGroupForZone(targetZone);
+  const groupMsg = zoneGroup ? `\n💬 Rejoins le groupe **${zoneGroup.groupName}** pour parler avec les joueurs de cette zone.` : '';
+
   return render('move', {
     destination: targetZone,
-    distance: path.path.length - 1,
-    time: path.totalTime,
+    distance: 1,
+    time: travelTime,
     cost,
-    travelTime: path.totalTime,
-  });
+    travelTime,
+  }) + groupMsg;
 }
 
 export async function getNeighborsForZone(zoneId) {

@@ -1,4 +1,5 @@
 import logger from '../utils/logger.js';
+import { search, formatResults, getStats } from './vector-index.js';
 
 const LEVEL1_CACHE = new Map();
 const CACHE_TTL_MS = 5 * 60 * 1000;
@@ -10,11 +11,48 @@ export async function retrieveKnowledge(db, query, context = {}) {
   const l1 = level1Cache(query);
   if (l1) return l1;
 
-  const l2 = await level2DB(db, query, context);
-  if (l2) return l2;
+  const l1v = await level1Vector(query, context);
+  if (l1v) {
+    setCache(query, l1v);
+    return l1v;
+  }
+
+  const l2Result = await level2DB(db, query, context);
+  if (l2Result) {
+    if (context.useApi) {
+      const l3 = await level3Generate(db, query, { ...context, ragContext: l2Result.content });
+      if (l3?.content) return l3;
+    }
+    return l2Result;
+  }
 
   const l3 = await level3Generate(db, query, context);
   return l3;
+}
+
+async function level1Vector(query, context) {
+  const stats = getStats();
+  if (!stats.total) return null;
+
+  const results = search(query, 3);
+  if (!results.length) return null;
+
+  if (context.npcId) {
+    const npcResults = results.filter(r => r.metadata?.npc_id === context.npcId);
+    if (npcResults.length) {
+      return { source: 'l1v_npc', content: npcResults.map(r => r.text).join('\n') };
+    }
+  }
+
+  if (context.zoneId) {
+    const zoneResults = results.filter(r => r.sourceId === context.zoneId && r.sourceTable === 't_zones');
+    if (zoneResults.length) {
+      return { source: 'l1v_zone', content: zoneResults.map(r => r.text).join('\n') };
+    }
+  }
+
+  const content = formatResults(results);
+  return content ? { source: 'l1v_general', content } : null;
 }
 
 function level1Cache(query) {

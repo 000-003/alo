@@ -7,6 +7,7 @@ import * as combat from '../handlers/combat.js';
 import * as playerService from '../handlers/player.js';
 import * as dialogue from '../handlers/dialogue.js';
 import { retrieveLore } from '../services/rag.js';
+import { executeCommand, executePipelineCommands } from '../services/sys-pipeline.js';
 
 export async function processMessage(db, text, playerId = null, groupId = null, phoneNumber = null) {
   if (!text || typeof text !== 'string') {
@@ -42,6 +43,17 @@ export async function processMessage(db, text, playerId = null, groupId = null, 
 
   if (!response) {
     response = render('fallback', { intent: routing.intent });
+  }
+
+  const pipelineResult = await executePipelineCommands(db, response, 'system');
+  if (pipelineResult.commands.length > 0) {
+    const sysResults = pipelineResult.commands
+      .filter(c => c.result)
+      .map(c => c.result.ok ? render('sys_ok', c.result) : render('sys_fail', c.result))
+      .join('\n');
+    response = pipelineResult.modified
+      ? `${pipelineResult.modified}\n${sysResults}`
+      : sysResults;
   }
 
   logger.info('Message traité', {
@@ -127,9 +139,36 @@ async function executeIntent(db, routing, playerId) {
     case 'WHISPER':
       return `📩 Message privé à **${routing.entities.target || 'inconnu'}** : ${routing.match?.[1] || ''}`;
 
+    case 'SYS':
+      return handleSysCommand(db, routing, playerId);
+
     default:
       return null;
   }
+}
+
+async function handleSysCommand(db, routing, playerId) {
+  const text = routing.raw || '';
+  if (text.match(/^!sys_help/i)) {
+    return render('sys_help');
+  }
+
+  const parts = text.slice(1).split(/\s+/);
+  const cmdName = parts[0]?.toUpperCase();
+  if (!cmdName || !cmdName.startsWith('SYS_')) {
+    return render('sys_unknown');
+  }
+
+  const params = {};
+  for (let i = 1; i < parts.length; i++) {
+    const eq = parts[i].indexOf('=');
+    if (eq === -1) continue;
+    params[parts[i].slice(0, eq)] = parts[i].slice(eq + 1);
+  }
+  if (!params.player_id && playerId) params.player_id = playerId;
+
+  const result = await executeCommand(db, { command: cmdName, params }, 'gm');
+  return result.ok ? render('sys_ok', result) : render('sys_fail', result);
 }
 
 export default { processMessage };

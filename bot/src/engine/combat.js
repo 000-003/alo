@@ -3,7 +3,7 @@ import logger from '../utils/logger.js';
 export function calculateDamage(attacker, defender, skill = null) {
   const atk = attacker.base_atk || 0;
   const def = defender.base_def || 0;
-  const levelRatio = attacker.level / Math.max(defender.level, 1);
+  const levelRatio = Math.min(3.0, attacker.level / Math.max(defender.level, 1));
 
   let baseDmg = (atk * atk) / (atk + Math.max(def, 1));
   baseDmg = Math.max(baseDmg, 1);

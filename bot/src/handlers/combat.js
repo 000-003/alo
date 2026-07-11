@@ -20,16 +20,26 @@ export async function handleAttack(db, playerUuid, entities) {
 
   const monsterResult = await db.query(
     'SELECT monster_id, name, level, base_hp, base_mp, base_atk, base_def, base_agi, exp_yield '
-    + 'FROM t_monsters_dict WHERE monster_id = $1 OR name ILIKE $1',
-    [`%${monsterId}%`]
+    + 'FROM t_monsters_dict WHERE (monster_id = $1 OR name ILIKE $1) AND zone_id = $2',
+    [`%${monsterId}%`, player.current_zone_id]
   );
 
   if (monsterResult.rows.length === 0) {
+    const anyResult = await db.query(
+      'SELECT monster_id, name, level, base_hp, base_mp, base_atk, base_def, base_agi, exp_yield, zone_id '
+      + 'FROM t_monsters_dict WHERE monster_id = $1 OR name ILIKE $1 LIMIT 1',
+      [`%${monsterId}%`]
+    );
+    if (anyResult.rows.length) {
+      return `❌ "${monsterId}" n'est pas dans ta zone actuelle.`;
+    }
     return `❌ Monstre "${monsterId}" introuvable.`;
   }
   const monster = monsterResult.rows[0];
 
+  const combatId = `${playerUuid}_${Date.now()}`;
   const combat = {
+    combatId,
     playerUuid,
     monster: { ...monster, hp_current: monster.base_hp, hp_max: monster.base_hp, activeEffects: [] },
     player: { ...player, hp_current: player.hp_current, hp_max: player.hp_max, activeEffects: [] },
@@ -37,6 +47,16 @@ export async function handleAttack(db, playerUuid, entities) {
     startedAt: Date.now(),
   };
   activeCombats.set(playerUuid, combat);
+
+  try {
+    await db.query(
+      `INSERT INTO t_combat_sessions (session_id, avatar_uuid, monster_id, zone_id, status, started_at, turn_count)
+       VALUES ($1, $2, $3, $4, 'active', NOW(), 0)`,
+      [combatId, playerUuid, monster.monster_id, player.current_zone_id]
+    );
+  } catch (err) {
+    logger.warn('Impossible de persister le combat', { error: err.message });
+  }
 
   logger.info('Combat engagé', { playerUuid, monsterId: monster.monster_id, monsterLevel: monster.level });
   return render('attack_start', {
@@ -77,6 +97,12 @@ export async function handleCombatAction(db, playerUuid, action) {
     } catch (err) {
       logger.error('Erreur récompense combat', { error: err.message });
     }
+    try {
+      await db.query(
+        'UPDATE t_combat_sessions SET status = $1, ended_at = NOW(), turn_count = $2 WHERE session_id = $3',
+        ['victory', combat.turn, combat.combatId]
+      );
+    } catch {}
     response.push(render('attack_kill', { targetName: combat.monster.name, exp, yrds }));
     activeCombats.delete(playerUuid);
     return response.join('\n');
@@ -98,6 +124,12 @@ export async function handleCombatAction(db, playerUuid, action) {
     } catch (err) {
       logger.error('Erreur mort combat', { error: err.message });
     }
+    try {
+      await db.query(
+        'UPDATE t_combat_sessions SET status = $1, ended_at = NOW(), turn_count = $2 WHERE session_id = $3',
+        ['defeat', combat.turn, combat.combatId]
+      );
+    } catch {}
     response.push(render('attack_death'));
     activeCombats.delete(playerUuid);
   } else {

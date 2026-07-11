@@ -92,6 +92,18 @@ Les développeurs travaillent sur cette fonctionnalité.`,
   api_busy: `⏳ Le Système Cardinal réfléchit... Patiente un instant.`,
 
   maintenance: `🔧 Le Système Cardinal est en maintenance. Réessaie dans quelques instants.`,
+
+  sys_ok: `✅ Commande système exécutée : {message}`,
+  sys_fail: `❌ Commande système refusée : {message}`,
+  sys_unknown: `❌ Commande système inconnue. Utilise !sys_help pour la liste.`,
+  sys_help: `🛠 **Commandes système (GM)**
+━━━━━━━━━━━━━━━━
+!sys_grant_item player_id=<uuid> item_id=<id> quantity=<nb> reason=<texte>
+!sys_advance_quest player_id=<uuid> quest_id=<id> steps=<nb>
+!sys_npc_knowledge_unlock player_id=<uuid> npc_id=<id> level=<K0-K3>
+!sys_set_env_hazard zone_id=<id> hazard_type=<type> duration_minutes=<nb> severity=<low|medium|high|extreme>
+!sys_shop_restock npc_id=<id>
+━━━━━━━━━━━━━━━━`,
 };
 
 export function render(templateName, variables = {}) {
