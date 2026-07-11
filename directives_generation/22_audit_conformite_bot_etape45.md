@@ -240,3 +240,41 @@ Embeddings stockés en `FLOAT[]` jamais relus (`search()` ré-embedde à la vol�
 | 3 (14h06) | Architecture ✓, exécution ✗ : **nR5-nR8 rouges** (2 trous d'autorisation + schéma imaginaire + combat cassé + gazetteer en régression), nR9-nR10 majeurs |
 
 **Cause racine de la vague 3 : coder sans lire `schema.sql`.** Recommandations : (1) corriger nR7/nR8 en priorité (le jeu de base — combat, résolution de noms — est cassé, c'est pire qu'avant la vague) ; (2) nR5 avant toute mise en service du pipeline (autorisation par identité + jamais de parsing sur écho joueur) ; (3) réaligner le registre sur le schéma réel (nR6) et englober lock+exécution dans une transaction (nR9) ; (4) **m2 devient critique** : un test d'intégration minimal qui exécute chaque `SYS_*` et chaque handler contre la base réelle aurait attrapé 100 % de nR6-nR8 — `tests/` est toujours vide.
+
+---
+
+# ADDENDUM 45-quinquies — Contre-audit de la vague 4 PE (commit `a0c5830`, 14h20) — vérifié PAR EXÉCUTION
+
+> Vague annonçant « nR5-nR10 clos, m2 tests posés ». Contre-audit par diff **et, pour la première fois, par exécution** : suite d'intégration du PE lancée (**27/27 ✅**) + 3 sondes ciblées sur ses angles morts.
+
+## 1. Re-verdict nR5-nR10
+
+| Finding | Re-verdict | Preuve |
+|---|---|---|
+| **nR5-b (écho joueur)** | ✅ clos | post-parsing global retiré de `message-handler` ; `executePipelineCommands` ne scanne plus que la **sortie LLM** (`dialogue.js`, `rag.js` L3) — EMOTE/WHISPER ne passent plus au pipeline |
+| **nR5-a (GM sans contrôle)** | ⚠️ intention ✅, **cassé (nR11)** | contrôle `isGm()` ajouté… sur `t_avatars.role` **qui n'existe pas** (aucune colonne de rôle dans `T_AVATARS`). Sonde : `!sys_grant_item …` → *« ❌ Une erreur est survenue : la colonne « role » n'existe pas »*. Fail-closed (personne ne passe), mais la fonction GM est inutilisable et `err.message` fuit au joueur |
+| **nR6 (schéma imaginaire)** | ✅ largement clos | 5 commandes réécrites sur les colonnes réelles (`instance_uuid`, `current_step`/`progress_status`, `qi_id`, `current_weather`/PK `zone_id`, `shop_id`/`stock`) ; K3 rejeté au déblocage ✅ (D22). **Reliquat** : `SYS_ADVANCE_QUEST` termine la quête à `current_step >= 10` **codé en dur** au lieu du `total_steps` réel de `T_QUESTS_DICT` (bug logique) ; hazards = météo générique, les jauges D12 `OXYGEN`/`HEAT`/`DOT` restent non modélisées |
+| **nR7 (combat)** | ✅ code / ❌ **données (nR13)** | requête corrigée (JOIN `t_spawn_tables` — la bonne table)… mais **`T_SPAWN_TABLES` contient 0 ligne** (ni seed ni seed-generator ne la peuplent). Sonde : `attaque <monstre réel>` → *« n'est pas dans ta zone actuelle »* pour tout monstre. **Le combat reste 100 % inopérant** — c'est désormais une dette de peuplement, pas de code |
+| **nR8 (gazetteer)** | ✅ clos | colonnes réelles (`family`/`element`), `mobIndex` ajouté, chargement vérifié en test ; `zone-groups.js` corrigé (`wa_group_id`) — table vide, dégradation propre |
+| **nR9 (lock)** | ✅ clos | client dédié + `BEGIN` → `pg_advisory_xact_lock` → `execute(client)` → `COMMIT`/`ROLLBACK` → `release` : le verrou couvre réellement l'exécution |
+| **nR10 (is_secret)** | ✅ clos | `WHERE is_secret = FALSE` à l'ingestion (la métadonnée n'est même plus stockée) |
+| **m2 (tests)** | ✅ posé | `tests/integration.mjs` : 27 tests handlers + pipeline + D71. **Exécutés par l'ACP : 27/27 ✅.** |
+
+## 2. Nouveaux findings (vague 4)
+
+- **nR11 🟠 — `t_avatars.role` n'existe pas** : le contrôle GM plante en SQL (fail-closed, vérifié par sonde). Il faut soit une colonne/flag GM au MLD (décision de données — à acter proprement : `T_AVATARS` est une table du MLD ACP), soit une **allowlist de téléphones GM en config** (plus simple, pas de migration). Corriger aussi la fuite d'`err.message` vers le joueur.
+- **nR12 🟡 — `build-embeddings.js` casse encore** : la source monsters sélectionne `loot_table_id` **inexistant** → le script s'arrête en erreur après les 6 premières sources. (3ᵉ itération du même pattern schéma.)
+- **nR13 🟠 — `T_SPAWN_TABLES` vide = combat mort** : le `seed-generator.js` ne produit aucune ligne de spawn (les plages D6 des fiches faune ne sont pas parsées). Sans peuplement, aucune attaque ne peut aboutir. **C'est LE bloqueur gameplay n°1 restant.**
+- 🟡 Qualité seed : noms de monstres avec artefacts de parsing (ex. *« Chevalier d Argent — »* : apostrophe perdue + tiret cadratin) — le parseur de fiches mérite une passe.
+- 🟡 Angles morts de la suite de tests = exactement les 3 zones restées cassées (chemin GM, combat avec monstre réel, build d'embeddings). Ajouter ces 3 cas.
+
+## 3. Bilan cumulé après 4 vagues
+
+| | État |
+|---|---|
+| Rouges audit initial (R1-R3) | ✅ **tous clos** (vague 2) |
+| Rouges vague 3 (nR5-nR8) | nR5-b/nR6/nR8 ✅ · nR5-a ⚠️ (nR11) · nR7 ✅ code / ❌ données (nR13) |
+| Majeurs vague 3 (nR9-nR10) | ✅ clos |
+| **Restant prioritaire** | **nR13** (peupler `T_SPAWN_TABLES` — débloquant gameplay), **nR11** (GM par allowlist config ou colonne actée au MLD), `SYS_ADVANCE_QUEST` total en dur, nR12, source LLM='system' à restreindre (allowlist par source dédiée), M3-sanitizer FR, gating K2/L1 en lecture, P2 RAG réel (fiches+e5), parseur QI, D12 jauges |
+
+*Contre-audit exécuté en lecture seule sur `bot/` (D-P3-1) ; seule la suite de tests du PE et 3 sondes en lecture ont été exécutées contre la base de dev.*

@@ -1471,3 +1471,13 @@ Vague massive (M1/M3/M4-R0/P2/Gemini/mineurs, +783 lignes, 5 nouveaux modules). 
 - 🟡 : embeddings stockés jamais relus, sanitizer anglophone, travelTime non appliqué, gating K2/L1 toujours absent, « index vectoriel » ≠ CDC 15 (tables DB + bag-of-words, pas fiches+e5).
 
 **Cause racine : code écrit sans lire `schema.sql`. Priorités : nR7/nR8 (le jeu de base est cassé, pire qu'avant la vague) → nR5 → nR6/nR9 → tests d'intégration (m2 devient critique — aurait attrapé 100 % de nR6-nR8).** Rapport : addendum 45-quater du doc 22.
+
+### Addendum 45-quinquies — Contre-audit vague 4 PE (commit `a0c5830`, 14h20) — vérifié PAR EXÉCUTION
+
+Contre-audit par diff + exécution : suite d'intégration PE lancée (**27/27 ✅**) + 3 sondes ACP sur ses angles morts. **nR5-b (écho joueur), nR6, nR8, nR9, nR10 : ✅ clos proprement. m2 : suite posée et verte.** Mais les sondes confirment 3 résidus :
+- 🟠 **nR11** : le contrôle GM interroge `t_avatars.role` **qui n'existe pas** → « la colonne role n'existe pas » sur tout `!sys_*` (fail-closed mais GM inutilisable + fuite d'err.message). Fix : allowlist téléphones GM en config, ou colonne actée au MLD.
+- 🟠 **nR13** : `T_SPAWN_TABLES` = **0 ligne** → le combat reste 100 % inopérant malgré la requête corrigée (JOIN juste). Le seed-generator ne parse pas les plages D6. **Bloqueur gameplay n°1.**
+- 🟡 **nR12** : `build-embeddings.js` sélectionne `loot_table_id` inexistant → casse encore (3ᵉ itération du pattern « schéma imaginaire »).
+- Reliquats : `SYS_ADVANCE_QUEST` termine à `step>=10` en dur (≠ `total_steps` réel), source LLM='system' sur-privilégiée, sanitizer anglophone, gating K2/L1, artefacts de noms dans le seed (« Chevalier d Argent — »), angles morts des tests = exactement les 3 zones cassées.
+
+**Bilan cumulé : R1-R3 clos (vague 2) ; vague 3 apurée à ~80 % par la vague 4 ; restent nR13 (données) et nR11 (config/MLD) comme bloqueurs réels.** Rapport : addendum 45-quinquies du doc 22.
