@@ -6,14 +6,14 @@ import { routeMessage } from './agents/router.js';
 import * as movement from './engine/movement.js';
 import { render } from './services/template.js';
 import { processMessage } from './orchestrator/message-handler.js';
-import { initWhatsApp, getClient as getWAClient } from './services/whatsapp.js';
-import { loadModels, getStatus as getModelStatus } from './models/loader.js';
+import { initWhatsApp } from './services/whatsapp.js';
+import { loadModels } from './models/loader.js';
+import { loadGazetteer } from './services/gazetteer.js';
 
 const app = express();
 app.use(express.json());
 
 let serverStartTime = Date.now();
-let modelStatus = { intent: false, ner: false, combat: false, embed: false };
 let waConnected = false;
 
 async function initialize() {
@@ -44,32 +44,32 @@ async function initialize() {
   }
 
   try {
-    await loadModels();
-    modelStatus = getModelStatus();
+    await loadGazetteer(pool);
   } catch (err) {
-    logger.warn('Impossible de charger les modèles ONNX', { error: err.message });
+    logger.warn('Impossible de charger le gazetteer', { error: err.message });
   }
 
   try {
-    const fs = await import('fs');
-    const path = await import('path');
-    const modelDir = config.models.path;
-    for (const [key, file] of [['intent', config.models.intent], ['ner', config.models.ner], ['combat', config.models.combat], ['embed', config.models.embed]]) {
-      const fullPath = path.join(modelDir, file);
-      if (fs.existsSync(fullPath)) {
-        modelStatus[key] = true;
-        logger.debug(`Modèle ONNX trouvé : ${file}`);
-      }
-    }
-    logger.info('Statut des modèles ONNX', modelStatus);
+    await loadModels();
   } catch (err) {
-    logger.warn('Vérification des modèles ONNX impossible', { error: err.message });
+    logger.warn('Impossible de charger les modèles ONNX', { error: err.message });
   }
 
   serverStartTime = Date.now();
   logger.info('Système Cardinal initialisé', {
     uptime: `${Math.round((Date.now() - serverStartTime) / 1000)}s`,
-    models: Object.values(modelStatus).filter(Boolean).length + '/4 chargés',
+  });
+
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+  } catch (err) {
+    logger.warn('Vérification des modèles impossible', { error: err.message });
+  }
+
+  serverStartTime = Date.now();
+  logger.info('Système Cardinal initialisé', {
+    uptime: `${Math.round((Date.now() - serverStartTime) / 1000)}s`,
   });
 }
 
@@ -81,7 +81,7 @@ app.get('/health', async (req, res) => {
     uptime: `${uptime}s`,
     version: '0.1.0',
     database: dbOk ? 'connected' : 'disconnected',
-    models: getModelStatus(),
+    models: { intent: false, ner: false, combat: false, embed: false },
     wa: { status: waConnected ? 'connected' : 'disconnected' },
     memory: process.memoryUsage(),
   });

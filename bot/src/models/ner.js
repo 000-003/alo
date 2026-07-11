@@ -1,41 +1,60 @@
-import { getSession } from './loader.js';
+import { resolveItem, resolveNpc, resolveZone } from '../services/gazetteer.js';
 
-const ENTITY_REGEX = {
-  zoneId: /`?(ZONE_\w+_\d+)`?/i,
-  npcId: /`?(NPC_\w+_\d+)`?/i,
-  monsterId: /`?(MOB_\w+)`?/i,
-  itemId: /`?([A-Z]{2,4}_[A-Z]{2,4}_\d{3})`?/i,
-  skillId: /`?((?:MAG|OSS|PAS)_\w+_\d{3})`?/i,
-  quantity: /(\d+)\s*(?:x|fois)?/i,
-  playerName: /[A-Z][a-zéèêëàâùûôîï]{2,}/,
-};
+const QUANTITY_RE = /(\d+)\s*(?:x|fois)?/i;
+const ITEM_ID_RE = /`?([A-Z]{2,4}_[A-Z]{2,4}_\d{3})`?/i;
+const NPC_ID_RE = /`?(NPC_\w+_\d+)`?/i;
+const MONSTER_ID_RE = /`?(MOB_\w+)`?/i;
+const ZONE_ID_RE = /`?(ZONE_\w+_\d+)`?/i;
+const SKILL_ID_RE = /`?((?:MAG|OSS|PAS)_\w+_\d{3})`?/i;
 
 export function extractEntities(text) {
   const entities = {};
+  const lower = text.toLowerCase();
 
-  for (const [key, regex] of Object.entries(ENTITY_REGEX)) {
-    const match = text.match(regex);
-    if (match) {
-      const val = match[1] || match[0];
-      if (key === 'quantity') {
-        entities[key] = parseInt(val, 10);
-      } else {
-        entities[key] = val;
-      }
-    }
+  const npcMatch = text.match(NPC_ID_RE);
+  if (npcMatch) {
+    entities.npcId = npcMatch[1];
+  } else {
+    const resolved = resolveNpc(text);
+    if (resolved) entities.npcId = resolved.npc_id;
   }
 
-  if (text.toLowerCase().includes('marchand')) entities.keyword = 'marchand';
-  if (text.toLowerCase().includes('garde')) entities.keyword = 'garde';
-  if (text.toLowerCase().includes('forgeron')) entities.keyword = 'forgeron';
-  if (text.toLowerCase().includes('poti')) entities.keyword = 'potion';
+  const monsterMatch = text.match(MONSTER_ID_RE);
+  if (monsterMatch) entities.monsterId = monsterMatch[1];
+
+  let itemIdMatch = text.match(ITEM_ID_RE);
+  if (itemIdMatch) {
+    entities.itemId = itemIdMatch[1];
+  } else if (lower.includes('potion') || lower.includes('arme') || lower.includes('armure')) {
+    const resolved = resolveItem(text);
+    if (resolved) entities.itemId = resolved.item_id;
+  }
+
+  let zoneIdMatch = text.match(ZONE_ID_RE);
+  if (zoneIdMatch) {
+    entities.zoneId = zoneIdMatch[1];
+  } else {
+    const resolved = resolveZone(text);
+    if (resolved) entities.zoneId = resolved.zone_id;
+  }
+
+  const qtyMatch = text.match(QUANTITY_RE);
+  if (qtyMatch) entities.quantity = parseInt(qtyMatch[1], 10);
+
+  const skillMatch = text.match(SKILL_ID_RE);
+  if (skillMatch) entities.skillId = skillMatch[1];
+
+  for (const kw of ['potion', 'arme', 'armure', 'épée', 'bouclier', 'anneau', 'bague', 'minerai', 'plante', 'marchand', 'garde', 'forgeron']) {
+    if (lower.includes(kw)) {
+      entities.keyword = kw;
+      break;
+    }
+  }
 
   return entities;
 }
 
 export async function extractEntitiesNER(text) {
-  const session = getSession('ner');
-  if (!session) return extractEntities(text);
   return extractEntities(text);
 }
 

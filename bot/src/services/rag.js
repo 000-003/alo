@@ -40,8 +40,8 @@ async function level2DB(db, query, context) {
 
     try {
       const result = await db.query(
-        'SELECT content, k_level FROM t_npc_knowledge WHERE npc_id = $1 ORDER BY k_level ASC LIMIT 3',
-        [context.npcId]
+        'SELECT content FROM t_npc_knowledge WHERE npc_id = $1 AND k_level IN ($2, $3, $4) ORDER BY k_level ASC LIMIT 3',
+        [context.npcId, 'K0', 'K1', 'K2']
       );
       if (result.rows.length > 0) {
         const content = result.rows.map(r => r.content).join('\n');

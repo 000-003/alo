@@ -235,6 +235,11 @@ function parseNPCs() {
         if (inQISection && line.startsWith('|') && line.split('|').length >= 6) {
           const parts = line.split('|').map(p => p.trim());
           if (parts.length >= 7 && /^QI_\w+/.test(parts[1])) {
+            const kLevel = (parts[2] || '').trim().toUpperCase();
+            if (kLevel === 'K3' || kLevel === 'KX' || kLevel.startsWith('K') && !['K0','K1','K2'].includes(kLevel)) {
+              console.warn(`  [SKIP] ${parts[1]} — niveau K interdit : ${kLevel}`);
+              continue;
+            }
             knowledgeRows.push([
               parts[1], npcId, parts[2], parts[3] || '',
               parts[4]?.replace(/\n/g, ' ') || '',

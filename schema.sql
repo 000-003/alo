@@ -722,7 +722,7 @@ CREATE INDEX idx_active_effects_target ON T_ACTIVE_EFFECTS(target_id);
 CREATE TABLE T_NPC_KNOWLEDGE (
     qi_id               VARCHAR(50) PRIMARY KEY,
     npc_id              VARCHAR(50) NOT NULL REFERENCES T_NPC(npc_id),
-    k_level             VARCHAR(2) NOT NULL CHECK (k_level IN ('K0','K1','K2','K3','KX')),
+    k_level             VARCHAR(2) NOT NULL CHECK (k_level IN ('K0','K1','K2')),
     topic_tags          TEXT[] NOT NULL,
     content             TEXT NOT NULL,
     unlock_condition    TEXT,

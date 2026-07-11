@@ -1,6 +1,7 @@
 import { findShortestPath, zoneExists, getGraph } from '../engine/movement.js';
 import { getPlayer } from '../services/player.js';
 import { render } from '../services/template.js';
+import logger from '../utils/logger.js';
 
 export async function handleMove(db, playerUuid, entities) {
   const player = await getPlayer(db, playerUuid);
@@ -36,11 +37,29 @@ export async function handleMove(db, playerUuid, entities) {
     return `❌ Aucun chemin trouvé entre ${fromZone} et ${targetZone}.`;
   }
 
+  const cost = path.totalCost || 0;
+
+  try {
+    const upd = await db.query(
+      'UPDATE t_avatars SET current_zone_id = $1, mp_current = GREATEST(0, mp_current - $2) WHERE avatar_uuid = $3 AND mp_current >= $4',
+      [targetZone, cost, playerUuid, cost]
+    );
+
+    if (upd.rowCount === 0) {
+      return `❌ MP insuffisants pour ce déplacement (coût : ${cost} MP, disponible : ${player.mp_current}).`;
+    }
+
+    logger.info('Déplacement effectué', { playerUuid, fromZone, targetZone, cost });
+  } catch (err) {
+    logger.error('Erreur lors du déplacement', { error: err.message, playerUuid });
+    return `❌ Erreur lors du déplacement.`;
+  }
+
   return render('move', {
     destination: targetZone,
     distance: path.path.length - 1,
     time: path.totalTime,
-    cost: path.totalCost,
+    cost,
     travelTime: path.totalTime,
   });
 }

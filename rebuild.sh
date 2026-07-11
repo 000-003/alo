@@ -4,8 +4,8 @@ set -e
 DB="cardinal_alo"
 
 echo "=== Drop & Create ==="
-echo 0000 | sudo -S -u postgres psql -c "DROP DATABASE IF EXISTS $DB" > /dev/null
-echo 0000 | sudo -S -u postgres createdb $DB > /dev/null
+sudo -S -u postgres psql -c "DROP DATABASE IF EXISTS $DB" > /dev/null
+sudo -S -u postgres createdb $DB > /dev/null
 
 echo "=== Schema ==="
 psql -d $DB -f schema.sql > /dev/null

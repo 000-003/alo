@@ -6,6 +6,7 @@ import * as movement from '../handlers/movement.js';
 import * as combat from '../handlers/combat.js';
 import * as playerService from '../handlers/player.js';
 import * as dialogue from '../handlers/dialogue.js';
+import { retrieveLore } from '../services/rag.js';
 
 export async function processMessage(db, text, playerId = null, groupId = null, phoneNumber = null) {
   if (!text || typeof text !== 'string') {
@@ -24,7 +25,7 @@ export async function processMessage(db, text, playerId = null, groupId = null, 
 
   const routing = await routeMessage(text);
 
-  if (routing.confidence < 0.3) {
+  if (routing.confidence < 0.7) {
     return { response: render('error'), routing };
   }
 
@@ -97,6 +98,20 @@ async function executeIntent(db, routing, playerId) {
 
     case 'HELP':
       return render('help');
+
+    case 'LORE_QUERY': {
+      const lore = await retrieveLore(db, routing.raw || '');
+      return lore || `📖 Mes connaissances sur ce sujet sont limitées. Interroge un PNJ ou explore le monde pour en apprendre plus.`;
+    }
+
+    case 'VAULT':
+      return `🏦 La banque n'est pas encore ouverte. Reviens dans une prochaine mise à jour.`;
+
+    case 'MAIL':
+      return `📫 Le service de courrier n'est pas encore disponible.`;
+
+    case 'EQUIP':
+      return `⚔️ L'équipement n'est pas encore implémenté. Utilise *inventaire* pour voir tes objets.`;
 
     case 'PARTY':
     case 'GUILD':

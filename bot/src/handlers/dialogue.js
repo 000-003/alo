@@ -49,7 +49,7 @@ export async function handleTalk(db, playerId, entities) {
 
   if (!dialogue) {
     const knowledgeResult = await db.query(
-      'SELECT content FROM t_npc_knowledge WHERE npc_id = $1 ORDER BY k_level ASC LIMIT 1',
+      "SELECT content FROM t_npc_knowledge WHERE npc_id = $1 AND k_level IN ('K0','K1','K2') ORDER BY k_level ASC LIMIT 1",
       [npc.npc_id]
     );
     dialogue = knowledgeResult.rows.length > 0

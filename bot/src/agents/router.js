@@ -15,6 +15,10 @@ const INTENT_PATTERNS = [
   { intent: 'PARTY', pattern: /(?:groupe?|party|invite?|recrute?)\s*(?::\s*)?(.+)?/i },
   { intent: 'GUILD', pattern: /(?:guilde?|guild|clan)\s*(?::\s*)?(.+)?/i },
   { intent: 'CRAFT', pattern: /(?:craft|fabrique?|forge?|artisanat|recette?)\s*(?::\s*)?(.+)?/i },
+  { intent: 'LORE_QUERY', pattern: /(?:légende?|lore|histoire|dieu|création|mythe|origine|pourquoi|comment)\s*(?::\s*)?(.+)?/i },
+  { intent: 'VAULT', pattern: /(?:banque|coffre|dépôt|retrait|vault|banqu)\s*(?::\s*)?(.+)?/i },
+  { intent: 'MAIL', pattern: /(?:mail|courrier|message|boîte)\s*(?::\s*)?(.+)?/i },
+  { intent: 'EQUIP', pattern: /(?:équipe?|equip|arme?|armure?|accessoir)\s*(?::\s*)?(.+)?/i },
   { intent: 'HELP', pattern: /^(?:help|aide|commandes?|menu|\/help|\/aide|!aide|!help)$/i },
   { intent: 'EMOTE', pattern: /^(?:\/me|\/emote|\/do|\/it)(?:\s+(.+))?$/i },
   { intent: 'WHISPER', pattern: /^(?:\/w|\/whisper|\/tell)\s+(\w+)\s+(.+)/i },
@@ -26,7 +30,9 @@ export function getAgentForIntent(intent) {
     ATTACK: 'combat', USE_SKILL: 'combat',
     TALK: 'dialogue', INVENTORY: 'player', QUEST: 'player',
     STATUS: 'player', PARTY: 'social', GUILD: 'social',
-    CRAFT: 'economy', HELP: 'system', EMOTE: 'social', WHISPER: 'social',
+    CRAFT: 'economy', LORE_QUERY: 'lore', VAULT: 'economy',
+    MAIL: 'social', EQUIP: 'player',
+    HELP: 'system', EMOTE: 'social', WHISPER: 'social',
   };
   return map[intent] || 'fallback';
 }
@@ -41,7 +47,7 @@ export async function routeMessage(text) {
   let intent = modelResult.intent;
   let confidence = modelResult.confidence;
 
-  if (confidence < 0.3) {
+  if (confidence < 0.7) {
     for (const { intent: fi, pattern } of INTENT_PATTERNS) {
       const match = cleaned.match(pattern);
       if (match) {
