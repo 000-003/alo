@@ -1,0 +1,12 @@
+[
+  "atk",
+  "defense",
+  "level",
+  "hp",
+  "monster_atk",
+  "monster_def",
+  "monster_level",
+  "distance",
+  "is_magic",
+  "accuracy"
+]

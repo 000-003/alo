@@ -1,0 +1,2466 @@
+[
+  {
+    "text": "je vais à ZONE_NEU_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je vais à zone_neu_cap_001 svp",
+    "intent": "MOVE"
+  },
+  {
+    "text": "HELLO JE VAIS À ZONE_NEU_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je vais à ZONE_NEU_CAP_001 merci",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à ZONE_SYL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à ZONE_SYL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à zone_syl_cap_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à ZONE_SYL_CAP_001 merci",
+    "intent": "MOVE"
+  },
+  {
+    "text": "tp moi à ZONE_CAI_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "!tp moi à ZONE_CAI_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "bonjour tp moi à ZONE_CAI_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "tp moi à ZONE_CAI_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "déplace toi vers ZONE_SAL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "DÉPLACE TOI VERS ZONE_SAL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "stp déplace toi vers ZONE_SAL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "déplace toi vers zone_sal_cap_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je me téléporte à ZONE_IMP_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je me téléporte à ZONE_IMP_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "hello je me téléporte à ZONE_IMP_CAP_001 vite",
+    "intent": "MOVE"
+  },
+  {
+    "text": "hello je me téléporte à ZONE_IMP_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à la capitale neutre",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à la capitale neutre",
+    "intent": "MOVE"
+  },
+  {
+    "text": "hey va à la capitale neutre",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à la capitale neutre",
+    "intent": "MOVE"
+  },
+  {
+    "text": "direction la forêt des sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "hey direction la forêt des sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "direction la forêt des sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "direction la forêt des sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je veux aller à la zone des salamandres",
+    "intent": "MOVE"
+  },
+  {
+    "text": "HELLO JE VEUX ALLER À LA ZONE DES SALAMANDRES",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je veux aller à la zone des salamandres",
+    "intent": "MOVE"
+  },
+  {
+    "text": "JE VEUX ALLER À LA ZONE DES SALAMANDRES VITE",
+    "intent": "MOVE"
+  },
+  {
+    "text": "emmène moi à la capitale des gnomes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "emmène moi à la capitale des gnomes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "s'il te plaît emmène moi à la capitale des gnomes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "hey emmène moi à la capitale des gnomes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "tp ZONE_NEU_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "tp zone_neu_cap_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "tp ZONE_NEU_CAP_001 maintenant",
+    "intent": "MOVE"
+  },
+  {
+    "text": "tp ZONE_NEU_CAP_001 svp",
+    "intent": "MOVE"
+  },
+  {
+    "text": "move ZONE_SYL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "move zone_syl_cap_001 maintenant",
+    "intent": "MOVE"
+  },
+  {
+    "text": "move zone_syl_cap_001 maintenant",
+    "intent": "MOVE"
+  },
+  {
+    "text": "move ZONE_SYL_CAP_001",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je vais chez les sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je vais chez les sylphes maintenant",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je vais chez les sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je vais chez les sylphes",
+    "intent": "MOVE"
+  },
+  {
+    "text": "direction capitale impériale",
+    "intent": "MOVE"
+  },
+  {
+    "text": "HEY DIRECTION CAPITALE IMPÉRIALE MERCI",
+    "intent": "MOVE"
+  },
+  {
+    "text": "direction capitale impériale",
+    "intent": "MOVE"
+  },
+  {
+    "text": "s'il te plaît direction capitale impériale !",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à la zone de départ",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à la zone de départ",
+    "intent": "MOVE"
+  },
+  {
+    "text": "va à la zone de départ",
+    "intent": "MOVE"
+  },
+  {
+    "text": "VA À LA ZONE DE DÉPART",
+    "intent": "MOVE"
+  },
+  {
+    "text": "retour au point de départ",
+    "intent": "MOVE"
+  },
+  {
+    "text": "RETOUR AU POINT DE DÉPART",
+    "intent": "MOVE"
+  },
+  {
+    "text": "RETOUR AU POINT DE DÉPART",
+    "intent": "MOVE"
+  },
+  {
+    "text": "hey retour au point de départ",
+    "intent": "MOVE"
+  },
+  {
+    "text": "je veux 3 CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "!je veux 3 CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "hey je veux 3 CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux 3 CSM_POT_001 !",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète csm_pot_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète moi 2 ARM_CHA_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "!achète moi 2 ARM_CHA_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "hey achète moi 2 ARM_CHA_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "HEY ACHÈTE MOI 2 ARM_CHA_001 MERCI",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux une potion",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux une potion",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux une potion",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux une potion",
+    "intent": "BUY"
+  },
+  {
+    "text": "donne moi 5 CSM_POT_002",
+    "intent": "BUY"
+  },
+  {
+    "text": "bonjour donne moi 5 CSM_POT_002 vite",
+    "intent": "BUY"
+  },
+  {
+    "text": "donne moi 5 CSM_POT_002 !",
+    "intent": "BUY"
+  },
+  {
+    "text": "HEY DONNE MOI 5 CSM_POT_002 SVP",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète 10 potions de soin",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète 10 potions de soin merci",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète 10 potions de soin",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète 10 potions de soin maintenant",
+    "intent": "BUY"
+  },
+  {
+    "text": "je prends 1 WPN_SWD_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "je prends 1 WPN_SWD_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "stp je prends 1 WPN_SWD_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "je prends 1 WPN_SWD_001 !",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux 3 WPN_BOW_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "hello je veux 3 wpn_bow_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux 3 WPN_BOW_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "JE VEUX 3 WPN_BOW_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète CSM_POT_003",
+    "intent": "BUY"
+  },
+  {
+    "text": "hello achète CSM_POT_003",
+    "intent": "BUY"
+  },
+  {
+    "text": "ACHÈTE CSM_POT_003 MERCI",
+    "intent": "BUY"
+  },
+  {
+    "text": "achète csm_pot_003",
+    "intent": "BUY"
+  },
+  {
+    "text": "combien coûte CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "combien coûte CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "combien coûte CSM_POT_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "combien coûte CSM_POT_001 merci",
+    "intent": "BUY"
+  },
+  {
+    "text": "prix de ARM_CHA_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "prix de ARM_CHA_001 vite",
+    "intent": "BUY"
+  },
+  {
+    "text": "prix de ARM_CHA_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "hello prix de ARM_CHA_001",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux acheter des potions",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux acheter des potions",
+    "intent": "BUY"
+  },
+  {
+    "text": "!je veux acheter des potions",
+    "intent": "BUY"
+  },
+  {
+    "text": "je veux acheter des potions vite",
+    "intent": "BUY"
+  },
+  {
+    "text": "donne moi 2 CSM_POT_004",
+    "intent": "BUY"
+  },
+  {
+    "text": "DONNE MOI 2 CSM_POT_004",
+    "intent": "BUY"
+  },
+  {
+    "text": "donne moi 2 CSM_POT_004 maintenant",
+    "intent": "BUY"
+  },
+  {
+    "text": "bonjour donne moi 2 CSM_POT_004",
+    "intent": "BUY"
+  },
+  {
+    "text": "je prends l'épée longue",
+    "intent": "BUY"
+  },
+  {
+    "text": "JE PRENDS L'ÉPÉE LONGUE MAINTENANT",
+    "intent": "BUY"
+  },
+  {
+    "text": "bonjour je prends l'épée longue maintenant",
+    "intent": "BUY"
+  },
+  {
+    "text": "JE PRENDS L'ÉPÉE LONGUE !",
+    "intent": "BUY"
+  },
+  {
+    "text": "vends CSM_POT_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends CSM_POT_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends CSM_POT_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "VENDS CSM_POT_001 MERCI",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends csm_pot_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends CSM_POT_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends CSM_POT_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends CSM_POT_001 !",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends 3 CSM_POT_002",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends 3 CSM_POT_002",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends 3 CSM_POT_002 merci",
+    "intent": "SELL"
+  },
+  {
+    "text": "!revends 3 CSM_POT_002 !",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends 3 CSM_POT_002",
+    "intent": "SELL"
+  },
+  {
+    "text": "REVENDS 3 CSM_POT_002",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends 3 CSM_POT_002",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends 3 csm_pot_002 vite",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends mon épée",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends mon épée merci",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends mon épée",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends mon épée",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends mon épée",
+    "intent": "SELL"
+  },
+  {
+    "text": "s'il te plaît vends mon épée",
+    "intent": "SELL"
+  },
+  {
+    "text": "VENDS MON ÉPÉE !",
+    "intent": "SELL"
+  },
+  {
+    "text": "stp vends mon épée",
+    "intent": "SELL"
+  },
+  {
+    "text": "je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "bonjour je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "je veux vendre 2 potions",
+    "intent": "SELL"
+  },
+  {
+    "text": "S'IL TE PLAÎT JE VEUX VENDRE 2 POTIONS !",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends WPN_SWD_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends wpn_swd_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends WPN_SWD_001 maintenant",
+    "intent": "SELL"
+  },
+  {
+    "text": "REVENDS WPN_SWD_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "REVENDS WPN_SWD_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "stp revends WPN_SWD_001 svp",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends WPN_SWD_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "revends wpn_swd_001 svp",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends ARM_CHA_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends arm_cha_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "s'il te plaît vends ARM_CHA_001 !",
+    "intent": "SELL"
+  },
+  {
+    "text": "HELLO VENDS ARM_CHA_001 SVP",
+    "intent": "SELL"
+  },
+  {
+    "text": "VENDS ARM_CHA_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "VENDS ARM_CHA_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "stp vends ARM_CHA_001",
+    "intent": "SELL"
+  },
+  {
+    "text": "vends ARM_CHA_001 maintenant",
+    "intent": "SELL"
+  },
+  {
+    "text": "vend mon équipement",
+    "intent": "SELL"
+  },
+  {
+    "text": "vend mon équipement",
+    "intent": "SELL"
+  },
+  {
+    "text": "VEND MON ÉQUIPEMENT",
+    "intent": "SELL"
+  },
+  {
+    "text": "VEND MON ÉQUIPEMENT",
+    "intent": "SELL"
+  },
+  {
+    "text": "vend mon équipement !",
+    "intent": "SELL"
+  },
+  {
+    "text": "vend mon équipement",
+    "intent": "SELL"
+  },
+  {
+    "text": "vend mon équipement",
+    "intent": "SELL"
+  },
+  {
+    "text": "vend mon équipement",
+    "intent": "SELL"
+  },
+  {
+    "text": "attaque MOB_SYL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque mob_syl_001 merci",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque MOB_SYL_001 !",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque MOB_SYL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque MOB_SYL_001 svp",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "!ATTAQUE MOB_SYL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "bonjour attaque MOB_SYL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "frappe MOB_SYL_002",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "frappe mob_syl_002",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "hello frappe MOB_SYL_002 vite",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "frappe MOB_SYL_002",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "frappe MOB_SYL_002 svp",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "frappe MOB_SYL_002",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "hello frappe MOB_SYL_002",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage le combat contre MOB_NEU_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage le combat contre MOB_NEU_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage le combat contre mob_neu_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "!engage le combat contre mob_neu_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage le combat contre MOB_NEU_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "ENGAGE LE COMBAT CONTRE MOB_NEU_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage le combat contre MOB_NEU_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque le monstre",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "HELLO ATTAQUE LE MONSTRE",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "ATTAQUE LE MONSTRE",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "hey attaque le monstre",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "hey attaque le monstre",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque le monstre",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "attaque le monstre merci",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "combat MOB_SAL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "S'IL TE PLAÎT COMBAT MOB_SAL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "combat mob_sal_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "stp combat MOB_SAL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "combat MOB_SAL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "combat MOB_SAL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "COMBAT MOB_SAL_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "cogne MOB_CAI_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "stp cogne MOB_CAI_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "cogne MOB_CAI_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "HEY COGNE MOB_CAI_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "bonjour cogne mob_cai_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "hello cogne MOB_CAI_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "cogne mob_cai_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "hey je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "bonjour je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "je veux attaquer",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage MOB_IMP_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage MOB_IMP_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "stp engage MOB_IMP_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "stp engage MOB_IMP_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage MOB_IMP_001 vite",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "HEY ENGAGE MOB_IMP_001 !",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "engage mob_imp_001",
+    "intent": "ATTACK"
+  },
+  {
+    "text": "parle à NPC_ALN_00",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle à NPC_ALN_00",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle à NPC_ALN_00",
+    "intent": "TALK"
+  },
+  {
+    "text": "s'il te plaît parle à NPC_ALN_00",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle à NPC_ALN_00 !",
+    "intent": "TALK"
+  },
+  {
+    "text": "!parle à NPC_ALN_00 svp",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle à NPC_ALN_00",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le garde",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le garde",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le garde",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le garde",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le garde",
+    "intent": "TALK"
+  },
+  {
+    "text": "DISCUTE AVEC LE GARDE",
+    "intent": "TALK"
+  },
+  {
+    "text": "DISCUTE AVEC LE GARDE",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au marchand",
+    "intent": "TALK"
+  },
+  {
+    "text": "PARLE AU MARCHAND !",
+    "intent": "TALK"
+  },
+  {
+    "text": "PARLE AU MARCHAND",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au marchand",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au marchand",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au marchand",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au marchand",
+    "intent": "TALK"
+  },
+  {
+    "text": "dialogue avec NPC_VOU_01",
+    "intent": "TALK"
+  },
+  {
+    "text": "s'il te plaît dialogue avec npc_vou_01",
+    "intent": "TALK"
+  },
+  {
+    "text": "dialogue avec NPC_VOU_01",
+    "intent": "TALK"
+  },
+  {
+    "text": "dialogue avec NPC_VOU_01",
+    "intent": "TALK"
+  },
+  {
+    "text": "hey dialogue avec npc_vou_01",
+    "intent": "TALK"
+  },
+  {
+    "text": "hey dialogue avec NPC_VOU_01",
+    "intent": "TALK"
+  },
+  {
+    "text": "dialogue avec NPC_VOU_01 !",
+    "intent": "TALK"
+  },
+  {
+    "text": "qui es tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "qui es tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "qui es tu svp",
+    "intent": "TALK"
+  },
+  {
+    "text": "qui es tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "QUI ES TU",
+    "intent": "TALK"
+  },
+  {
+    "text": "qui es tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "qui es tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "que fais tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "QUE FAIS TU",
+    "intent": "TALK"
+  },
+  {
+    "text": "que fais tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "que fais tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "que fais tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "que fais tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "que fais tu",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au forgeron",
+    "intent": "TALK"
+  },
+  {
+    "text": "stp parle au forgeron",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au forgeron",
+    "intent": "TALK"
+  },
+  {
+    "text": "s'il te plaît parle au forgeron !",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au forgeron",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au forgeron vite",
+    "intent": "TALK"
+  },
+  {
+    "text": "parle au forgeron",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le maître des quêtes",
+    "intent": "TALK"
+  },
+  {
+    "text": "hey discute avec le maître des quêtes svp",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le maître des quêtes",
+    "intent": "TALK"
+  },
+  {
+    "text": "!discute avec le maître des quêtes",
+    "intent": "TALK"
+  },
+  {
+    "text": "discute avec le maître des quêtes",
+    "intent": "TALK"
+  },
+  {
+    "text": "DISCUTE AVEC LE MAÎTRE DES QUÊTES",
+    "intent": "TALK"
+  },
+  {
+    "text": "!discute avec le maître des quêtes",
+    "intent": "TALK"
+  },
+  {
+    "text": "inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "inventaire !",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "inventaire vite",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "INVENTAIRE",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "s'il te plaît mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mon inventaire merci",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "MON INVENTAIRE MAINTENANT",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mon inventaire merci",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mes objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mes objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "MES OBJETS SVP",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mes objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "MES OBJETS",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "MES OBJETS",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "mes objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "sac",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "sac !",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "HELLO SAC",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "hey sac merci",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "sac",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "SAC",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "sac",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "équipement",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "équipement !",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "équipement",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "équipement merci",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "!équipement",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "!équipement",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "stp équipement",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "que ai je dans mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "que ai je dans mon inventaire svp",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "que ai je dans mon inventaire vite",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "QUE AI JE DANS MON INVENTAIRE",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "s'il te plaît que ai je dans mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "que ai je dans mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "que ai je dans mon inventaire",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "liste mes items",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "liste mes items",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "liste mes items",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "liste mes items vite",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "liste mes items svp",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "LISTE MES ITEMS",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "liste mes items",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "bonjour objets vite",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "objets !",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "s'il te plaît objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "BONJOUR OBJETS",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "objets",
+    "intent": "INVENTORY"
+  },
+  {
+    "text": "statut",
+    "intent": "STATUS"
+  },
+  {
+    "text": "STATUT VITE",
+    "intent": "STATUS"
+  },
+  {
+    "text": "!statut",
+    "intent": "STATUS"
+  },
+  {
+    "text": "STATUT",
+    "intent": "STATUS"
+  },
+  {
+    "text": "stp statut maintenant",
+    "intent": "STATUS"
+  },
+  {
+    "text": "STATUT",
+    "intent": "STATUS"
+  },
+  {
+    "text": "STATUT",
+    "intent": "STATUS"
+  },
+  {
+    "text": "ma fiche",
+    "intent": "STATUS"
+  },
+  {
+    "text": "ma fiche",
+    "intent": "STATUS"
+  },
+  {
+    "text": "HELLO MA FICHE MAINTENANT",
+    "intent": "STATUS"
+  },
+  {
+    "text": "ma fiche",
+    "intent": "STATUS"
+  },
+  {
+    "text": "!MA FICHE MERCI",
+    "intent": "STATUS"
+  },
+  {
+    "text": "MA FICHE",
+    "intent": "STATUS"
+  },
+  {
+    "text": "ma fiche",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "bonjour mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mon profil !",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes stats",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes stats",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes stats",
+    "intent": "STATUS"
+  },
+  {
+    "text": "MES STATS",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes stats vite",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes stats svp",
+    "intent": "STATUS"
+  },
+  {
+    "text": "MES STATS",
+    "intent": "STATUS"
+  },
+  {
+    "text": "niveau",
+    "intent": "STATUS"
+  },
+  {
+    "text": "niveau",
+    "intent": "STATUS"
+  },
+  {
+    "text": "niveau vite",
+    "intent": "STATUS"
+  },
+  {
+    "text": "!NIVEAU",
+    "intent": "STATUS"
+  },
+  {
+    "text": "niveau",
+    "intent": "STATUS"
+  },
+  {
+    "text": "niveau",
+    "intent": "STATUS"
+  },
+  {
+    "text": "niveau",
+    "intent": "STATUS"
+  },
+  {
+    "text": "qui suis je",
+    "intent": "STATUS"
+  },
+  {
+    "text": "qui suis je",
+    "intent": "STATUS"
+  },
+  {
+    "text": "qui suis je",
+    "intent": "STATUS"
+  },
+  {
+    "text": "qui suis je",
+    "intent": "STATUS"
+  },
+  {
+    "text": "qui suis je",
+    "intent": "STATUS"
+  },
+  {
+    "text": "qui suis je",
+    "intent": "STATUS"
+  },
+  {
+    "text": "QUI SUIS JE",
+    "intent": "STATUS"
+  },
+  {
+    "text": "affiche mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "hello affiche mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "affiche mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "affiche mon profil vite",
+    "intent": "STATUS"
+  },
+  {
+    "text": "affiche mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "affiche mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "affiche mon profil",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes caractéristiques",
+    "intent": "STATUS"
+  },
+  {
+    "text": "HEY MES CARACTÉRISTIQUES SVP",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes caractéristiques",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes caractéristiques",
+    "intent": "STATUS"
+  },
+  {
+    "text": "MES CARACTÉRISTIQUES !",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes caractéristiques",
+    "intent": "STATUS"
+  },
+  {
+    "text": "mes caractéristiques",
+    "intent": "STATUS"
+  },
+  {
+    "text": "aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "s'il te plaît aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "aide svp",
+    "intent": "HELP"
+  },
+  {
+    "text": "aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "aide merci",
+    "intent": "HELP"
+  },
+  {
+    "text": "AIDE",
+    "intent": "HELP"
+  },
+  {
+    "text": "stp aide merci",
+    "intent": "HELP"
+  },
+  {
+    "text": "commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "commandes !",
+    "intent": "HELP"
+  },
+  {
+    "text": "commandes merci",
+    "intent": "HELP"
+  },
+  {
+    "text": "COMMANDES",
+    "intent": "HELP"
+  },
+  {
+    "text": "commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "commandes !",
+    "intent": "HELP"
+  },
+  {
+    "text": "!aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "!aide merci",
+    "intent": "HELP"
+  },
+  {
+    "text": "!aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "!AIDE",
+    "intent": "HELP"
+  },
+  {
+    "text": "!aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "!AIDE !",
+    "intent": "HELP"
+  },
+  {
+    "text": "!aide",
+    "intent": "HELP"
+  },
+  {
+    "text": "help",
+    "intent": "HELP"
+  },
+  {
+    "text": "help",
+    "intent": "HELP"
+  },
+  {
+    "text": "help",
+    "intent": "HELP"
+  },
+  {
+    "text": "stp help",
+    "intent": "HELP"
+  },
+  {
+    "text": "HELP",
+    "intent": "HELP"
+  },
+  {
+    "text": "help",
+    "intent": "HELP"
+  },
+  {
+    "text": "bonjour help maintenant",
+    "intent": "HELP"
+  },
+  {
+    "text": "que faire",
+    "intent": "HELP"
+  },
+  {
+    "text": "!que faire vite",
+    "intent": "HELP"
+  },
+  {
+    "text": "que faire !",
+    "intent": "HELP"
+  },
+  {
+    "text": "que faire",
+    "intent": "HELP"
+  },
+  {
+    "text": "QUE FAIRE",
+    "intent": "HELP"
+  },
+  {
+    "text": "que faire",
+    "intent": "HELP"
+  },
+  {
+    "text": "que faire maintenant",
+    "intent": "HELP"
+  },
+  {
+    "text": "tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "s'il te plaît tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "stp tutoriel",
+    "intent": "HELP"
+  },
+  {
+    "text": "liste des commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "liste des commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "s'il te plaît liste des commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "liste des commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "hey liste des commandes svp",
+    "intent": "HELP"
+  },
+  {
+    "text": "liste des commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "s'il te plaît liste des commandes",
+    "intent": "HELP"
+  },
+  {
+    "text": "comment jouer",
+    "intent": "HELP"
+  },
+  {
+    "text": "comment jouer",
+    "intent": "HELP"
+  },
+  {
+    "text": "!comment jouer !",
+    "intent": "HELP"
+  },
+  {
+    "text": "comment jouer",
+    "intent": "HELP"
+  },
+  {
+    "text": "comment jouer",
+    "intent": "HELP"
+  },
+  {
+    "text": "comment jouer",
+    "intent": "HELP"
+  },
+  {
+    "text": "s'il te plaît comment jouer",
+    "intent": "HELP"
+  },
+  {
+    "text": "quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "S'IL TE PLAÎT QUÊTE",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête maintenant",
+    "intent": "QUEST"
+  },
+  {
+    "text": "hello quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "QUÊTE VITE",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête vite",
+    "intent": "QUEST"
+  },
+  {
+    "text": "QUÊTE",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête vite",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mes quêtes",
+    "intent": "QUEST"
+  },
+  {
+    "text": "hey mes quêtes",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mes quêtes svp",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mes quêtes",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mes quêtes",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mes quêtes",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mes quêtes",
+    "intent": "QUEST"
+  },
+  {
+    "text": "!MES QUÊTES MERCI",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mission",
+    "intent": "QUEST"
+  },
+  {
+    "text": "bonjour mission",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mission",
+    "intent": "QUEST"
+  },
+  {
+    "text": "s'il te plaît mission",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mission !",
+    "intent": "QUEST"
+  },
+  {
+    "text": "stp mission svp",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mission",
+    "intent": "QUEST"
+  },
+  {
+    "text": "mission",
+    "intent": "QUEST"
+  },
+  {
+    "text": "que faire comme quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "que faire comme quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "que faire comme quête maintenant",
+    "intent": "QUEST"
+  },
+  {
+    "text": "que faire comme quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "stp que faire comme quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "que faire comme quête maintenant",
+    "intent": "QUEST"
+  },
+  {
+    "text": "hello que faire comme quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "que faire comme quête",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "hey quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "bonjour quête principale vite",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quête principale",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "QUÊTES DISPONIBLES VITE",
+    "intent": "QUEST"
+  },
+  {
+    "text": "stp quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "quêtes disponibles",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "progression",
+    "intent": "QUEST"
+  },
+  {
+    "text": "/dance",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "hey /dance maintenant",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/dance",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/DANCE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/DANCE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/dance maintenant",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/dance",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salut",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salut svp",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "hey /salut vite",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salut merci",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/SALUT",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salut",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "hey /salut svp",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/pleure",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/pleure",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/pleure",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/PLEURE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/pleure vite",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/pleure",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "hello /pleure merci",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/rire",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "bonjour /rire svp",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/rire vite",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/RIRE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/rire",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/rire",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "s'il te plaît /rire",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/crie",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/crie",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/crie",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/crie",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/CRIE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/crie",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/CRIE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/s assied",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "hey /s assied",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "s'il te plaît /s assied",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/s assied",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/s assied",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/s assied",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/S ASSIED !",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salue",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "hello /salue",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salue",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salue",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/SALUE",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/salue",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "!/salue",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/applaudit",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/applaudit",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "s'il te plaît /applaudit",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/applaudit",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "S'IL TE PLAÎT /APPLAUDIT MAINTENANT",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/APPLAUDIT",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "/applaudit",
+    "intent": "EMOTE"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour maintenant",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour merci",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour maintenant",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "MP À TESTEUR BONJOUR",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "S'IL TE PLAÎT MP À TESTEUR BONJOUR",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "mp à Testeur bonjour",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "bonjour message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "stp message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "hello message privé à Joueur coucou !",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "bonjour message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "MESSAGE PRIVÉ À JOUEUR COUCOU",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "stp message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "s'il te plaît message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "message privé à Joueur coucou",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "WHISPER TESTEUR SALUT",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut maintenant",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "WHISPER TESTEUR SALUT",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "hello whisper Testeur salut merci",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper testeur salut maintenant",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "whisper Testeur salut",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "STP WHISPER TESTEUR SALUT !",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va !",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "DM TESTEUR ÇA VA",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "DM TESTEUR ÇA VA SVP",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "s'il te plaît dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "s'il te plaît dm Testeur ça va",
+    "intent": "WHISPER"
+  },
+  {
+    "text": "dm Testeur ça va",
+    "intent": "WHISPER"
+  }
+]

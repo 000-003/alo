@@ -1,0 +1,39 @@
+[Unit]
+Description=ALfheim Online — Cardinal System Bot
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=user1808
+WorkingDirectory=/opt/alo/bot
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=DB_HOST=localhost
+Environment=DB_PORT=5432
+Environment=DB_NAME=cardinal_alo
+Environment=DB_USER=user1808
+Environment=DB_PASSWORD=0000
+Environment=REDIS_URL=redis://localhost:6379
+Environment=WA_SESSION_PATH=/opt/alo/bot/wa_session
+Environment=USE_API=false
+Environment=LLM_PROVIDER=groq
+Environment=GROQ_API_KEY=
+Environment=MISTRAL_API_KEY=
+Environment=OPENROUTER_API_KEY=
+Environment=HF_API_KEY=
+Environment=GEMINI_API_KEY=
+
+# Puppeteer/Chromium
+Environment=PUPPETEER_SKIP_DOWNLOAD=true
+Environment=PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
+# Resource limits
+MemoryMax=1G
+CPUQuota=80%
+
+[Install]
+WantedBy=multi-user.target

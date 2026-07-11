@@ -108,9 +108,9 @@ les couches où l'élément est référencé (atlas ↔ fiche zone ↔ table MLD
 | P1 | Fiches détaillées des zones nouvellement référencées (Freelia, Lioda, Duskarn, Granzam, Brokkheim, Penwether + chasses/donjons/routes) au format `capitale_swilvane.md` | ✅ Étape 2 (2026-07-06) — 30 fiches |
 | P1 | Tables MLD manquantes : `T_WA_GROUPS`, `T_SPAWN_TABLES`, `T_NPC`, `T_ZONE_LINKS` (détail des liaisons) | ✅ Étape 2 (2026-07-06) |
 | P1-bis | Fiches manquantes des territoires « anciens » : Salamander (`SAL_DUN_001` Caldeira d'Obsidienne, `ROUTE_SAL_ALN`), Undine (`UND_HUNT_001/002`, `UND_DUN_001`, `ROUTE_UND_ALN`), Gattan (registre PNJ `NPC_GAT_*`) | ✅ Étape 3 (2026-07-07) — 7 fichiers |
-| **P2** | **Chantier de renflouement conforme « ≥100 unités par type » — voir §10** (le pré-généré non validé ne clôt aucune ligne, D66) | 🚧 en cours |
+| **P2** | **Chantier de renflouement conforme « ≥100 unités par type » — voir §10** (le pré-généré non validé ne clôt aucune ligne, D66) | ✅ **CLOS** (étapes 4-37 ; audit de conformité étape 36, équilibrage économique étape 37) |
 | P2 | Détail MLD des mobs de donjons (plage réservée `MOB_<SEC>_030-034`) | ⏳ |
-| P3 | Implémentation Node.js du bot (hors phase données) | ⏳ |
+| P3 | Implémentation Node.js du bot (hors phase données) | 🚧 **LANCÉ PAR LE PE** (2026-07-11, étape 44) — chantier `bot/`, voir §11 |
 
 > **⚠️ Le statut d'une tâche ne peut être ✅ que sur du contenu conforme validé** (§10). Un dossier pré-rempli par une session automatique reste **⏳/🚧 « à régénérer »**, jamais ✅ (D66).
 
@@ -125,21 +125,32 @@ les couches où l'élément est référencé (atlas ↔ fiche zone ↔ table MLD
 
 **Procédé de mise en conformité d'un lot pré-généré** : (1) le dossier pré-rempli est réputé **vide** (D66) ; (2) régénération **intégrale** par script outillé (extraction disque des familles conformes → catalogue, allocation disjointe assertée) ; (3) validation automatisée (comptage, unicité, prix multiples de 5, exclusivité) ; (4) l'original non conforme est archivé en `ressources_brutes/deprecated_v1/`.
 
-### État de conformité (au 2026-07-10)
+### État de conformité (au 2026-07-11 — chantier §10 CLOS)
 
 | Lot | Cible | Statut conforme | Reste (pré-généré à régénérer/auditer) |
 |---|---|---|---|
 | **PNJ** (Phase A) | 12 villes ×100 + 10 canoniques | ✅ validé (gabarit D17, quotas D34) | — |
 | **Items I-1 consommables** `CSM_*` | 100 + 30 portage | ✅ validé | — |
 | **Items I-2 armes** `WPN_*` | 100 / 13 familles | ✅ validé | — |
-| **Items I-3 matériaux** `MAT_*` | 100 / 5 familles | ✅ validé (normalisé) | famille « bois » `MAT_WOD_*` à créer (amendement CDC-ITM) |
-| **Items I-4 skills** `MAG_`/`OSS_`/`PAS_` | 300 | ✅ validé | — |
+| **Items I-3 matériaux** `MAT_*` | 100 / 5 familles + bois | ✅ validé (normalisé ; `MAT_WOD_*` créé étape 31) | — |
+| **Items I-4 skills** `MAG_`/`OSS_`/`PAS_` | 300 | ✅ validé (parasite 303 doublons archivé étape 36) | — |
 | **Équipement tête** `ARM_TET_*` | 100 | ✅ validé | — |
-| **Boutiques** (Phase C) | 11 villes | 🚧 **5/11 validées** (C-1 Gattan, C-2 Alne, C-3 Swilvane, C-4 Voulg, C-5 Freelia) | **6 villes à régénérer** : Archipel 🌊, Lioda 🎭, Duskarn 🌑, Granzam ⛏️, Brokkheim 🔨, Penwether 🕯️ (pré-généré non validé) |
-| **Autres slots d'armure** (torse/jambes/bras/taille) | 4 ×100 | ⏳ **à auditer/régénérer** — pré-généré non conforme (doublons de fichiers `ARM_*` majuscules/minuscules constatés) | 4 slots |
-| **Accessoires** (anneaux/capes/ceintures/colliers) | dérogation ≥100 gelée (D39 caduque) | ⏳ à arbitrer PE | — |
-| **Faune** `MOB_*` par territoire | 249 (plages D6) | ⏳ **à auditer/régénérer** — pré-généré non validé | par territoire |
-| **Flore** `MAT_HRB_*`/nodes | 100 | ⏳ **à auditer/régénérer** — pré-généré non validé | par race |
-| **Quêtes** `QST_*` | 34 (dont dette `QST_SYL_HELKA_01`) | ⏳ **à auditer/régénérer** — pré-généré non validé | 34 |
+| **Boutiques** (Phase C) | 11 villes | ✅ **11/11 validées** (C-1→C-5 puis 6 villes régénérées étape 25 : 160 boutiques, 1 128 articles, 0 `Item_ID` fabriqué, 0 doublon R2) | — |
+| **Autres slots d'armure** (torse/jambes/bras/taille) | 4 ×100 | ✅ validé (étapes 26-27 ; junk co-résident archivé étape 36) | — |
+| **Accessoires** (anneaux/capes/ceintures/colliers) | dérogation ≥100 gelée (D39 caduque) | ⏳ à arbitrer PE (statu quo assumé : 14 fiches) | — |
+| **Faune** `MOB_*` par territoire | 249+ (plages D6) | ✅ validé (256 fiches étape 28 ; legacy 223 archivé étape 36) | — |
+| **Flore** `MAT_HRB_*`/nodes | 100 | ✅ validé (étape 27) | — |
+| **Quêtes** `QST_*` | 34+ | ✅ validé (étapes 29/32/33/34 ; +22 side-quests d'affinité étape 43 → 79 au total) | — |
+| **Social SOC-1→4** (étape 43) | emplois 66 / quêtes affinité 22 / décorations 36 / cadeaux noces | ✅ validé | auberge exploitable, 2 taverniers, peuplement `T_GUILDS` (backlog mineur) |
 
-> **Lecture** : un ✅ n'est accordé qu'après validation par la méthode ci-dessus. Les lignes ⏳/🚧 restent dues **même si un dossier pré-rempli existe sur disque** — leur présence ne vaut pas livraison (D66). Ordre d'exécution recommandé pour les boutiques : C-6 Archipel → Lioda → Duskarn → Granzam → Brokkheim → Penwether. `alo_context.md` / `alo_progression.md` tiennent l'état fin par étape.
+> **Lecture** : un ✅ n'est accordé qu'après validation par la méthode ci-dessus. **Le chantier §10 est clos** (audit de conformité étape 36 : 766 fichiers non conformes archivés, 0 collision d'ID ; équilibrage économique étape 37). `alo_context.md` / `alo_progression.md` tiennent l'état fin par étape.
+
+## 11. Chantier P3 — Implémentation du bot (`bot/`, propriété PE)
+
+**Décision PE (2026-07-11, actée étape 44)** : la phase P3 « implémentation Node.js » est **lancée et portée par le Producteur Exécutif lui-même**, en parallèle des sessions ACP. Le code vit dans `bot/` (Node.js 20+, `whatsapp-web.js`, PostgreSQL, Redis, ONNX Runtime, Docker/nginx/systemd), structuré selon les CDC `directives_generation/16-20` (NLU locale, spécialistes narratifs, orchestration runtime, moteur déterministe L1, sélection de modèles).
+
+**Règles de gouvernance du chantier** :
+1. La directive « zéro code » reste applicable **aux livrables ACP** (markdown/spéc), sauf demande explicite du PE sur `bot/`.
+2. Les CDC 13-21 sont le **contrat de conformité** du code : frontière déterministe absolue (combat/éco/inventaire jamais neuronaux, L1 seul écrivain), statelessness, interface `generate()` agnostique, verrou K3/D22 à l'ingestion RAG.
+3. Hygiène dépôt : `bot/.gitignore` exclut `node_modules/`, `.env` (secrets), `wa_session/` (session WhatsApp authentifiée), `models/*.onnx` ; seuls sources, configs et petits artefacts d'inférence sont versionnés.
+4. Réserve toujours ouverte avant lancement public : **audit des CGU des API gratuites** (Groq, Gemini, Cerebras, OpenRouter…) — étape 39.

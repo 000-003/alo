@@ -1,0 +1,1 @@
+{"classes": ["ATTACK", "BUY", "EMOTE", "HELP", "INVENTORY", "MOVE", "QUEST", "SELL", "STATUS", "TALK", "WHISPER"], "ngram_range": [1, 3], "max_features": 5000}

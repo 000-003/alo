@@ -1393,3 +1393,28 @@ Sur demande PE, les quotas SOC-1→4 ont été **délégués** (protocole D37). 
 **État de sortie** : pilier social **entièrement instancié** — mécanique (4 tables + specs) **et** contenu (124 fiches). Restent en backlog mineur : auberge exploitable (`[BESOIN_ENTITE]`), 2 taverniers dédiés, peuplement `T_GUILDS` pour les employeurs guilde.
 
 ---
+
+## ÉTAPE 44 — Régularisation P3 : chantier `bot/` officialisé + hygiène dépôt 🤖 ✅ CLOS (2026-07-11)
+
+**Contexte** : l'audit de reprise (2026-07-11) a constaté un dossier `bot/` non documenté (créé par le PE dans la nuit, travail parallèle) : implémentation Node.js complète conforme à l'architecture des CDC 16-20 (src/ handlers+engine+orchestrator+services, modèles ONNX entraînés intent/NER/combat, scripts d'entraînement Python, Docker/nginx/systemd). Le dernier commit datait de l'étape 37 : tout le travail 38-43 était non commité. Régularisation demandée par le PE.
+
+### Modifications
+
+| # | Action | Fichier(s) |
+|---|---|---|
+| 44.1 | 📦 Commit `1940f57` — travail des étapes 38-43 (9 CDC IA `directives_generation/13-21`, 4 tables MLD sociales, 124 fiches SOC, amendement persona §5) : 176 fichiers, **hors `bot/`** | dépôt git |
+| 44.2 | ✏️ Modifié — CDC §9 : P2 renflouement → ✅ CLOS (étapes 4-37) ; P3 → 🚧 LANCÉ PAR LE PE. §10 : table d'état de conformité mise à jour (elle datait d'avant les clôtures 25-37) — boutiques 11/11, armures 4×100, faune 256, flore, quêtes 79, social SOC-1→4 ; chantier §10 déclaré CLOS | `cahier_des_charges.md` |
+| 44.3 | ➕ Créé — **CDC §11 « Chantier P3 — Implémentation du bot »** : propriété PE, CDC 13-21 = contrat de conformité du code (frontière déterministe L1, statelessness, verrou D22), règles d'hygiène dépôt, réserve CGU API gratuites | `cahier_des_charges.md` |
+| 44.4 | ✏️ Modifié — Persona §5.1 : amendement — P3 lancé par le PE, `bot/` = propriété PE ; « zéro code » reste en vigueur pour les livrables ACP hors `bot/` (intervention ACP dans `bot/` = demande PE explicite) | `system_persona_architecte.md` |
+| 44.5 | ✅ Vérifié — hygiène git de `bot/` : `bot/.gitignore` existant couvre `node_modules/` (600 Mo), `.env` (secrets DB/API), `wa_session/` (46 Mo, session WhatsApp authentifiée), `models/*.onnx` ; git ne versionne que 50 fichiers légitimes (sources, configs, petits artefacts `.npy` d'inférence — conservés pour exécutabilité sans réentraînement) | `bot/.gitignore` (aucune modification nécessaire) |
+| 44.6 | 📦 Commit — `bot/` (50 fichiers) + fichiers de régularisation (CDC, persona, contexte, journal) | dépôt git |
+
+### Décisions actées
+
+- **D-P3-1** : `bot/` = **chantier PE** ; les sessions ACP n'y touchent que sur demande explicite. Les CDC 13-21 restent la source de vérité architecturale — tout écart constaté dans le code est un point d'audit, pas une mise à jour tacite des CDC.
+- **D-P3-2** : artefacts de modèles — les `.onnx` (lourds, régénérables via `bot/training/`) sont exclus du dépôt ; les petits artefacts (`.npy`, `.json` de vocabulaire/classes) sont versionnés.
+- Correction d'état : `alo_context.md` disait « pas un dépôt git » — le projet **est** un dépôt git (branche `main`, remote `origin`) depuis le commit initial `d847999`.
+
+### État de sortie
+
+Gouvernance réalignée sur le terrain : phase données CLOSE (§10 ✅), phase P3 OUVERTE et documentée (§11), dépôt à jour (2 commits propres, 0 secret versionné). Backlog documentaire restant : accessoires (dérogation D39 à arbitrer), auberge exploitable + taverniers + `T_GUILDS` (mineur), `!sys_rag_reindex`/`SYS_RAG_REINDEX` en `[BESOIN_COMMANDE]`, arbitrage `ZONE_ROUTE_LUGRU`, audit CGU API avant lancement public. Prochain front naturel : audit de conformité du code `bot/` contre les CDC 16-20 (sur demande PE).

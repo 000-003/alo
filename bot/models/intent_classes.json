@@ -1,0 +1,13 @@
+{
+  "0": "ATTACK",
+  "1": "BUY",
+  "2": "EMOTE",
+  "3": "HELP",
+  "4": "INVENTORY",
+  "5": "MOVE",
+  "6": "QUEST",
+  "7": "SELL",
+  "8": "STATUS",
+  "9": "TALK",
+  "10": "WHISPER"
+}
