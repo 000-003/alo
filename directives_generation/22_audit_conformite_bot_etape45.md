@@ -357,3 +357,18 @@ Le re-mapping a résolu la FK en envoyant `aincrad`/`neutre`/`jotunheimr`/`golde
 | nR15 — noms sales en base (générateur propre) | opération | `rebuild.sh` complet (ou UPDATE ciblé) |
 | Apostrophes perdues dans les fiches AIN/YGG | **corpus (ACP)** | passe de réparation des titres, sur demande PE |
 | Fond (§4 ci-dessus) | architecture | inchangé |
+
+---
+
+# ADDENDUM 45-nonies — Contre-audit de la vague 4.5 PE (commit `50bea53`, 15h01) — par exécution
+
+> nR14+nR15 annoncés clos. Vérifié en base + suite (**31/31 ✅**). **L'essentiel est fait** : boss dans les donjons raciaux (2 par `DUN_001` ✓), axe vertical réparti (`AIN_HUB`=15, `JOT_FLD`=13, `JOT_RAID`=2 boss), `SYL_HUNT` dégonflé 97→65, **noms propres en base** (`DO UPDATE SET` fonctionne — « Chevalier d Argent » sans tiret), 257/257.
+
+## Résidus, tous circonscrits au corpus d'axe vertical
+
+1. **nR14-b — stats par défaut dans les instances** : les gabarits boss/axe vertical ne sont pas parsés → **29 mobs d'instance à niveau ≤ 2** (Kayaba et Skuld : niv 1, 100 PV, dans `AIN_HUB_001`). Le placement est bon, la difficulté est absurde. Vrai fix = parseur adapté aux gabarits boss **ou** normalisation des fiches (corpus).
+2. **nR14-c — 5 boss encore en `SYL_HUNT_001`** : `MOB_NEU_025/026` (boss du dir `neutre`, non couverts par `DIR_TO_BOSS_ZONE`) et `MOB_YGG_025/026/00X` (dir `yggdrasil` non mappé → fallback SYL) ; `YGG_DUN_001`/`YGG_TOP_001` restent vides.
+3. **nR15-b — fiche dégénérée + double-échappement** : `MOB_YGG_00X` (ID malformé, « X » littéral) porte un nom de page wiki (« Wiki ALfheim Online - Le Gardien du Dôme… ») avec **apostrophes doublées stockées littéralement** (`d''Yggdrasil`) : le `.replace(/'/g,"''")` de `parseMonsters` double l'échappement déjà fait par `batchInsert`. Retirer l'échappement du parseur (une seule couche), et exclure/réparer la fiche `00X`.
+4. **5 noms encore sales** : `MOB_YGG_030-034` (mêmes fiches YGG au gabarit divergent).
+
+**Lecture d'ensemble** : le code du bot et le générateur sont désormais au niveau ; ce qui reste est une **dette de corpus** (fiches d'axe vertical de l'étape 35 : titres dégradés, gabarit hétérogène, une fiche wiki brute) + 2 retouches générateur (mapping `neutre`/`yggdrasil` boss, couche d'échappement unique). La réparation des fiches est du périmètre **ACP** — sur demande PE.
