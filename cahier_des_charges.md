@@ -14,8 +14,10 @@ multijoueur opéré par un bot WhatsApp**. Le monde est simulé par un « Systè
 backend Node.js à venir) ; les joueurs (~200 au lancement) agissent par commandes textuelles et vivent des
 restitutions narratives cinématiques, jamais des sorties de terminal brut.
 
-**Principe cardinal du projet** : *un lieu = un groupe WhatsApp*. La géographie du monde EST l'architecture
-des groupes.
+**Principe cardinal du projet (amendé D76, étape 48)** : *un territoire = un groupe WhatsApp*. La géographie du
+monde reste découpée en **zones** (granularité du gameplay, portée par l'état L1 `current_zone_id`) ; sa
+matérialisation WhatsApp est agrégée en **13 territoires** (contrainte réelle : ~100 groupes max par communauté).
+La géographie du monde EST l'architecture des groupes — au grain territoire.
 
 ## 2. Périmètre
 
@@ -41,7 +43,7 @@ des groupes.
 | Réf. | Module | Source de vérité | Exigence |
 |---|---|---|---|
 | EF-01 | **Cartographie & Monde** | `données/cartographie/atlas_monde_liaisons.md` | Le monde est découpé en zones identifiées (`ZONE_*`), reliées par un graphe symétrique ; 9 territoires raciaux + axe neutre Alne/Yggdrasil/Jötunheimr/New Aincrad |
-| EF-02 | **Déplacement** | `the_seed_engine/system_mechanics/zone_movement_protocol.md` | Invariant R0 : un joueur connecté est dans exactement un groupe lieu/instance ; entrée = sortie automatique de tous les autres lieux ; le HUB chat n'est jamais quitté |
+| EF-02 | **Déplacement** | `the_seed_engine/system_mechanics/zone_movement_protocol.md` (v2.0) | Invariant R0 (v2, D76) : un joueur connecté est dans exactement un groupe **territoire**/instance ; la zone exacte est l'état L1 `current_zone_id` ; changement de groupe seulement au franchissement de frontière de territoire (`sync_player_groups()` par retrait) ; les groupes permanents (4 communauté + 9 raciaux) ne sont jamais quittés |
 | EF-03 | **Commandes** | `the_seed_engine/whatsapp_commands_list.md` | Toute mécanique du monde a son équivalent commande (Joueur, GM et/ou IA) — règle de complétude obligatoire pour tout ajout |
 | EF-04 | **Progression & Stats** | `the_seed_engine/stat_scaling/*` | 9 races équilibrées (60 pts base), formules de dérivation, scaling par niveau |
 | EF-05 | **Combat** | `system_mechanics/damage_calculation_algorithm.md`, `physics_combat.md` | Combat asynchrone verrouillé (anti-duplication), Remain Light à la mort |
@@ -87,10 +89,11 @@ les couches où l'élément est référencé (atlas ↔ fiche zone ↔ table MLD
 | D1 | Capitale Salamander = **Gattan** (`ZONE_SAL_CAP_001`) ; **Voulg** requalifiée forteresse secondaire (`ZONE_SAL_TWN_001`) | Conflit entre deux fichiers ; l'ID cartographique existant fait foi |
 | D2 | Disposition radiale des 9 territoires autour d'Alne, frontières par paires de zones `HUNT_002` | Supporte les liaisons terrestres + tension PvP frontalière du lore |
 | D3 | New Aincrad : seuls le Palier 1 et le palier de front ont des groupes persistants ; salles de boss = groupes `INSTANCE` éphémères | 100 paliers ≠ 100 groupes WhatsApp (limite opérationnelle) |
-| D4 | Taxonomie de groupes : `LOCATION` / `INSTANCE` (exclusifs) vs `HUB_CHAT` / `GUILD` / `PARTY` / `SYSTEM` (persistants) | Fonde l'invariant R0 du protocole de déplacement |
+| D4 | Taxonomie de groupes (v2, harmonisée D76 sur l'enum implémenté) : `location` (= territoire) / `dungeon_instance` (exclusifs) vs `community_hub` / `guild_hall` / `private_party` / `housing` / `arena` / `system` (persistants ou sociaux) | Fonde l'invariant R0 du protocole de déplacement |
 | D5 | Capitales nommées pour les 4 territoires sans fiche : Lioda (Puca), Duskarn (Imp), Granzam (Gnome), Brokkheim (Leprechaun), Penwether (Spriggan — canon) | Complétude du découpage en 9 territoires |
 | D11 | Mécaniques signatures des 2 donjons restants (complète D10 sur 9/9) : Caldeira d'Obsidienne = jauge de **Surchauffe** (chaque message du groupe chauffe l'instance — anti-spam) ; Gouffre de Léviathan = jauge d'**Apnée** individuelle (chaque action consomme de l'oxygène, `!respirer` en poche d'air) | Exploiter nativement WhatsApp ; transformer les contraintes anti-spam (ENF-02) en gameplay |
 | D12 | Paramètres environnementaux de zone unifiés (`OXYGEN`, `HEAT`, `DOT`) pilotés par une commande générique unique : GM `!sys_env_set`, IA `SYS_SET_ENV_HAZARD` | Éviter une commande par jauge ; extensible aux futurs environnements (froid Jötunheimr, etc.) |
+| D76 | **Pivot territorial WhatsApp** (décision produit PE, étape 47 `b0ab4dd` ; docs maîtres amendés étape 48). La matérialisation WhatsApp passe du grain **zone** (52 groupes + dynamiques) au grain **territoire** : **13 territoires** couvrent les 52 zones (9 raciaux + `alne` + `aincrad` + `jotunheimr` + `yggdrasil` — registre maître : atlas §2-bis), soit **26 groupes permanents** (4 communauté + 9 raciaux + 13 territoires) et ~74 slots dynamiques. La **zone** reste la granularité du gameplay (adjacence R3, spawns, capacité, jauges D12), portée exclusivement par l'état L1 `T_AVATARS.current_zone_id` ; le changement de groupe n'a lieu qu'au franchissement de frontière de territoire (`sync_player_groups()` par retrait, idempotente). R0 reformulé en conséquence (protocole v2.0). Aucune commande ajoutée ni retirée (sémantique joueur préservée). | Contrainte réelle : ~100 groupes maximum par communauté WhatsApp — 52 groupes de zones + instances + guildes + parties auraient dépassé le plafond dès le lancement |
 | D66 | **Non-autorité du contenu pré-généré.** Toute donnée héritée de sessions automatiques (ID à hash, lore d'une ligne, zéro chaînage éco, doublons `Item_ID` R2, noms d'items fabriqués, zones erronées) est réputée **non conforme** : elle **ne fait pas foi**, **n'est jamais citée comme source de vérité**, et **ne compte pas comme livrée**. Un dossier pré-rempli est traité comme **vide** tant qu'il n'a pas été **régénéré et validé** selon les gabarits (D13-D15 items, D34-D37 rosters/boutiques, D61/D64/D65 tiers/marché noir/chevauchement). La régénération est **intégrale** (remplacement), jamais un complément. L'original non conforme part en `ressources_brutes/deprecated_v1/`. | Deux sessions parallèles ont pré-rempli les dossiers de villes/slots ; les compter comme « faits » masquerait des doublons R2, de faux `Item_ID` et des prix inventés — incompatibles avec ENF-05 (cohérence éco) et le persona (profondeur 200 %) |
 
 ## 8. Critères d'Acceptation de la Base

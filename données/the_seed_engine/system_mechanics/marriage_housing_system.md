@@ -50,7 +50,7 @@ L'affinité (−100…+100) se traduit en 5 paliers (`hostile`→`confidant`) qu
 - **Avantages** : (1) **stockage domestique massif** (`!home_storage`, +50 à +1 000 slots, armes admises) ; (2) **checkpoint sûr** — `!home_return` (rappel hors combat) + `!rest` (regen 5 %/min, logout sans *Remain Light*) ; (3) **prérequis de mariage**.
 
 ### 2.2 Interaction protocole de déplacement (R0)
-`!home_return` = déplacement **sanctionné** vers le **groupe WhatsApp privé du logement** (comme un cristal de rappel) ; conforme à l'invariant R0 (`zone_movement_protocol.md`) : le joueur quitte son groupe LOCATION vers son groupe HOME, jamais le HUB/GUILD/PARTY. Interdit en combat (P4).
+`!home_return` = déplacement **sanctionné** (comme un cristal de rappel) : écriture L1 `current_zone_id` = zone de la propriété + `sync_player_groups()` vers le groupe territoire correspondant (invariant R0 v2, D76 — `zone_movement_protocol.md` v2.0). Le **groupe WhatsApp privé du logement** (`group_type='housing'`) est un canal social persistant — jamais quitté automatiquement, hors décompte R0 — où se joue la vie domestique (`!rest`, `!home_storage`). Interdit en combat (P4).
 
 ---
 

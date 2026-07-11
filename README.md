@@ -3,9 +3,10 @@
 MMORPG textuel inspiré de **Sword Art Online : ALfheim Online**, joué via des groupes WhatsApp
 pilotés par le Système Cardinal (bot Node.js + LLM).
 
-> **Principe fondateur : un lieu = un groupe WhatsApp** — se déplacer dans le monde, c'est changer de groupe.
-> La limite des 100 groupes par communauté WhatsApp impose un design par **territoires** (13 groupes de zone,
-> 16 groupes permanents, 71 slots libres pour dynamiques).
+> **Principe fondateur (D76) : un territoire = un groupe WhatsApp** — la zone reste la granularité du gameplay
+> (état L1 `current_zone_id`) ; changer de groupe, c'est franchir une frontière de territoire.
+> La limite des 100 groupes par communauté WhatsApp impose ce design (13 groupes territoriaux,
+> 13 groupes sociaux permanents, ~74 slots libres pour dynamiques).
 
 ---
 
@@ -21,12 +22,15 @@ alo/
 │   │   ├── services/               # whatsapp, zone-groups, player, template, rag
 │   │   ├── agents/                 # router (classifieur d'intention), models
 │   │   └── engine/                 # movement (graphe de zones), combat engine
-│   ├── tests/integration.mjs       # 31 tests d'intégration
+│   ├── tests/integration.mjs       # 37 tests d'intégration
 │   └── .env.example
 ├── scripts/
 │   └── seed-generator.js           # Convertit les fiches markdown en SQL
 ├── schema.sql                      # Modèle de données PostgreSQL (46 tables)
 ├── seed_data.sql                   # Données générées (items, monstres, PNJ, etc.)
+├── pour_rc/                        # ★ DIRECTIVES DE TRAVAIL
+│   ├── flow_bot_directives.md      # Spécifications commandes !flow + arbitre IA
+│   └── methodes_integration_ia.md  # Catalogue complet des méthodes d'IA employées
 ├── données/                        # ★ FICHES DU MONDE (markdown structuré)
 │   ├── cartographie/               # Atlas, territoires, routes
 │   ├── personnages_bestiaire/      # Monstres (257), PNJ (300+), boss
@@ -51,7 +55,8 @@ La limite de **100 groupes par communauté** a conduit à un design en 3 couches
 Quand un joueur se déplace, `syncPlayerGroups()` retire les groupes de territoire non autorisés
 et le rejoint dans le bon — sans toucher aux groupes permanents.
 
-**29 groupes permanents** — il reste **71 slots** pour guildes, instances et parties.
+**26 groupes permanents** (4 communauté + 9 raciaux + 13 territoriaux) — il reste **~74 slots** pour guildes,
+instances et parties. Référentiel : atlas §2-bis + protocole de déplacement v2.0 (**D76**, docs maîtres amendés étape 48).
 
 ## 🏛️ Guilde d'Alne
 
@@ -76,8 +81,8 @@ Le **Hall de la Guilde** à Alne (ZONE_NEU_CAP_001) accueille 4 PNJ :
 node bot/tests/integration.mjs
 ```
 
-31 tests couvrent : handler STATUS/INVENTORY/QUESTS/BUY/SELL/TALK, pipeline SYS (6 commandes),
-processMessage (9 cas), spawn/combat, routage GM.
+37 tests couvrent : handler STATUS/INVENTORY/QUESTS/BUY/SELL/TALK, pipeline SYS (5 commandes),
+processMessage (9 cas), spawn/combat, routage GM, status effects (6 cas).
 
 ## 📊 État d'Avancement
 

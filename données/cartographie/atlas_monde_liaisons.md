@@ -2,9 +2,12 @@
 
 > **Statut** : Document-maître structurel (base). Les fiches détaillées par zone vivent dans
 > `cartographie/territoires_raciaux/` et `cartographie/routes_aeriennes/` et DOIVENT référencer les ID définis ici.
-> **Règle absolue** : 1 zone = 1 groupe WhatsApp (voir `the_seed_engine/system_mechanics/zone_movement_protocol.md`).
+> **Règle absolue (amendée D76, étape 48)** : 1 **territoire** = 1 groupe WhatsApp ; la zone reste la granularité
+> du **gameplay** (adjacence, spawns, capacité), portée par l'état L1 `T_AVATARS.current_zone_id`
+> (voir `the_seed_engine/system_mechanics/zone_movement_protocol.md` v2.0). L'ancienne règle « 1 zone = 1 groupe »
+> est supersédée — contrainte réelle : ~100 groupes maximum par communauté WhatsApp.
 > **Détail relationnel du graphe** : `cardinal_system_db/MLD_Logic/table_t_zone_links.md` (80 liaisons seed) ;
-> registre des groupes : `table_t_wa_groups.md`.
+> registre des groupes : `table_t_wa_groups.md` ; registre des territoires : **§2-bis ci-dessous**.
 
 ---
 
@@ -15,7 +18,8 @@
 | Zone | `ZONE_<SECTEUR>_<TYPE>_<NNN>` | `ZONE_SYL_CAP_001` |
 | Route aérienne | `ZONE_ROUTE_<SECTEUR>_ALN` | `ZONE_ROUTE_SYL_ALN` |
 | Palier New Aincrad | `ZONE_AIN_FLR_<NNN>` | `ZONE_AIN_FLR_027` |
-| Groupe WhatsApp (lieu) | `🗺️ ALO — <Nom Zone>` | `🗺️ ALO — Swilvane` |
+| Territoire (D76) | slug minuscule (13 valeurs, §2-bis) | `sylphe`, `alne`, `jotunheimr` |
+| Groupe WhatsApp (territoire) | `<emoji> Terres <Race>` / nom dédié pour l'axe neutre | `🌿 Terres Sylphes` |
 | Groupe WhatsApp (instance) | `⚔️ RAID — <Donjon> #<n>` | `⚔️ RAID — Vent Hurlant #3` |
 
 **Codes secteur** : `SYL` Sylph · `SAL` Salamander · `CAI` Cait Sith · `UND` Undine · `IMP` Imp · `GNO` Gnome · `PUC` Puca · `SPR` Spriggan · `LEP` Leprechaun · `NEU` Neutre (Alne) · `YGG` Yggdrasil · `JOT` Jötunheimr · `AIN` New Aincrad · `ROUTE` Couloir aérien.
@@ -24,18 +28,58 @@
 
 ---
 
-## 2. Taxonomie des Groupes WhatsApp
+## 2. Taxonomie des Groupes WhatsApp (amendée D76)
 
-| Type de groupe | Exclusif ? | Quitté automatiquement ? | Exemples |
+| Type (enum `T_WA_GROUPS.group_type`) | Porte | Exclusif ? | Quitté automatiquement ? | Exemples |
+|---|---|---|---|---|
+| `location` | un **TERRITOIRE** (13, §2-bis) | ✅ Oui — un joueur n'est que dans UN territoire | ✅ Oui, au franchissement de frontière de territoire (`sync_player_groups()`) | 🌿 Terres Sylphes, 🔥 Terres Salamanders |
+| `dungeon_instance` | une instance éphémère | ✅ Oui (compte comme lieu) | ✅ Oui (fin de raid / mort / fuite) | ⚔️ RAID — Vent Hurlant #3 |
+| `community_hub` | canal communautaire permanent | ❌ Non | ❌ **Jamais** (exception fondatrice) | 📢 Annonces, 📋 Enregistrement, 💬 Général, 🤝 LFG, 🏛️ les 9 groupes raciaux |
+| `guild_hall` | une guilde | ❌ Non | ❌ Non (départ manuel / kick) | Groupes de guilde |
+| `private_party` | une party | ❌ Non | ❌ Non (dissolution de groupe) | Groupes de party |
+| `housing` | un logement (D-SOC) | ❌ Non | ❌ Non | Maisons de joueurs |
+| `arena` | un événement PvP | ❌ Non | ✅ Oui (fin d'événement) | Tournois |
+| `system` | canal Cardinal/GM | ❌ Non | ❌ Non | Support GM |
+
+**Invariant Cardinal (R0 v2)** : pour tout avatar connecté, `card(groupes location ∪ dungeon_instance) = 1` —
+la **zone** exacte est portée par `T_AVATARS.current_zone_id` (L1), jamais déduite des groupes.
+
+*(Les anciens libellés v1 `LOCATION`/`INSTANCE`/`HUB_CHAT`/`GUILD`/`PARTY`/`SYSTEM` mappent respectivement sur
+`location`/`dungeon_instance`/`community_hub`/`guild_hall`/`private_party`/`system` — l'enum du schéma implémenté fait foi.)*
+
+---
+
+## 2-bis. Registre Maître des Territoires (D76, étape 48) — source de vérité
+
+13 territoires couvrent les 52 zones. La **zone d'ancrage** (première zone listée) est celle dont le `zone_id`
+porte la ligne `T_WA_GROUPS` du territoire. Reflet implémenté : `TERRITORY_ZONES` (`bot/src/services/zone-groups.js`)
+et `sync_player_groups()` (`schema.sql`) — toute modification passe d'abord ICI (règle L6).
+
+| Territoire (slug) | Groupe WhatsApp | Zone d'ancrage | Zones couvertes |
 |---|---|---|---|
-| `LOCATION` | ✅ Oui — un joueur n'est que dans UN lieu | ✅ Oui, à chaque déplacement | Capitales, zones de chasse, routes |
-| `INSTANCE` | ✅ Oui (compte comme lieu) | ✅ Oui (fin de raid / mort / fuite) | Donjons instanciés, salles de boss |
-| `HUB_CHAT` | ❌ Non | ❌ **Jamais** (exception fondatrice) | Taverne Communautaire globale |
-| `GUILD` | ❌ Non | ❌ Non (départ manuel / kick) | Groupes de guilde |
-| `PARTY` | ❌ Non | ❌ Non (dissolution de groupe) | Groupes de party |
-| `SYSTEM` | ❌ Non | ❌ Non | Annonces Cardinal, support GM |
+| `sylphe` | 🌿 Terres Sylphes | `ZONE_SYL_CAP_001` | + `SYL_HUNT_001`, `SYL_HUNT_002`, `SYL_DUN_001`, `ROUTE_SYL_ALN` |
+| `salamander` | 🔥 Terres Salamanders | `ZONE_SAL_CAP_001` | + `SAL_HUNT_001`, `SAL_HUNT_002`, `SAL_DUN_001`, `ROUTE_SAL_ALN`, `SAL_TWN_001` |
+| `undine` | 💧 Terres Undines | `ZONE_UND_CAP_001` | + `UND_HUNT_001`, `UND_HUNT_002`, `UND_DUN_001`, `ROUTE_UND_ALN` |
+| `cait` | 🐱 Terres Cait Sith | `ZONE_CAI_CAP_001` | + `CAI_HUNT_001`, `CAI_HUNT_002`, `CAI_DUN_001`, `ROUTE_CAI_ALN` |
+| `gnome` | ⛰️ Terres Gnomes | `ZONE_GNO_CAP_001` | + `GNO_HUNT_001`, `GNO_HUNT_002`, `GNO_DUN_001`, `ROUTE_GNO_ALN` |
+| `imp` | 🌑 Terres Imps | `ZONE_IMP_CAP_001` | + `IMP_HUNT_001`, `IMP_HUNT_002`, `IMP_DUN_001`, `ROUTE_IMP_ALN` |
+| `leprechaun` | ⚒️ Terres Leprechauns | `ZONE_LEP_CAP_001` | + `LEP_HUNT_001`, `LEP_HUNT_002`, `LEP_DUN_001`, `ROUTE_LEP_ALN` |
+| `puca` | 🎵 Terres Pucas | `ZONE_PUC_CAP_001` | + `PUC_HUNT_001`, `PUC_HUNT_002`, `PUC_DUN_001`, `ROUTE_PUC_ALN` |
+| `spriggan` | 🌫️ Terres Spriggans | `ZONE_SPR_CAP_001` | + `SPR_HUNT_001`, `SPR_HUNT_002`, `SPR_DUN_001`, `ROUTE_SPR_ALN` |
+| `alne` | 🏔️ Alne — Capitale Neutre | `ZONE_NEU_CAP_001` | (capitale seule) |
+| `aincrad` | 🏰 New Aincrad | `ZONE_AIN_HUB_001` | paliers `AIN_FLR_002-100` = état L1 (D3 : palier de front éventuellement promu groupe dynamique) |
+| `jotunheimr` | ❄️ Jötunheimr | `ZONE_JOT_FLD_001` | + `JOT_RAID_001` |
+| `yggdrasil` | 🌳 Yggdrasil | `ZONE_YGG_DUN_001` | + `YGG_TOP_001` |
 
-**Invariant Cardinal** : pour tout avatar connecté, `card(groupes LOCATION ∪ INSTANCE) = 1`.
+**Budget communautaire WhatsApp (~100 groupes max)** :
+
+| Couche | Groupes | Type |
+|---|---|---|
+| Communauté (Annonces, Enregistrement, Général, LFG) | 4 | `community_hub` |
+| Raciaux (🏛️ un par peuple, jamais quittés) | 9 | `community_hub` |
+| Territoires (auto-switch au déplacement) | 13 | `location` |
+| **Total permanent** | **26** | — |
+| Slots dynamiques restants (instances, guildes, parties, housing, arène) | **~74** | éphémères/sociaux |
 
 ---
 
@@ -182,9 +226,11 @@ CAP (capitale, safe) ── HUNT_001 (chasse intérieure)
 | `ZONE_AIN_HUB_001` | New Aincrad — Palier 1 (Ville du Début) | HUB | 1 | ✅ | `NEU_CAP_001` (vol), `AIN_FLR_002` | Vol requis |
 | `ZONE_AIN_FLR_002` → `ZONE_AIN_FLR_100` | New Aincrad — Paliers 2 à 100 | FLR | 1→10 | ❌ | Palier N ↔ N±1 (progression linéaire) | Boss du palier N−1 vaincu — `BOSS_AIN_<NNN>` (cf. `personnages_bestiaire/_index_boss_axe_vertical.md`) |
 
-> **New Aincrad — règle structurelle** : les paliers ne sont PAS 100 groupes WhatsApp permanents.
-> Seuls le Palier 1 (hub) et le **palier de front** (plus haut palier atteint par le serveur) ont un groupe
-> persistant ; les salles de boss sont des groupes `INSTANCE` éphémères créés via `!dungeon_queue`.
+> **New Aincrad — règle structurelle (harmonisée D76)** : les paliers ne sont PAS 100 groupes WhatsApp permanents.
+> Le territoire `aincrad` (§2-bis) porte le groupe permanent (ancré au Palier 1) ; la position exacte d'un joueur
+> dans les paliers 2-100 est de l'état L1 (`current_zone_id`). Le **palier de front** (plus haut palier atteint par
+> le serveur) peut être promu groupe dynamique sur le budget de slots libres ; les salles de boss sont des groupes
+> `dungeon_instance` éphémères créés via `!dungeon_queue`.
 > Boss : **nommés/canon** = fiches `BOSS_AIN_001/027/074/075/100` ; **paliers génériques** = profil paramétrique
 > (fonction du n° de palier) instancié à la volée — pas de fiche permanente (cf. index d'axe vertical §3).
 

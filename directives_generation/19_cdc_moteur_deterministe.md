@@ -13,7 +13,7 @@ Ces domaines sont **du code pur, 0 IA**. Y mettre un réseau = un bug déguisé.
 | Sous-système | Règle | Latence |
 |---|---|---|
 | **Combat (résolution)** | `DMG = ATK²/(ATK+DEF) × multiplicateurs` (crit, élément, jauges D11/D12) ; hit/miss ; I-frames ; mort | < 1 ms |
-| **Mouvement** | Dijkstra sur le graphe de zones (`T_ZONE_LINKS`, source de vérité D9) ; **invariant R0** (1 joueur = 1 groupe LOCATION) | < 1 ms |
+| **Mouvement** | Dijkstra sur le graphe de zones (`T_ZONE_LINKS`, source de vérité D9) ; **invariant R0 v2, D76** (1 joueur = 1 groupe TERRITOIRE ; zone exacte = `current_zone_id`, écrite par L1 seul) | < 1 ms |
 | **Économie** | `prix × quantité`, stock, taxes, revente 25 % ; grille de tiers (étape 37) | < 1 ms |
 | **Inventaire** | CRUD + capacité/port (D44/D45, `T_INVENTORY`) ; triggers **anti-dup**, plafonds | < 1 ms |
 | **XP / niveaux** | seuils précalculés | < 1 ms |
@@ -78,7 +78,7 @@ DeepSeek Agent #3b, adopté **avec clarification de la frontière**. Le **choix 
 | `SYS_NPC_SECRET_PROBED` | méta | **D22 : ≤ 1/session, jamais confirmé** |
 | `SYS_SET_ENV_HAZARD` | jauges D11/D12 | zone valide, borne 0-100 |
 | `SYS_SHOP_RESTOCK` / transaction | économie | stock, solde, prix (grille étape 37) |
-| déplacement | mouvement | **R0** : liaison existe (`T_ZONE_LINKS`), 1 lieu à la fois |
+| déplacement | mouvement | **R0 v2 (D76)** : liaison existe (`T_ZONE_LINKS`), 1 zone à la fois (état L1) + 1 groupe territoire à la fois (`sync_player_groups()`) |
 
 ---
 

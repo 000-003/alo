@@ -55,7 +55,7 @@ CREATE INDEX idx_property_delinquent   ON T_PROPERTIES(is_delinquent) WHERE is_d
 
 Le logement est un **point de rappel personnel**, interaction directe avec l'invariant **R0** de `zone_movement_protocol.md` :
 
-- `!home_return` : rappel vers le **groupe WhatsApp du logement** depuis n'importe quelle zone — **hors combat uniquement** (`is_in_combat = FALSE`). Déplacement *sanctionné* (comme un cristal de rappel), le joueur quitte son groupe LOCATION courant vers son groupe HOME (jamais le HUB/GUILD/PARTY, conforme R0).
+- `!home_return` : rappel depuis n'importe quelle zone — **hors combat uniquement** (`is_in_combat = FALSE`). Déplacement *sanctionné* (comme un cristal de rappel) : écriture L1 `current_zone_id` = zone de la propriété + `sync_player_groups()` vers le groupe territoire correspondant (R0 v2, D76). Le groupe HOME (`group_type='housing'`) est un canal social persistant, hors décompte R0, jamais quitté automatiquement.
 - `!rest` chez soi : régénération `rest_regen_pct` %/min (5 % contre 1 % en extérieur) **et logout sûr** — aucune pénalité *Remain Light*, l'avatar réapparaît chez lui à la reconnexion.
 - Le groupe HOME est **privé** : `invited_avatars` + le propriétaire (et le conjoint, cf. `T_MARRIAGES`) uniquement.
 

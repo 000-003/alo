@@ -54,7 +54,7 @@ Filtre Développeur, non négociable. Mettre un réseau ici = un bug déguisé e
 | Résolution de combat (dégâts, I-frames, hit/miss, mort) | Reproductibilité, **anti-exploit**, locking anti-duplication (persona §2.2) | Moteur L1, `services/combat` |
 | Économie (prix, stocks, Yrds, revente 25 %) | Une IA qui « estime » un prix casse l'économie (persona §3.1) | L1 + `T_SHOPS` |
 | Inventaire / capacité / port | Triggers anti-dup, plafonds (D44/D45, `T_INVENTORY`) | L1 |
-| Déplacement / présence de zone | **Invariant R0** : 1 joueur = 1 groupe LOCATION (`zone_movement_protocol`) | L1 + `T_WA_GROUPS`/`T_ZONE_LINKS` |
+| Déplacement / présence de zone | **Invariant R0 (v2, D76)** : 1 joueur = 1 groupe TERRITOIRE ; zone exacte = état L1 `current_zone_id` (`zone_movement_protocol` v2.0) | L1 + `T_WA_GROUPS`/`T_ZONE_LINKS` |
 | Jauges environnementales | Surchauffe/Apnée/Vacarme = `HEAT`/`OXYGEN`/`DOT` calculés (D11/D12) | L1, `SYS_SET_ENV_HAZARD` |
 | Déblocage skill/titre/loot | Règles de prérequis (Niveau, quête T5, drop rate) | L1 |
 

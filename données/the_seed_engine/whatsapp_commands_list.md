@@ -34,9 +34,9 @@
 - `!lore [Titre]` : Affiche un document d'histoire ancienne (ex: *La Chute de Jötunheimr*) trouvé en loot.
 
 ## 3. 🚪 Mouvement Dynamique & Architecture des Groupes WhatsApp
-*Se déplacer dans ALO correspond à naviguer entre différents groupes WhatsApp gérés par le bot.*
-*Règle d'exclusivité (cf. `system_mechanics/zone_movement_protocol.md`) : entrer dans un groupe de type lieu retire automatiquement le joueur de tous les autres groupes lieux/instances. Le groupe de chat communautaire (HUB) n'est jamais quitté.*
-- `!enter_zone [Nom_Zone]` : Si la zone est adjacente (atlas `cartographie/atlas_monde_liaisons.md`) et les conditions remplies, le bot l'ajoute au groupe WhatsApp de la zone et le retire de l'ancienne. Alias : `!marcher [direction]`, `!voler [destination]`.
+*Se déplacer dans ALO met à jour la zone du joueur (état L1 `current_zone_id`) ; le changement de groupe WhatsApp n'a lieu qu'au franchissement d'une frontière de **territoire** (13 territoires — atlas §2-bis, D76).*
+*Règle d'exclusivité (cf. `system_mechanics/zone_movement_protocol.md` v2.0) : un joueur n'appartient qu'à UN groupe territoire/instance à la fois — la synchronisation se fait par retrait des groupes non autorisés. Les groupes permanents (4 communauté + 9 raciaux) ne sont jamais quittés.*
+- `!enter_zone [Nom_Zone]` : Si la zone est adjacente (atlas `cartographie/atlas_monde_liaisons.md`) et les conditions remplies, le bot met à jour la position du joueur ; si la zone cible est dans un autre territoire, il l'ajoute au groupe du territoire cible et le retire de l'ancien. Alias : `!marcher [direction]`, `!voler [destination]`.
 - `!leave_zone` : Le joueur quitte la zone (retour vers la zone parente — capitale ou zone précédente).
 - `!where` : Affiche la zone actuelle du joueur, son type et ses zones adjacentes accessibles.
 - `!dungeon_queue [Donjon_ID]` : Place le joueur en file d'attente. Quand 7 joueurs sont prêts, le bot crée un groupe WhatsApp éphémère (Raid Instance) et les ajoute dedans.

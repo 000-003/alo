@@ -6,11 +6,11 @@
 - `SYS_CHANGE_WEATHER(Zone_ID, Type)` : Modifie la météo (Pluie, Tempête, Brume toxique, Neige) modifiant instantanément la physique de vol et la visibilité.
 - `SYS_TIME_SHIFT(Zone_ID, Time_Target)` : Force le cycle Jour/Nuit, par exemple pour créer une éclipse qui paralyse la magie Sylphe.
 - `SYS_ALTER_GRAVITY(Zone_ID, Valeur)` : Modifie la constante `9.8m/s²`. Utilisé dans les donjons spéciaux (Jötunheimr profond).
-- `SYS_LOCK_ZONE(Zone_ID, Raison)` : Verrouille l'accès à un groupe WhatsApp (ex: "Mur de ronces magiques") empêchant tout transfert de joueur.
+- `SYS_LOCK_ZONE(Zone_ID, Raison)` : Verrouille l'accès à une zone (ex: "Mur de ronces magiques") — tout `!enter_zone` vers elle est refusé (contrôle R4, au grain zone et non groupe, D76).
 - `SYS_TRIGGER_DISASTER(Zone_ID, Disaster_Type)` : Invoque une catastrophe naturelle (Tremblement de terre, Éruption) causant des dégâts passifs dans la zone.
 - `SYS_CONNECT_ZONES(Zone_A, Zone_B)` : Crée une liaison bidirectionnelle dans le graphe de voisinage (ex: un pont apparaît, un éboulement ouvre un passage). Met à jour l'atlas (`connected_zones` symétrique, règle L1).
 - `SYS_DISCONNECT_ZONES(Zone_A, Zone_B)` : Supprime une liaison du graphe (ex: pont détruit). Les joueurs en transit sont renvoyés vers la zone source.
-- `SYS_SYNC_PRESENCE(Avatar_ID)` : Résout toute désynchronisation entre les groupes WhatsApp et `T_AVATARS.current_zone` — fait respecter l'invariant « 1 joueur = 1 lieu » (protocole R0).
+- `SYS_SYNC_PRESENCE(Avatar_ID)` : Résout toute désynchronisation entre les groupes WhatsApp et `T_AVATARS.current_zone_id` (source de vérité L1) — fait respecter l'invariant « 1 joueur = 1 groupe territoire » (protocole R0 v2, D76 ; implémentation : `sync_player_groups()`, idempotente).
 - `SYS_SET_ENV_HAZARD(Zone_ID, Param, Valeur)` : Pilote les jauges environnementales de zone/instance (`OXYGEN` — Apnée du Gouffre de Léviathan, `HEAT` — Surchauffe de la Caldeira d'Obsidienne, `DOT` — dégâts continus type Désolation de Magma). Équivalent GM : `!sys_env_set`.
 
 ## 2. 🎭 Manipulations PNJ, Factions & Narratives

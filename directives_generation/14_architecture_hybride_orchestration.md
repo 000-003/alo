@@ -131,9 +131,9 @@ Conséquence directe : on **ajoute de la capacité sans rien réécrire** —
 
 ## 7. Sharding par lieu — la clé de partition déjà présente
 
-Le monde est **déjà** découpé : 1 lieu = 1 groupe WhatsApp = une clé de partition naturelle (`ZONE_*` / `T_WA_GROUPS`). Passage mono→multi-instance =
-- router les lieux `A-M` sur l'instance 1, `N-Z` sur l'instance 2 (base partagée ou répliquée) ;
-- l'invariant R0 (1 joueur = 1 lieu) garantit qu'un joueur est traité par **une** instance à la fois → pas de conflit d'état.
+Le monde est **déjà** découpé : 1 territoire = 1 groupe WhatsApp (D76) = une clé de partition naturelle (13 territoires, atlas §2-bis / `T_WA_GROUPS`) — la zone (`ZONE_*`, état L1) reste une sous-clé disponible pour un partitionnement plus fin. Passage mono→multi-instance =
+- router les territoires `A-M` sur l'instance 1, `N-Z` sur l'instance 2 (base partagée ou répliquée) ;
+- l'invariant R0 v2 (1 joueur = 1 territoire) garantit qu'un joueur est traité par **une** instance à la fois → pas de conflit d'état.
 
 Le sharding est **conçu d'avance** (clé existante), **activé plus tard** (config). Zéro refonte.
 

@@ -1524,3 +1524,32 @@ Vérifié par exécution (31/31 ✅) : **nR14-b CLOS** (`parsePipeTableStats()` 
 **⚠️ POINT D'AUDIT MAJEUR (D-P3-1)** : le pivot territorial n'est répercuté QUE dans le code/schéma/README. Les **documents maîtres** (`zone_movement_protocol.md` R0 « 1 joueur = 1 groupe LOCATION », `atlas_monde_liaisons.md` taxonomie des groupes) sont **intouchés depuis la Phase C** → divergence docs maîtres ↔ réalité implémentée. La décision produit étant actée par le PE (README + code), ce sont les **docs maîtres qui doivent être amendés** (R0 reformulé : 1 joueur = 1 groupe TERRITOIRE, granularité zone portée par l'état L1 `current_zone_id` ; taxonomie atlas ; CDC concernés) — **travail ACP, sur demande PE**.
 
 **Constats annexes** : ➕ `directives_generiques/` (non versionné) = kit méthodologique générique extrait du projet par le PE (CDC d'intégration IA, persona CONTROLEUR, méthode de décomposition, gabarit SYS, architecture déterministe) — à committer ou ignorer (décision PE). 🚧 **Chantier non commité en cours** (étape 48 probable) : effets de statut au combat (DoT/buff/debuff par famille de monstre, 20 %, dictionnaire `t_status_effects_dict`, +6 tests) — déterministe, conforme à la frontière, **suite exécutée par l'ACP : 37/37 ✅**.
+
+---
+
+## ÉTAPE 48 — Réalignement des documents maîtres sur le pivot territorial WA (D76) ✅ CLOS (2026-07-12)
+
+**Contexte** : résorption du **point d'audit majeur** relevé à l'étape 47 (D-P3-1) — le pivot « groupes WhatsApp par territoire » était acté par le PE dans le code/schéma/README (`b0ab4dd`), mais les documents maîtres (protocole R0, atlas, CDC, MCD/MLD) décrivaient encore le modèle v1 « 1 zone = 1 groupe ». Travail ACP sur demande PE (« commence l'étape 48 »), 100 % markdown, `bot/` intact.
+
+### Décision actée
+
+- **D76 — Pivot territorial WhatsApp** (décision produit PE étape 47, docs maîtres amendés étape 48) : 1 **territoire** = 1 groupe WA ; **13 territoires** couvrent les 52 zones (9 raciaux + `alne` + `aincrad` + `jotunheimr` + `yggdrasil`) ; **26 groupes permanents** (4 communauté + 9 raciaux + 13 territoriaux), ~74 slots dynamiques ; la **zone** reste la granularité du gameplay (adjacence R3, spawns, capacité, jauges D12), portée exclusivement par l'état L1 `T_AVATARS.current_zone_id` ; changement de groupe uniquement au franchissement de frontière de territoire (`sync_player_groups()` par retrait, idempotente). **R0 reformulé** : `card(TERRITOIRE ∪ INSTANCE) = 1`. Aucune commande ajoutée/retirée (complétude à périmètre constant). ⚠️ Numérotation : D72-D75 étaient déjà consommées (étape 37, équilibrage éco) — d'où **D76** ; collision évitée en cours d'étape.
+
+### Modifications
+
+| # | Action | Fichier |
+|---|---|---|
+| 48.1 | ✏️ **Réécrit v2.0** — principe fondateur à double granularité (zone logique / territoire physique), R0-R10 reformulées (R1 synchro par retrait + cas intra-territorial, R2 permanents 4+9, R4 capacité au grain zone L1, R5/R7/R8 adaptées), machine à états avec SWITCH conditionnel, cas limite nominal « même groupe ≠ même zone », registre de commandes inchangé | `données/the_seed_engine/system_mechanics/zone_movement_protocol.md` |
+| 48.2 | ✏️ Amendé — règle absolue d'en-tête, conventions §1 (slug territoire, nom de groupe territorial), **taxonomie §2 refondue sur l'enum implémenté** (`location`=territoire, `dungeon_instance`, `community_hub`, `guild_hall`, `private_party`, `housing`, `arena`, `system` + mapping v1→v2), **nouveau §2-bis = REGISTRE MAÎTRE DES TERRITOIRES** (13 territoires, zones d'ancrage, groupes, budget 26+74), note New Aincrad harmonisée | `données/cartographie/atlas_monde_liaisons.md` |
+| 48.3 | ✏️ Amendé — principe cardinal §1, EF-02 (R0 v2), D4 (taxonomie v2), **+D76** au registre des décisions | `cahier_des_charges.md` |
+| 48.4 | ✏️ Amendé — définition conceptuelle (Territory Mapping), `zone_id` = zone d'ancrage, protocole d'exclusion mutuelle v2 en 6 étapes (écriture L1 d'abord, switch conditionnel) | `cardinal_system_db/MCD_Concept/entite_whatsapp_group.md` |
+| 48.5 | ✏️ **Réécrit** — aligné sur le schéma implémenté (`avatar_uuid`, `sync_player_groups()`) ; `move_player_to_zone()` v1 supersédée ; contrats (résolution zone→territoire = atlas §2-bis, 13 lignes `location`) | `cardinal_system_db/MLD_Logic/table_t_wa_groups.md` |
+| 48.6 | ✏️ Amendé — §3 mouvement (sémantique v2 de `!enter_zone`, exclusivité territoriale) | `the_seed_engine/whatsapp_commands_list.md` |
+| 48.7 | ✏️ Amendé — `SYS_SYNC_PRESENCE` (vérité = `current_zone_id`, R0 v2), `SYS_LOCK_ZONE` (grain zone, pas groupe) | `the_seed_engine/ai_orchestrator_commands.md` |
+| 48.8 | ✏️ Amendé — mentions R0 : CDC-13 (frontière déterministe), CDC-14 (clé de sharding = territoire, sous-clé zone), CDC-19 (mouvement + contrat SYS) | `directives_generation/13/14/19_*.md` |
+| 48.9 | ✏️ Amendé — `!home_return` reformulé (écriture L1 + synchro territoire ; groupe HOME `housing` = canal social hors décompte R0) | `system_mechanics/marriage_housing_system.md`, `MLD_Logic/table_t_properties.md` |
+| 48.10 | ✏️ Harmonisé — principe fondateur (D76) + **correction d'incohérence interne : 16/29 permanents & 71 slots → 26 permanents (4+9+13) & ~74 slots** (compte issu du code `zone-groups.js`) | `README.md` |
+
+### État de sortie
+
+**Divergence docs maîtres ↔ réalité implémentée : RÉSORBÉE.** Balayage de vérification : plus aucune occurrence active de « 1 lieu/zone = 1 groupe » ni de la taxonomie v1 hors mapping documenté, archives et rapports d'audit historiques. `bot/`, `schema.sql`, `seed*.sql` intacts (D-P3-1) — le chantier PE non commité (effets de statut, 37/37 ✅) n'a pas été touché. Points relevés au passage : (a) le kit `directives_generiques/` du PE réutilise les libellés D71/D72 comme noms d'étapes de pipeline — espace de nommage distinct du registre de décisions projet, à surveiller ; (b) `directives_generiques/` et `pour_rc/` toujours non versionnés (décision PE) ; (c) backlog inchangé (accessoires D39, auberge, `T_GUILDS`, `SYS_RAG_REINDEX`, `ZONE_ROUTE_LUGRU`, CGU API, gating K2/L1, P2 RAG fiches+e5, parseur QI).
