@@ -58,7 +58,7 @@ define('SYS_ADVANCE_QUEST', {
   },
   async prereqs(db, params) {
     const aq = await db.query(
-      'SELECT current_step, progress_status FROM t_active_quests WHERE avatar_uuid = $1 AND quest_id = $2',
+      'SELECT aq.current_step, aq.progress_status, qd.total_steps FROM t_active_quests aq JOIN t_quests_dict qd ON qd.quest_id = aq.quest_id WHERE aq.avatar_uuid = $1 AND aq.quest_id = $2',
       [params.player_id, params.quest_id]
     );
     if (!aq.rows.length) return 'Quête non active chez ce joueur';
@@ -70,20 +70,26 @@ define('SYS_ADVANCE_QUEST', {
   },
   async execute(db, params) {
     const steps = Math.max(1, parseInt(params.steps, 10) || 1);
+    const questInfo = await db.query(
+      'SELECT qd.total_steps FROM t_active_quests aq JOIN t_quests_dict qd ON qd.quest_id = aq.quest_id WHERE aq.avatar_uuid = $1 AND aq.quest_id = $2',
+      [params.player_id, params.quest_id]
+    );
+    if (!questInfo.rows.length) return { ok: false, message: 'Quête introuvable' };
+    const totalSteps = questInfo.rows[0].total_steps || 10;
     const aq = await db.query(
       `UPDATE t_active_quests
        SET current_step = current_step + $1,
-           progress_status = CASE WHEN current_step + $1 >= 10 THEN 'completed' ELSE progress_status END,
-           completed_at = CASE WHEN current_step + $1 >= 10 THEN NOW() ELSE NULL END
-       WHERE avatar_uuid = $2 AND quest_id = $3 AND progress_status = 'in_progress'
+           progress_status = CASE WHEN current_step + $1 >= $2 THEN 'completed' ELSE progress_status END,
+           completed_at = CASE WHEN current_step + $1 >= $2 THEN NOW() ELSE NULL END
+       WHERE avatar_uuid = $3 AND quest_id = $4 AND progress_status = 'in_progress'
        RETURNING current_step, progress_status`,
-      [steps, params.player_id, params.quest_id]
+      [steps, totalSteps, params.player_id, params.quest_id]
     );
     if (!aq.rows.length) return { ok: false, message: 'Échec mise à jour quête' };
     const row = aq.rows[0];
     const done = row.progress_status === 'completed';
-    logger.info('SYS_ADVANCE_QUEST ok', { player: params.player_id, quest: params.quest_id, steps, done });
-    return { ok: true, message: `Quête avancée (étape ${row.current_step})${done ? ' — TERMINÉE !' : ''}`, completed: done };
+    logger.info('SYS_ADVANCE_QUEST ok', { player: params.player_id, quest: params.quest_id, steps, done, totalSteps });
+    return { ok: true, message: `Quête avancée (étape ${row.current_step}/${totalSteps})${done ? ' — TERMINÉE !' : ''}`, completed: done };
   },
 });
 

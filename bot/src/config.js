@@ -53,6 +53,7 @@ const config = {
     tickRateMs: parseInt(process.env.TICK_RATE_MS || '1000', 10),
     startingYrds: parseInt(process.env.STARTING_YRDS || '500', 10),
     startingZone: process.env.STARTING_ZONE || 'ZONE_NEU_CAP_001',
+    gmPhones: (process.env.GM_PHONES || '').split(',').map(s => s.trim()).filter(Boolean),
   },
   get dbUrl() {
     return `postgresql://${this.db.user}:${this.db.password}@${this.db.host}:${this.db.port}/${this.db.database}`;

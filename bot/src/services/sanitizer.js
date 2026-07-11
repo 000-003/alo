@@ -16,6 +16,10 @@ const INJECTION_PATTERNS = [
   /<s>/i,
   /\[\/s\]/i,
   /role\s*[:=]\s*(?:system|assistant)/i,
+  /(?:ignore|oublie)\s+(?:toutes\s+)?(?:les|mes)?\s*(?:instructions?|directives?|consignes?)/i,
+  /(?:à partir de maintenant|désormais)\s*(?:tu|vous)\s+(?:es|êtes|seras)\s+/i,
+  /(?:ne\s+)?(?:tiens?\s+pas?\s+compte|écoute?\s+pas?|suit?\s+pas?)\s+(?:de\s+)?(?:ce qui précède|ces instructions)/i,
+  /(?:tu\s+)?(?:es|seras)\s+(?:maintenant|désormais)\s+/i,
 ];
 
 export function sanitizeUserInput(text) {

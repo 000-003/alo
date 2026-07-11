@@ -8,6 +8,7 @@ import * as playerService from '../handlers/player.js';
 import * as dialogue from '../handlers/dialogue.js';
 import { retrieveLore } from '../services/rag.js';
 import { executeCommand, executePipelineCommands, parseCommands } from '../services/sys-pipeline.js';
+import config from '../config.js';
 
 export async function processMessage(db, text, playerId = null, groupId = null, phoneNumber = null) {
   if (!text || typeof text !== 'string') {
@@ -136,21 +137,9 @@ async function executeIntent(db, routing, playerId) {
   }
 }
 
-async function isGm(db, playerId, phoneNumber) {
-  if (phoneNumber) {
-    const pr = await db.query(
-      "SELECT 1 FROM t_avatars WHERE (avatar_uuid = $1 OR whatsapp_phone = $2) AND role = 'GM'",
-      [playerId, phoneNumber]
-    );
-    if (pr.rows.length) return true;
-  }
-  if (playerId) {
-    const pr = await db.query(
-      "SELECT 1 FROM t_avatars WHERE avatar_uuid = $1 AND role = 'GM'",
-      [playerId]
-    );
-    if (pr.rows.length) return true;
-  }
+async function isGm(_db, _playerId, phoneNumber) {
+  if (phoneNumber && config.game.gmPhones.includes(phoneNumber)) return true;
+  if (_playerId && config.game.gmPhones.some(p => _playerId.includes(p))) return true;
   return false;
 }
 

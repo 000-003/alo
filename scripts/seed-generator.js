@@ -120,8 +120,9 @@ function parseMonsters() {
     if (!mobId || seen.has(mobId)) continue;
     seen.add(mobId);
 
-    const name = content.match(/^#\s+(.+?)──?/)?.[1]?.trim() ||
-                 content.match(/^#\s+(.+)/m)?.[1]?.replace(/`.*$/, '').trim() || mobId;
+    const name = (content.match(/^#\s+(.+?)──?/)?.[1]?.trim() ||
+                  content.match(/^#\s+(.+)/m)?.[1]?.replace(/`.*$/, '').trim() || mobId)
+                  .replace(/[\s─]+$/, '').trim();
     const level = parseInt(content.match(/Niveau\s*[:]?\s*(\d+)/i)?.[1] ||
                            content.match(/niveau\s*:\s*(\d+)/i)?.[1] || 1);
     const family = content.match(/Famille\s*:\s*(.+)/i)?.[1]?.trim() || null;
@@ -143,6 +144,53 @@ function parseMonsters() {
                element, weakness, resistance, null,
                isNaN(expYield) ? 50 : expYield, bounty,
                isBoss, isFlying, 10, 'passive', lore]);
+  }
+  return rows;
+}
+
+// ---------------------------------------------------------------------------
+// 2b. Spawns → T_SPAWN_TABLES
+// ---------------------------------------------------------------------------
+const DIR_TO_ZONE = {
+  aincrad:    'ZONE_NEU_HUNT_001',
+  neutre:     'ZONE_NEU_HUNT_001',
+  air:        'ZONE_SYL_HUNT_001',
+  sylphe:     'ZONE_SYL_HUNT_001',
+  sylph:      'ZONE_SYL_HUNT_001',
+  salamander: 'ZONE_SAL_HUNT_001',
+  salamandre: 'ZONE_SAL_HUNT_001',
+  undine:     'ZONE_UND_HUNT_001',
+  cait:       'ZONE_CAI_HUNT_001',
+  caitsith:   'ZONE_CAI_HUNT_001',
+  imp:        'ZONE_IMP_HUNT_001',
+  gnome:      'ZONE_GNO_HUNT_001',
+  puca:       'ZONE_PUC_HUNT_001',
+  leprechaun: 'ZONE_LEP_HUNT_001',
+  lepre:      'ZONE_LEP_HUNT_001',
+  spriggan:   'ZONE_SPR_HUNT_001',
+  jotun:      'ZONE_NEU_HUNT_001',
+  jotunheimr: 'ZONE_NEU_HUNT_001',
+  golden:     'ZONE_NEU_HUNT_001',
+};
+
+function parseSpawns() {
+  const rows = [];
+  const seen = new Set();
+  const baseDir = path.join(BASE, 'personnages_bestiaire', 'monstres');
+  const files = walk(baseDir);
+  for (const f of files) {
+    if (path.basename(f).startsWith('_')) continue;
+    const content = fs.readFileSync(f, 'utf-8');
+    const mobId = (content.match(/MOB_ID\s*:\s*(\S+)/i) ||
+                   content.match(/`(MOB_\w+)`/) ||
+                   content.match(/(MOB_\w{3}_\d{3})/) ||
+                   [])[1];
+    if (!mobId || seen.has(mobId)) continue;
+    seen.add(mobId);
+    const isBoss = content.includes('BOSS') || content.includes('boss');
+    const dirName = path.basename(path.dirname(f)).toLowerCase().replace(/[^a-z]/g, '');
+    const zone = DIR_TO_ZONE[dirName] || 'ZONE_NEU_HUNT_001';
+    rows.push([zone, mobId, isBoss ? 5 : 30, 1, 100, isBoss ? 1 : 5, 'always', 'any', isBoss ? 'TRUE' : 'FALSE']);
   }
   return rows;
 }
@@ -418,6 +466,18 @@ try {
     'is_boss','is_flying','aggression_range','spawn_behavior','lore_text'
   ], monsters, 50, '(monster_id)'));
   console.log(`-- Monstres : ${monsters.length} lignes`);
+
+  // Spawn tables
+  console.log('-- ============================================================');
+  console.log('-- T_SPAWN_TABLES');
+  console.log('-- ============================================================');
+  const spawns = parseSpawns();
+  if (spawns.length > 0) {
+    console.log(batchInsert('T_SPAWN_TABLES', [
+      'zone_id','monster_id','spawn_rate','min_level','max_level','max_concurrent','time_condition','weather_cond','is_boss'
+    ], spawns, 50));
+  }
+  console.log(`-- Spawns : ${spawns.length} lignes`);
 
   // NPCs
   const npcData = parseNPCs();

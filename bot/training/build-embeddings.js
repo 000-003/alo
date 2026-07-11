@@ -70,7 +70,7 @@ async function build() {
     },
     {
       table: 't_monsters_dict',
-      query: 'SELECT monster_id, name, level, family, exp_yield, loot_table_id FROM t_monsters_dict',
+      query: 'SELECT monster_id, name, level, family, exp_yield FROM t_monsters_dict',
       idCol: 'monster_id',
       textCols: ['name'],
       meta: (r) => ({ level: r.level, family: r.family }),

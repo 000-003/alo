@@ -186,6 +186,28 @@ async function run() {
     if (result.ok !== false) throw new Error('Devrait échouer D71');
   });
 
+  await test('Spawn — t_spawn_tables a des lignes', async () => {
+    const result = await pool.query('SELECT count(*)::int AS cnt FROM t_spawn_tables');
+    if (result.rows[0].cnt === 0) throw new Error('t_spawn_tables est vide — relancer seed-generator');
+    console.log(`      ${result.rows[0].cnt} entrées spawn`);
+  });
+
+  await test('Combat — monstre trouvable dans le spawn', async () => {
+    const result = await pool.query(
+      `SELECT m.monster_id, m.name FROM t_monsters_dict m
+       JOIN t_spawn_tables s ON s.monster_id = m.monster_id
+       WHERE s.zone_id = 'ZONE_NEU_HUNT_001' LIMIT 1`
+    );
+    if (!result.rows.length) throw new Error('Aucun monstre dans ZONE_NEU_HUNT_001');
+    console.log(`      Ex: ${result.rows[0].name} (${result.rows[0].monster_id})`);
+  });
+
+  await test('GM — isGm rejette téléphone inconnu', async () => {
+    const { default: msgHandler } = await import('../src/orchestrator/message-handler.js');
+    const result = await processMessage(pool, '!sys_help', '00000000-0000-0000-0000-000000000001', null, 'invalid_phone');
+    if (!result.response.includes('refusé')) throw new Error('Devrait refuser: ' + result.response);
+  });
+
   console.log(`\n📊 Résultat : ${passed} passé(s), ${failed} échec(s)\n`);
   await pool.end();
   process.exit(failed > 0 ? 1 : 0);
