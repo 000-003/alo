@@ -1,6 +1,7 @@
 import { render } from '../services/template.js';
 import { retrieveKnowledge, getDialogueResponse } from '../services/rag.js';
 import { enhanceDialogue } from '../services/llm.js';
+import { executePipelineCommands } from '../services/sys-pipeline.js';
 import logger from '../utils/logger.js';
 
 export async function handleTalk(db, playerId, entities) {
@@ -50,7 +51,8 @@ export async function handleTalk(db, playerId, entities) {
     };
     const enhanced = await enhanceDialogue(npc.npc_id, npc.display_name, npc.role_type, npcName, ctx);
     if (enhanced) {
-      dialogue = enhanced;
+      const pipelineResult = await executePipelineCommands(db, enhanced, 'system');
+      dialogue = pipelineResult.commands.length ? pipelineResult.modified || enhanced : enhanced;
     }
   }
 

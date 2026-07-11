@@ -19,15 +19,17 @@ export async function handleAttack(db, playerUuid, entities) {
   }
 
   const monsterResult = await db.query(
-    'SELECT monster_id, name, level, base_hp, base_mp, base_atk, base_def, base_agi, exp_yield '
-    + 'FROM t_monsters_dict WHERE (monster_id = $1 OR name ILIKE $1) AND zone_id = $2',
+    `SELECT m.monster_id, m.name, m.level, m.base_hp, m.base_mp, m.base_atk, m.base_def, m.base_agi, m.exp_yield
+     FROM t_monsters_dict m
+     JOIN t_spawn_tables s ON s.monster_id = m.monster_id
+     WHERE (m.monster_id = $1 OR m.name ILIKE $1) AND s.zone_id = $2
+     LIMIT 1`,
     [`%${monsterId}%`, player.current_zone_id]
   );
 
   if (monsterResult.rows.length === 0) {
     const anyResult = await db.query(
-      'SELECT monster_id, name, level, base_hp, base_mp, base_atk, base_def, base_agi, exp_yield, zone_id '
-      + 'FROM t_monsters_dict WHERE monster_id = $1 OR name ILIKE $1 LIMIT 1',
+      'SELECT monster_id, name FROM t_monsters_dict WHERE monster_id = $1 OR name ILIKE $1 LIMIT 1',
       [`%${monsterId}%`]
     );
     if (anyResult.rows.length) {

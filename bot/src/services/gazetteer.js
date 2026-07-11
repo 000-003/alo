@@ -32,7 +32,7 @@ export async function loadGazetteer(db) {
       db.query("SELECT item_id, name, item_type FROM t_items_dict WHERE name IS NOT NULL"),
       db.query("SELECT npc_id, display_name, role_type, zone_id FROM t_npc WHERE display_name IS NOT NULL"),
       db.query("SELECT zone_id, zone_name, zone_type FROM t_zones"),
-      db.query("SELECT monster_id, name, species, level, zone_id FROM t_monsters_dict WHERE name IS NOT NULL"),
+      db.query("SELECT monster_id, name, level, family, element FROM t_monsters_dict WHERE name IS NOT NULL"),
     ]);
     itemIndex = items.rows;
     npcIndex = npcs.rows;
@@ -121,4 +121,4 @@ export function isLoaded() {
   return loaded;
 }
 
-export default { loadGazetteer, resolveItem, resolveNpc, resolveZone, isLoaded };
+export default { loadGazetteer, resolveItem, resolveNpc, resolveZone, resolveMob, isLoaded };

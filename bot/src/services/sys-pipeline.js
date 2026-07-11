@@ -64,15 +64,22 @@ export async function executeCommand(db, cmd, source = 'system') {
   }
 
   const lockKey = `sys_${cmd.command}_${cmd.params.player_id || cmd.params.npc_id || cmd.params.zone_id || 'global'}`;
+  /* Lock via transaction explicite (nR9: pas d'autocommit) */
+  const client = await db.connect();
   try {
-    await db.query('SELECT pg_advisory_xact_lock(hashtext($1))', [lockKey]);
+    await client.query('BEGIN');
+    await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [lockKey]);
 
-    const result = await def.execute(db, cmd.params);
+    const result = await def.execute(client, cmd.params);
+    await client.query('COMMIT');
     logger.info('SYS exécuté', { command: cmd.command, source, ok: result.ok });
     return result;
   } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
     logger.error('SYS erreur exécution', { command: cmd.command, error: err.message });
     return { ok: false, message: `Erreur: ${err.message}` };
+  } finally {
+    client.release();
   }
 }
 

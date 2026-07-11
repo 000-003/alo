@@ -1,5 +1,6 @@
 import logger from '../utils/logger.js';
 import { search, formatResults, getStats } from './vector-index.js';
+import { executePipelineCommands } from './sys-pipeline.js';
 
 const LEVEL1_CACHE = new Map();
 const CACHE_TTL_MS = 5 * 60 * 1000;
@@ -176,7 +177,9 @@ async function level3Generate(db, query, context) {
     if (generateResponse) {
       try {
         const result = await generateResponse(query, context);
-        return { source: 'l3_llm', content: result };
+        const pipelineResult = await executePipelineCommands(db, result || '', 'system');
+        const content = pipelineResult.commands.length ? pipelineResult.modified || result : result;
+        return { source: 'l3_llm', content };
       } catch {
         return { source: 'l3_fallback', content: null };
       }

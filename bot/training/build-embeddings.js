@@ -28,15 +28,15 @@ async function build() {
   const sources = [
     {
       table: 't_encyclopedia_dict',
-      query: 'SELECT knowledge_id, title, content, category, is_secret FROM t_encyclopedia_dict',
+      query: 'SELECT knowledge_id, title, content, category, is_secret FROM t_encyclopedia_dict WHERE is_secret = FALSE',
       idCol: 'knowledge_id',
       textCols: ['title', 'content'],
-      meta: (r) => ({ category: r.category, is_secret: r.is_secret }),
+      meta: (r) => ({ category: r.category }),
     },
     {
       table: 't_npc_knowledge',
-      query: 'SELECT id, npc_id, k_level, content FROM t_npc_knowledge WHERE k_level IN (\'K0\', \'K1\', \'K2\')',
-      idCol: 'id',
+      query: 'SELECT qi_id, npc_id, k_level, content FROM t_npc_knowledge WHERE k_level IN (\'K0\', \'K1\', \'K2\')',
+      idCol: 'qi_id',
       textCols: ['content'],
       meta: (r) => ({ npc_id: r.npc_id, k_level: r.k_level }),
     },
@@ -49,10 +49,10 @@ async function build() {
     },
     {
       table: 't_zones',
-      query: 'SELECT zone_id, zone_name, zone_type, description, lore, terrain_type FROM t_zones',
+      query: 'SELECT zone_id, zone_name, zone_type, description FROM t_zones',
       idCol: 'zone_id',
-      textCols: ['zone_name', 'description', 'lore'],
-      meta: (r) => ({ zone_type: r.zone_type, terrain: r.terrain_type }),
+      textCols: ['zone_name', 'description'],
+      meta: (r) => ({ zone_type: r.zone_type }),
     },
     {
       table: 't_quests_dict',
@@ -70,10 +70,10 @@ async function build() {
     },
     {
       table: 't_monsters_dict',
-      query: 'SELECT monster_id, name, species, description, level FROM t_monsters_dict',
+      query: 'SELECT monster_id, name, level, family, exp_yield, loot_table_id FROM t_monsters_dict',
       idCol: 'monster_id',
-      textCols: ['name', 'description'],
-      meta: (r) => ({ species: r.species, level: r.level }),
+      textCols: ['name'],
+      meta: (r) => ({ level: r.level, family: r.family }),
     },
   ];
 

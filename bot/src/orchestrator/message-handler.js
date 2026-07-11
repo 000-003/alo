@@ -7,7 +7,7 @@ import * as combat from '../handlers/combat.js';
 import * as playerService from '../handlers/player.js';
 import * as dialogue from '../handlers/dialogue.js';
 import { retrieveLore } from '../services/rag.js';
-import { executeCommand, executePipelineCommands } from '../services/sys-pipeline.js';
+import { executeCommand, executePipelineCommands, parseCommands } from '../services/sys-pipeline.js';
 
 export async function processMessage(db, text, playerId = null, groupId = null, phoneNumber = null) {
   if (!text || typeof text !== 'string') {
@@ -43,17 +43,6 @@ export async function processMessage(db, text, playerId = null, groupId = null, 
 
   if (!response) {
     response = render('fallback', { intent: routing.intent });
-  }
-
-  const pipelineResult = await executePipelineCommands(db, response, 'system');
-  if (pipelineResult.commands.length > 0) {
-    const sysResults = pipelineResult.commands
-      .filter(c => c.result)
-      .map(c => c.result.ok ? render('sys_ok', c.result) : render('sys_fail', c.result))
-      .join('\n');
-    response = pipelineResult.modified
-      ? `${pipelineResult.modified}\n${sysResults}`
-      : sysResults;
   }
 
   logger.info('Message traité', {
@@ -140,14 +129,32 @@ async function executeIntent(db, routing, playerId) {
       return `📩 Message privé à **${routing.entities.target || 'inconnu'}** : ${routing.match?.[1] || ''}`;
 
     case 'SYS':
-      return handleSysCommand(db, routing, playerId);
+      return handleSysCommand(db, routing, playerId, null);
 
     default:
       return null;
   }
 }
 
-async function handleSysCommand(db, routing, playerId) {
+async function isGm(db, playerId, phoneNumber) {
+  if (phoneNumber) {
+    const pr = await db.query(
+      "SELECT 1 FROM t_avatars WHERE (avatar_uuid = $1 OR whatsapp_phone = $2) AND role = 'GM'",
+      [playerId, phoneNumber]
+    );
+    if (pr.rows.length) return true;
+  }
+  if (playerId) {
+    const pr = await db.query(
+      "SELECT 1 FROM t_avatars WHERE avatar_uuid = $1 AND role = 'GM'",
+      [playerId]
+    );
+    if (pr.rows.length) return true;
+  }
+  return false;
+}
+
+async function handleSysCommand(db, routing, playerId, phoneNumber) {
   const text = routing.raw || '';
   if (text.match(/^!sys_help/i)) {
     return render('sys_help');
@@ -157,6 +164,12 @@ async function handleSysCommand(db, routing, playerId) {
   const cmdName = parts[0]?.toUpperCase();
   if (!cmdName || !cmdName.startsWith('SYS_')) {
     return render('sys_unknown');
+  }
+
+  const gm = await isGm(db, playerId, phoneNumber);
+  if (!gm) {
+    logger.warn('Tentative SYS non-GM', { playerId, phoneNumber, command: cmdName });
+    return `❌ Accès refusé. Seuls les GMs peuvent utiliser les commandes système.`;
   }
 
   const params = {};
