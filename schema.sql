@@ -880,38 +880,37 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER trg_single_summon BEFORE UPDATE ON T_PETS
 FOR EACH ROW EXECUTE FUNCTION check_single_summon();
 
--- Procédure T_WA_GROUPS : protocole d'exclusion mutuelle des zones
-CREATE OR REPLACE FUNCTION move_player_to_zone(p_avatar_uuid UUID, p_new_zone_id VARCHAR(50)) RETURNS VOID AS $$
+-- Procédure T_WA_GROUPS : synchronisation par retrait des non-autorisés
+-- Un joueur doit être dans : (a) tous les groupes permanents, (b) le groupe
+-- du territoire correspondant à sa zone. Les groupes de territoires sont
+-- mutuellement exclusifs ; les groupes permanents ne sont jamais retirés.
+CREATE OR REPLACE FUNCTION sync_player_groups(p_avatar_uuid UUID, p_current_zone_id VARCHAR(50)) RETURNS VOID AS $$
 DECLARE
-    v_new_group VARCHAR(50);
-    v_in_combat BOOLEAN;
+    v_territory_group VARCHAR(50);
 BEGIN
-    SELECT EXISTS(
-        SELECT 1 FROM T_COMBAT_SESSIONS
-        WHERE avatar_uuid = p_avatar_uuid AND outcome IS NULL
-    ) INTO v_in_combat;
-    IF v_in_combat THEN
-        RAISE EXCEPTION 'Impossible de se déplacer en combat.';
-    END IF;
-
-    SELECT wa_group_id INTO v_new_group
+    -- Déterminer le groupe de territoire pour la zone actuelle
+    SELECT wa_group_id INTO v_territory_group
     FROM T_WA_GROUPS
-    WHERE zone_id = p_new_zone_id AND group_type = 'location'
+    WHERE zone_id = p_current_zone_id AND group_type = 'location'
     LIMIT 1;
-    IF v_new_group IS NULL THEN
-        RAISE EXCEPTION 'Zone inexistante ou sans groupe WhatsApp.';
-    END IF;
 
+    -- Retirer tous les groupes de territoire sauf celui autorisé
     DELETE FROM T_WA_PRESENCE
     WHERE avatar_uuid = p_avatar_uuid
-      AND wa_group_id IN (SELECT wa_group_id FROM T_WA_GROUPS WHERE group_type = 'location');
+      AND wa_group_id IN (
+          SELECT wa_group_id FROM T_WA_GROUPS WHERE group_type = 'location'
+      )
+      AND wa_group_id IS DISTINCT FROM v_territory_group;
 
-    INSERT INTO T_WA_PRESENCE (avatar_uuid, wa_group_id)
-    VALUES (p_avatar_uuid, v_new_group);
+    -- Ajouter au groupe de territoire (si existant)
+    IF v_territory_group IS NOT NULL THEN
+        INSERT INTO T_WA_PRESENCE (avatar_uuid, wa_group_id)
+        VALUES (p_avatar_uuid, v_territory_group)
+        ON CONFLICT DO NOTHING;
+    END IF;
 
-    UPDATE T_AVATARS
-    SET current_zone_id = p_new_zone_id
-    WHERE avatar_uuid = p_avatar_uuid;
+    -- Les groupes permanents (community_hub, racial, party, guild) ne sont
+    -- jamais retirés par cette procédure.
 END;
 $$ LANGUAGE plpgsql;
 

@@ -314,7 +314,9 @@ function parseNPCs() {
   const files = walk(path.join(BASE, 'personnages_bestiaire', 'pnj'));
   for (const f of files) {
     if (path.basename(f).startsWith('_')) continue;
-    const content = fs.readFileSync(f, 'utf-8');
+    let content = fs.readFileSync(f, 'utf-8');
+    // Normalize pipe tables: strip **bold** markers so regexes match Field | Value
+    content = content.replace(/^\|\s*\*\*(.+?)\*\*/gm, '| $1');
     const npcId = (content.match(/NPC_ID\s*[|]\s*`(\S+)`/i) ||
                    content.match(/`(NPC_\w+_\d+)`/) ||
                    content.match(/(NPC_\w{3}_\d{2})/) ||
@@ -351,30 +353,30 @@ function parseNPCs() {
       return 'SERVICE';
     }
 
-    const displayName = ((content.match(/Nom affiché\s*[|]\s*(.+)/i) ||
-                          content.match(/Nom\s*[|]\s*(.+)/i) ||
-                          content.match(/^#\s+.+?`([^`]+)`/m)?.[1]?.trim() ||
-                          [])[1]?.trim() || npcId).slice(0, 100);
-    const raceRaw = content.match(/Race\s*[|]\s*(.+)/i)?.[1]?.trim() || 'Sylphe';
+    const displayName = (content.match(/\|\s*Nom affiché\s*\|\s*(.+?)\s*\|/i)?.[1]?.trim() ||
+                         content.match(/\|\s*Nom\s*\|\s*(.+?)\s*\|/i)?.[1]?.trim() ||
+                         content.match(/^#\s+(.+?)\s*[—\-]/m)?.[1]?.trim() ||
+                         npcId).slice(0, 100);
+    const raceRaw = content.match(/\|\s*Race\s*\|\s*(.+?)\s*\|/i)?.[1]?.trim() || 'Sylphe';
     const race = mapRace(raceRaw);
-    const roleRaw = (content.match(/Rôle\s*\(.*\)\s*[|]\s*`(\w+)`/i) ||
-                     content.match(/role_type\s*[|]\s*`(\w+)`/i) ||
-                     content.match(/Rôle\s*[|]\s*(.+?)(?:\n|$)/i)?.[1]?.trim() ||
+    const roleRaw = (content.match(/\|\s*Rôle\b.*?\|\s*(.+?)\s*\|/i)?.[1]?.trim() ||
+                     content.match(/\|\s*role_type\s*\|\s*(.+?)\s*\|/i)?.[1]?.trim() ||
                      'SERVICE').replace(/`/g, '');
     const roleType = mapRole(roleRaw);
-    const zoneId = (content.match(/Zone.*?[|]\s*`(\S+)`/i) ||
-                    content.match(/zone_id\s*[|]\s*`(\S+)`/i) ||
-                    content.match(/`(ZONE_\w+_\d+)`/) ||
-                    [])[1] || null;
-    const levelMatch = content.match(/Niveau.*?(\d+).*?(\d+).*?(\d+)/i);
+    const zoneId = (content.match(/`(ZONE_\w+_\d+)`/) ||
+                    content.match(/\|\s*Zone\s*\|\s*(.+?)\s*\|/i)
+                   )?.[1]?.trim().replace(/`/g, '') || null;
+    const levelMatch = content.match(/\|\s*Niveau\s*\/\s*HP\s*\/\s*MP\s*\|\s*(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)/i) ||
+                       content.match(/\|\s*Niveau\b.*?\|\s*(\d+).*?\|/i);
     const level = parseInt(levelMatch?.[1] || 1);
     const hp = parseInt(levelMatch?.[2] || 100);
     const mp = parseInt(levelMatch?.[3] || 50);
-    const qiBudget = parseInt(content.match(/qi_budget\s*[|]\s*(\d+)/i)?.[1] || 10);
-    const isEssential = content.includes('is_essential') && content.includes('VRAI') ? 'TRUE' : 'FALSE';
-    const isCanon = content.includes('is_canon') && content.includes('VRAI') ? 'TRUE' : 'FALSE';
-    const shopRef = content.match(/shop_ref\s*[|]\s*`(\S+)`/i)?.[1] || null;
-    const questRef = content.match(/quest_ref\s*[|]\s*`(\S+)`/i)?.[1] || null;
+    const qiBudget = parseInt(content.match(/\|\s*qi_budget\s*\|\s*(\d+)/i)?.[1] ||
+                              content.match(/qi_budget\s*[|]\s*(\d+)/i)?.[1] || 10);
+    const isEssential = content.includes('VRAI') && (content.includes('is_essential') || content.match(/\|\s*is_essential\s*\|\s*VRAI/i)) ? 'TRUE' : 'FALSE';
+    const isCanon = content.includes('VRAI') && (content.includes('is_canon') || content.match(/\|\s*is_canon\s*\|\s*VRAI/i)) ? 'TRUE' : 'FALSE';
+    const shopRef = content.match(/\|\s*shop_ref\s*\|\s*`?(\S+?)`?\s*\|/i)?.[1] || null;
+    const questRef = content.match(/\|\s*quest_ref\s*\|\s*`?(\S+?)`?\s*\|/i)?.[1] || null;
 
     npcRows.push([npcId, displayName, race,
                   roleType, zoneId, null, level, hp, mp, null,

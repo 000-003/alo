@@ -1,7 +1,7 @@
 import { zoneExists, getGraph, getNeighbors } from '../engine/movement.js';
 import { getPlayer } from '../services/player.js';
 import { render } from '../services/template.js';
-import { getGroupForZone } from '../services/zone-groups.js';
+import { getGroupForZone, syncPlayerGroups } from '../services/zone-groups.js';
 import logger from '../utils/logger.js';
 
 export async function handleMove(db, playerUuid, entities) {
@@ -54,6 +54,10 @@ export async function handleMove(db, playerUuid, entities) {
       return `❌ MP insuffisants pour ce déplacement (coût : ${cost} MP, disponible : ${player.mp_current}).`;
     }
 
+    // Synchroniser les groupes WhatsApp : retrait des territoires non autorisés,
+    // ajout du nouveau territoire, permanents conservés
+    await syncPlayerGroups(db, playerUuid, targetZone);
+
     logger.info('Déplacement effectué', { playerUuid, fromZone, targetZone, cost, travelTime });
   } catch (err) {
     logger.error('Erreur lors du déplacement', { error: err.message, playerUuid });
@@ -61,7 +65,7 @@ export async function handleMove(db, playerUuid, entities) {
   }
 
   const zoneGroup = getGroupForZone(targetZone);
-  const groupMsg = zoneGroup ? `\n💬 Rejoins le groupe **${zoneGroup.groupName}** pour parler avec les joueurs de cette zone.` : '';
+  const groupMsg = zoneGroup ? `\n💬 Tu es maintenant dans le groupe **${zoneGroup.groupName}**.` : '';
 
   return render('move', {
     destination: targetZone,
