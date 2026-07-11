@@ -1418,3 +1418,29 @@ Sur demande PE, les quotas SOC-1→4 ont été **délégués** (protocole D37). 
 ### État de sortie
 
 Gouvernance réalignée sur le terrain : phase données CLOSE (§10 ✅), phase P3 OUVERTE et documentée (§11), dépôt à jour (2 commits propres, 0 secret versionné). Backlog documentaire restant : accessoires (dérogation D39 à arbitrer), auberge exploitable + taverniers + `T_GUILDS` (mineur), `!sys_rag_reindex`/`SYS_RAG_REINDEX` en `[BESOIN_COMMANDE]`, arbitrage `ZONE_ROUTE_LUGRU`, audit CGU API avant lancement public. Prochain front naturel : audit de conformité du code `bot/` contre les CDC 16-20 (sur demande PE).
+
+---
+
+## ÉTAPE 45 — Audit de conformité du code `bot/` contre les CDC 13-21 🔍 ✅ CLOS (2026-07-11)
+
+**Contexte** : front (a) de l'étape 44 activé par le PE. Audit en **lecture seule** (D-P3-1 : tout écart = point d'audit, pas de correction tacite ; aucun fichier de `bot/` modifié). Méthode : lecture intégrale des 50 fichiers versionnés de `bot/` (~2 400 lignes JS/Python) + chaîne de peuplement (`scripts/seed-generator.js`, `schema.sql`, `seed*.sql`, `rebuild.sh`), traçage d'usage réel de chaque module (grep), vérification croisée schéma/seed/code.
+
+### Livrable
+
+- ➕ **`directives_generation/22_audit_conformite_bot_etape45.md`** (AUDIT-BOT-01) : verdict par CDC, 3 violations 🔴 (R1-R3), 7 écarts majeurs 🟠 (M1-M7), 11 points mineurs/hygiène 🟡, 8 conformités ✅, position feuille de route P0-P6, ordre de correction recommandé.
+
+### Verdict
+
+**Direction saine, trois contrats violés.** Le code = phase P0 + P1 partiel, ordre D-ORC-7 respecté (déterministe avant génératif) ; frontière déterministe respectée **au runtime** (L1 = code pur, le LLM ne produit que du texte) ; Template Engine + dégradation gracieuse + stack conformes ; 0 secret versionné.
+
+**🔴 R1 — Verrou D22 absent du pipeline de connaissance** : `T_NPC_KNOWLEDGE` accepte K3 par schéma (CHECK), le seed-generator ingère les QI sans filtre K3, et `rag.js`/`dialogue.js` lisent sans clause `k_level` ni gating K2. Inoffensif aujourd'hui **par accident** (le parseur QI ne matche pas le gabarit → table vide). À verrouiller AVANT de réparer le parseur.
+**🔴 R2 — `combat.onnx` = résolution de combat ML** (RandomForest prédicteur de dégâts) entraînée et chargée au démarrage — ligne rouge D-DET-1. Circonstance : `predictDamage` n'est appelé nulle part (résolution réelle = `engine/combat.js`, déterministe). À supprimer/requalifier.
+**🔴 R3 — Économie sans verrou anti-dup** : contrôles solde/quantité hors transaction, UPDATE non conditionnels → exploit de duplication par messages simultanés (viole D-DET-2 étape 4, D-DET-4, persona §2.2).
+
+**🟠 Majeurs** : M1 pipeline `SYS_*` inexistant (bloquant P5) · M2 `generate(role,…,politique)` absent, pas de load-balancer quota-aware, Gemini configuré non câblé · M3 LLM sans grounding RAG/anti-injection (dormant, `USE_API=false`) · M4 R0 non implémenté (déplacement n'écrit pas l'état, pas de gestion groupes WA) · M5 gazetteer nom→ID absent (le joueur doit taper les IDs internes) · M6 4 modèles ONNX entraînés/chargés jamais appelés (NLU réelle = mots-clés ; regex jour-1 conforme D-NLU-4, modèles morts non) · M7 seuil 0.3 ≠ 0.7 + taxonomie d'intentions divergente (`LORE_QUERY` manquant → S7 non routable).
+
+**🟡 Notables** : Redis déclaré jamais connecté ; `tests/` vide ; combat en Map mémoire (perdu au restart) ; IDs modèles API périmés (Groq `llama3-70b-8192`) ; multiplicateur de niveau brut ×(niv/niv) non borné ; monstre cherché par ILIKE global sans filtre de zone ; API HTTP sans auth ; avatar fantôme universel `…001` ; `rebuild.sh` racine avec mot de passe sudo en clair (hors `bot/`).
+
+### État de sortie
+
+Audit clos, `bot/` intact, CDC 13-21 inchangés (aucun écart ne justifie d'amendement du référentiel). **Ordre de correction recommandé au PE : R1 → R3 → R2 → M2 → M1/M4 → M5/M7 → M6.** Backlog documentaire inchangé (accessoires D39, auberge exploitable, `T_GUILDS`, `SYS_RAG_REINDEX`, `ZONE_ROUTE_LUGRU`, audit CGU API).
