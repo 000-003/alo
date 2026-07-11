@@ -1,4 +1,4 @@
-# Chevalier d Or — `MOB_AIN_010`
+# Chevalier d'Or — `MOB_AIN_010`
 
 ## Identification
 - **MOB_ID** : `MOB_AIN_010`
@@ -28,4 +28,4 @@ Combo 5 coups. Soin 25% HP. Amélioré Argent.
 - **Respawn** : 18 min
 
 ## Lore
-Élite des chevaliers d Aincrad.
+Élite des chevaliers d'Aincrad.

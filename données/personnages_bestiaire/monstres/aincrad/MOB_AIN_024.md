@@ -1,4 +1,4 @@
-# Avatar d Heathcliff — `MOB_AIN_024`
+# Avatar d'Heathcliff — `MOB_AIN_024`
 
 ## Identification
 - **MOB_ID** : `MOB_AIN_024`
@@ -28,4 +28,4 @@ Copie Heathcliff. Bouclier immunisé. Maîtrise épée.
 - **Respawn** : 25 min
 
 ## Lore
-Hommage à l administrateur de SAO.
+Hommage à l'administrateur de SAO.

@@ -28,4 +28,4 @@ Golem mécanique. Résiste magie. Explose mort AoE 500.
 - **Respawn** : 18 min
 
 ## Lore
-Vestige de l ancienne Aincrad.
+Vestige de l'ancienne Aincrad.

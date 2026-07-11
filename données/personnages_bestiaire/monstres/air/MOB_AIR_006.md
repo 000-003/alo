@@ -1,4 +1,4 @@
-# Vol d Ombres — `MOB_AIR_006`
+# Vol d'Ombres — `MOB_AIR_006`
 
 ## Identification
 - **MOB_ID** : `MOB_AIR_006`
@@ -28,4 +28,4 @@ Essaim 8-12. Chaque membre +5% ATK. Invisibles zones sombres.
 - **Respawn** : 6 min
 
 ## Lore
-Entités nées des ombres d Yggdrasil.
+Entités nées des ombres d'Yggdrasil.

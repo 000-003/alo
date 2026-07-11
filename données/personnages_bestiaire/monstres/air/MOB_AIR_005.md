@@ -17,7 +17,7 @@
 
 ## Récompenses
 - **EXP** : 350 | **Prime** : 90 Yrds
-- **Loot** : Plume d Aigle (60%), Œil Perçant (10%), Serre de Géant (5%)
+- **Loot** : Plume d'Aigle (60%), Œil Perçant (10%), Serre de Géant (5%)
 
 ## Comportement IA
 Plané haute altitude. Repère proies. Pic vertical. Recule si trop fort.
@@ -28,4 +28,4 @@ Plané haute altitude. Repère proies. Pic vertical. Recule si trop fort.
 - **Respawn** : 8 min
 
 ## Lore
-Roi des airs des plaines d ALfheim. Monture des éclaireurs.
+Roi des airs des plaines d'ALfheim. Monture des éclaireurs.

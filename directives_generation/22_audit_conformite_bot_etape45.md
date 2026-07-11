@@ -372,3 +372,23 @@ Le re-mapping a résolu la FK en envoyant `aincrad`/`neutre`/`jotunheimr`/`golde
 4. **5 noms encore sales** : `MOB_YGG_030-034` (mêmes fiches YGG au gabarit divergent).
 
 **Lecture d'ensemble** : le code du bot et le générateur sont désormais au niveau ; ce qui reste est une **dette de corpus** (fiches d'axe vertical de l'étape 35 : titres dégradés, gabarit hétérogène, une fiche wiki brute) + 2 retouches générateur (mapping `neutre`/`yggdrasil` boss, couche d'échappement unique). La réparation des fiches est du périmètre **ACP** — sur demande PE.
+
+---
+
+# ADDENDUM 45-decies — Contre-audit de la vague 4.6 PE (commit `28b3ace`, 15h12) — CLÔTURE
+
+> Vérifié par exécution (base + suite **31/31 ✅**). **Tous les findings de l'audit sont clos.**
+
+| Finding | Verdict | Preuve en base |
+|---|---|---|
+| nR14-b (stats défaut) | ✅ **CLOS** | `parsePipeTableStats()` lit les tableaux markdown : Skuld **niv 75 / 50 000 PV**, Kayaba **niv 68 / 22 000 PV**, Chevalier d Argent **niv 52 / 7 000 PV** ; **0 mob d'instance à niveau ≤ 2** |
+| nR14-c (boss égarés) | ✅ **CLOS** | **0 boss en zone HUNT** ; `YGG_DUN_001` = 20 mobs ; 4 boss neutres placés en `SYL_DUN_001` (compromis pragmatique documenté — pas de donjon neutre dans le monde seedé) |
+| nR15-b (fiche 00X, échappement) | ✅ **CLOS** | `MOB_YGG_00X` filtré (0 ID malformé) ; une seule couche d'échappement — apostrophes correctes en base (« Araignée d'Ombre ») |
+| « 5 noms sales » | ✅ **faux positif ACP** | « Racine Primordiale — Vie » etc. : tirets cadratins **médians légitimes** (noms composés des 5 racines d'Yggdrasil) — mon détecteur `LIKE '%—%'` était trop large. Aucun défaut |
+| Volumétrie | ✅ | 256 monstres / 256 spawns / 19 zones |
+
+## Reste au dossier (hors périmètre bot — dettes corpus & fond, pour mémoire)
+1. **Corpus AIN/YGG (ACP, sur demande PE)** : apostrophes dégradées dans les titres de fiches (« Chevalier d Argent » l'est dans la fiche source) ; `MOB_YGG_030` référence `ZONE_YGG_RACINE_030` **hors atlas** (à ranger avec l'arbitrage `ZONE_ROUTE_LUGRU`) ; fiche wiki brute `MOB_YGG_00X` à réécrire ou supprimer.
+2. **Fond d'architecture** (inchangé, non bloquant pour le dev en cours) : source LLM=`'system'` à restreindre · gating K2/L1 en lecture · P2 RAG réel (fiches+e5, CDC 15) · parseur QI · jauges D12 · auth API HTTP · Redis · HF déprécié · avatar fantôme/flux de création · mot de passe défaut · monde seedé = sous-ensemble (52 zones/78 liaisons vs atlas complet).
+
+**Clôture de l'étape 45** : audit initial (AUDIT-BOT-01) + 6 vagues correctives PE + 6 contre-audits ACP (dont 4 par exécution). Trajectoire : 3 violations de contrat + jeu injouable → **0 finding ouvert côté bot/générateur/seed ; combat, économie, GM, spawns, noms et stats vérifiés fonctionnels et conformes en base.**

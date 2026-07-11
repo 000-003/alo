@@ -28,4 +28,4 @@
 - **Respawn** : 30 min
 
 ## Lore
-Gardien ultime du toit d Yggdrasil.
+Gardien ultime du toit d'Yggdrasil.

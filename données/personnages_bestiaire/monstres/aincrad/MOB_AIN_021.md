@@ -28,4 +28,4 @@ Maître épéiste. OSS sans interruption. Esquive sorts.
 - **Respawn** : 20 min
 
 ## Lore
-Le plus fort des chevaliers d Aincrad.
+Le plus fort des chevaliers d'Aincrad.

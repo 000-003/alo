@@ -28,4 +28,4 @@
 - **Respawn** : 10 min
 
 ## Lore
-Manifestation de la sève magique d Yggdrasil.
+Manifestation de la sève magique d'Yggdrasil.

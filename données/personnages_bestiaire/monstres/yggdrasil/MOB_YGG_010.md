@@ -28,4 +28,4 @@ Chevalier-arbuste. Épée bois sacré. Parade + contre.
 - **Respawn** : 15 min
 
 ## Lore
-Guerrier végétal d Yggdrasil. Gardien branches supérieures.
+Guerrier végétal d'Yggdrasil. Gardien branches supérieures.

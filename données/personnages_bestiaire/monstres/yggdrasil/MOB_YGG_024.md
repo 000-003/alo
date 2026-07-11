@@ -28,4 +28,4 @@ Enroulé tronc. Crache venin. Morsure poison + saignement.
 - **Respawn** : 18 min
 
 ## Lore
-Jörmungandr d Yggdrasil.
+Jörmungandr d'Yggdrasil.

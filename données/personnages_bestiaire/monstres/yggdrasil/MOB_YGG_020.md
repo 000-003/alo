@@ -1,4 +1,4 @@
-# Dragon d Yggdrasil — `MOB_YGG_020`
+# Dragon d'Yggdrasil — `MOB_YGG_020`
 
 ## Identification
 - **MOB_ID** : `MOB_YGG_020`

@@ -20,7 +20,7 @@
 - **Loot** : Écaille de Vent (50%), Poudre Cyclone (12%), Éclat Tempête (4%)
 
 ## Comportement IA
-Cercles en altitude. Lames de vent. Agressif sous l orage.
+Cercles en altitude. Lames de vent. Agressif sous l'orage.
 
 ## Bot
 - **Détection** : 22m
