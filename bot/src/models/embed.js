@@ -1,50 +1,64 @@
-import fs from 'fs';
-import path from 'path';
-import config from '../config.js';
+import { getPipeline } from './loader.js';
+import logger from '../utils/logger.js';
 
-let vocab = null;
-const EMBED_DIM = 64;
+const EMBED_DIM = 384;
 
-function loadVocab() {
-  if (vocab) return vocab;
-  const vocabPath = path.join(config.models.path, 'embed_vocab.json');
-  if (fs.existsSync(vocabPath)) {
-    vocab = JSON.parse(fs.readFileSync(vocabPath, 'utf-8'));
-  } else {
-    vocab = {};
-  }
-  return vocab;
+let fallbackVocab = null;
+let fallbackReady = false;
+
+async function initFallback() {
+  if (fallbackReady) return;
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const config = await import('../config.js');
+    const vocabPath = path.default.join(config.default.models.path, 'embed_vocab.json');
+    if (fs.default.existsSync(vocabPath)) {
+      fallbackVocab = JSON.parse(fs.default.readFileSync(vocabPath, 'utf-8'));
+    } else {
+      fallbackVocab = {};
+    }
+  } catch {}
+  fallbackReady = true;
 }
 
-export function embed(text) {
-  const v = loadVocab();
-  const vec = new Float32Array(EMBED_DIM);
+function bowEmbed(text) {
+  const vec = new Float32Array(64);
   const words = text.toLowerCase().split(/\s+/);
   let count = 0;
-
   for (const word of words) {
     const clean = word.replace(/[^a-zéèêëàâùûôîï]/g, '');
-    if (v[clean] !== undefined) {
-      const idx = v[clean];
-      if (idx < EMBED_DIM) {
-        vec[idx] += 1;
-        count++;
-      }
+    if (fallbackVocab && fallbackVocab[clean] !== undefined) {
+      const idx = fallbackVocab[clean];
+      if (idx < 64) { vec[idx] += 1; count++; }
     }
   }
-
-  if (count > 0) {
-    for (let i = 0; i < EMBED_DIM; i++) {
-      vec[i] /= count;
-    }
-  }
-
+  if (count > 0) for (let i = 0; i < 64; i++) vec[i] /= count;
   return vec;
 }
 
+export async function embed(text) {
+  const pipe = getPipeline('embed');
+  if (!pipe) {
+    if (!fallbackReady) await initFallback();
+    return bowEmbed(text);
+  }
+
+  try {
+    const result = await pipe(text, { pooling: 'mean', normalize: true });
+    return result.data;
+  } catch (err) {
+    logger.warn('Embedding Transformers.js failed, fallback BOW', { error: err.message });
+    if (!fallbackReady) await initFallback();
+    return bowEmbed(text);
+  }
+}
+
 export function cosineSimilarity(a, b) {
+  if (!a || !b) return 0;
+  const len = Math.min(a.length, b.length);
   let dot = 0, na = 0, nb = 0;
-  for (let i = 0; i < a.length; i++) {
+  for (let i = 0; i < len; i++) {
     dot += a[i] * b[i];
     na += a[i] * a[i];
     nb += b[i] * b[i];
@@ -53,12 +67,13 @@ export function cosineSimilarity(a, b) {
   return denom === 0 ? 0 : dot / denom;
 }
 
-export function semanticSearch(query, candidates, topK = 3) {
-  const queryVec = embed(query);
-  const scored = candidates.map(c => ({
-    ...c,
-    score: cosineSimilarity(queryVec, embed(c.text || c.name || c)),
-  }));
+export async function semanticSearch(query, candidates, topK = 3) {
+  const queryVec = await embed(query);
+  const scored = [];
+  for (const c of candidates) {
+    const vec = await embed(c.text || c.name || c);
+    scored.push({ ...c, score: cosineSimilarity(queryVec, vec) });
+  }
   scored.sort((a, b) => b.score - a.score);
   return scored.slice(0, topK);
 }

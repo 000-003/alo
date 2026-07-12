@@ -8,6 +8,7 @@ import * as economy from '../src/handlers/economy.js';
 import * as dialogue from '../src/handlers/dialogue.js';
 import * as playerService from '../src/handlers/player.js';
 import { loadGazetteer } from '../src/services/gazetteer.js';
+import { applyStatusEffect, tickStatusEffects, getStatModifiers, formatActiveEffects } from '../src/engine/combat.js';
 
 const TEST_PLAYER = '00000000-0000-0000-0000-000000000001';
 let passed = 0;
@@ -208,6 +209,93 @@ async function run() {
     if (!result.response || (!result.response.includes('refusé') && !result.response.includes('❌'))) {
       throw new Error('Devrait refuser: ' + (result.response || 'pas de réponse'));
     }
+  });
+
+  await test('Status — applyStatusEffect crée une instance', async () => {
+    const target = { hp_current: 100, activeEffects: [] };
+    const effect = {
+      effect_id: 'EFF_BURN',
+      name: 'Brûlure',
+      type: 'debuff',
+      stat_modified: null,
+      modifier_value: 0,
+      modifier_type: 'flat',
+      tick_damage: 5,
+      tick_interval: 3,
+      duration_sec: 15,
+      max_stacks: 3,
+      is_dispellable: true,
+      icon_emoji: '🔥',
+    };
+    const inst = applyStatusEffect(target, effect);
+    if (!inst || inst.effectId !== 'EFF_BURN') throw new Error('Instance invalide');
+    if (target.activeEffects.length !== 1) throw new Error('Devrait avoir 1 effet');
+    if (inst.tickDamage !== 5) throw new Error('tickDamage non propagé');
+  });
+
+  await test('Status — applyStatusEffect stack et refresh', async () => {
+    const target = { hp_current: 100, activeEffects: [] };
+    const effect = {
+      effect_id: 'EFF_BURN', name: 'Brûlure', type: 'debuff',
+      stat_modified: null, modifier_value: 0, modifier_type: 'flat',
+      tick_damage: 5, tick_interval: 3, duration_sec: 15,
+      max_stacks: 3, is_dispellable: true, icon_emoji: '🔥',
+    };
+    applyStatusEffect(target, effect);
+    const inst2 = applyStatusEffect(target, effect);
+    if (inst2.currentStacks !== 2) throw new Error(`Stacks devrait être 2, trouvé ${inst2.currentStacks}`);
+    if (target.activeEffects.length !== 1) throw new Error('Toujours 1 effet');
+  });
+
+  await test('Status — tickStatusEffects tick damage', async () => {
+    const target = { hp_current: 100, hp_max: 100, activeEffects: [] };
+    const effect = {
+      effect_id: 'EFF_POISON', name: 'Poison', type: 'debuff',
+      stat_modified: null, modifier_value: 0, modifier_type: 'flat',
+      tick_damage: 8, tick_interval: 0.001, duration_sec: 30,
+      max_stacks: 5, is_dispellable: true,
+    };
+    const inst = applyStatusEffect(target, effect);
+    inst.lastTick = Date.now() - 100;
+    const result = tickStatusEffects(target);
+    if (result.tickEvents.length === 0) throw new Error('Devrait produire un tick event');
+    if (target.hp_current >= 100) throw new Error('HP devrait avoir baissé');
+  });
+
+  await test('Status — tickStatusEffects expiration', async () => {
+    const target = { hp_current: 100, activeEffects: [] };
+    const effect = {
+      effect_id: 'EFF_STUN', name: 'Stun', type: 'debuff',
+      stat_modified: 'stat_agi', modifier_value: 100, modifier_type: 'percent',
+      tick_damage: 0, tick_interval: 0, duration_sec: -1,
+      max_stacks: 1, is_dispellable: true,
+    };
+    applyStatusEffect(target, effect);
+    const result = tickStatusEffects(target);
+    if (result.expired.length !== 1) throw new Error('Effet devrait être expiré');
+    if (target.activeEffects.length !== 0) throw new Error('Aucun effet actif');
+  });
+
+  await test('Status — getStatModifiers avec buff', async () => {
+    const base = { base_atk: 100, base_def: 50, base_agi: 30 };
+    const activeEffects = [
+      { statModified: 'stat_str', modifierValue: 20, modifierType: 'percent', currentStacks: 1 },
+      { statModified: 'stat_vit', modifierValue: 10, modifierType: 'percent', currentStacks: 2 },
+    ];
+    const mods = getStatModifiers(activeEffects, base);
+    if (mods.base_atk !== 120) throw new Error(`ATK devrait être 120, trouvé ${mods.base_atk}`);
+    if (mods.base_def !== 60) throw new Error(`DEF devrait être 60, trouvé ${mods.base_def}`);
+  });
+
+  await test('Status — formatActiveEffects retourne chaîne', async () => {
+    const activeEffects = [
+      { effectId: 'EFF_BURN', name: 'Brûlure', type: 'debuff', icon: '🔥',
+        endTime: Date.now() + 10000, maxStacks: 3, currentStacks: 2 },
+    ];
+    const str = formatActiveEffects(activeEffects);
+    if (!str.includes('Brûlure')) throw new Error('Nom manquant');
+    if (!str.includes('x2')) throw new Error('Stacks manquants');
+    if (!str.includes('10s')) throw new Error('Durée manquante');
   });
 
   await test('GM — !sys_help accessible sans GM', async () => {

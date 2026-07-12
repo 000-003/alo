@@ -35,7 +35,7 @@ async function level1Vector(query, context) {
   const stats = getStats();
   if (!stats.total) return null;
 
-  const results = search(query, 3);
+  const results = await search(query, 3);
   if (!results.length) return null;
 
   if (context.npcId) {

@@ -266,22 +266,24 @@ INSERT INTO T_TITLES (title_id, name, description, rarity, unlock_type, is_perma
 -- ============================================================================
 -- 6. T_STATUS_EFFECTS_DICT — Effets de base
 -- ============================================================================
-INSERT INTO T_STATUS_EFFECTS_DICT (effect_id, name, type, stat_modified, modifier_value, modifier_type, duration_sec, is_dispellable, max_stacks) VALUES
-('EFF_BURN',      'Brûlure',      'debuff',  'hp_current',   5,   'flat',      15, TRUE, 3),
-('EFF_POISON',    'Poison',       'debuff',  'hp_current',   8,   'flat',      30, TRUE, 5),
-('EFF_FREEZE',    'Gel',          'debuff',  'stat_agi',    50,   'percent',   10, TRUE, 1),
-('EFF_STUN',      'Étourdissement','debuff', 'stat_agi',   100,   'percent',    3, TRUE, 1),
-('EFF_SLOW',      'Lenteur',      'debuff',  'stat_agi',    30,   'percent',   10, TRUE, 2),
-('EFF_HASTE',     'Célérité',     'buff',    'stat_agi',    30,   'percent',   15, TRUE, 2),
-('EFF_STR_UP',    'Force +',       'buff',   'stat_str',    20,   'percent',   30, TRUE, 2),
-('EFF_DEF_UP',    'Défense +',     'buff',   'stat_vit',    20,   'percent',   30, TRUE, 2),
-('EFF_INT_UP',    'Intelligence +','buff',   'stat_int',    20,   'percent',   30, TRUE, 2),
-('EFF_REGENERATE','Régénération',  'buff',   'hp_current',  15,   'flat',      20, TRUE, 3),
-('EFF_INVISIBLE',  'Invisibilité', 'buff',   NULL,           0,   'flat',      60, TRUE, 1),
-('EFF_BLIND',     'Cécité',        'debuff', NULL,           0,   'flat',      10, TRUE, 1),
-('EFF_SILENCE',   'Silence',       'debuff', NULL,           0,   'flat',      10, TRUE, 1),
-('EFF_FEAR',      'Peur',          'debuff', 'stat_agi',    50,   'percent',    8, TRUE, 1),
-('EFF_PROTECT',   'Protection',    'buff',   'stat_vit',    50,   'percent',   20, TRUE, 1);
+INSERT INTO T_STATUS_EFFECTS_DICT (effect_id, name, type, stat_modified, modifier_value, modifier_type, duration_sec, tick_damage, tick_interval, is_dispellable, max_stacks) VALUES
+('EFF_BURN',      'Brûlure',        'debuff',  NULL,         0,   'flat',  15, 5,  3, TRUE, 3),
+('EFF_POISON',    'Poison',         'debuff',  NULL,         0,   'flat',  30, 8,  5, TRUE, 5),
+('EFF_BLEED',     'Saignement',     'debuff',  NULL,         0,   'flat',  12, 12, 3, TRUE, 3),
+('EFF_FREEZE',    'Gel',            'debuff',  'stat_agi',  50,   'percent', 10, 0, 0, TRUE, 1),
+('EFF_STUN',      'Étourdissement', 'debuff',  'stat_agi',  100,  'percent',  3, 0, 0, TRUE, 1),
+('EFF_SLOW',      'Lenteur',        'debuff',  'stat_agi',  30,   'percent', 10, 0, 0, TRUE, 2),
+('EFF_HASTE',     'Célérité',       'buff',    'stat_agi',  30,   'percent', 15, 0, 0, TRUE, 2),
+('EFF_STR_UP',    'Force +',        'buff',    'stat_str',  20,   'percent', 30, 0, 0, TRUE, 2),
+('EFF_DEF_UP',    'Défense +',      'buff',    'stat_vit',  20,   'percent', 30, 0, 0, TRUE, 2),
+('EFF_INT_UP',    'Intelligence +', 'buff',    'stat_int',  20,   'percent', 30, 0, 0, TRUE, 2),
+('EFF_REGENERATE','Régénération',   'buff',    'hp_current',15,   'flat',   20, 15, 5, TRUE, 3),
+('EFF_INVISIBLE', 'Invisibilité',   'buff',    NULL,         0,   'flat',   60, 0, 0, TRUE, 1),
+('EFF_BLIND',     'Cécité',         'debuff',  NULL,         0,   'flat',   10, 0, 0, TRUE, 1),
+('EFF_SILENCE',   'Silence',        'debuff',  NULL,         0,   'flat',   10, 0, 0, TRUE, 1),
+('EFF_FEAR',      'Peur',           'debuff',  'stat_agi',  50,   'percent', 8, 0, 0, TRUE, 1),
+('EFF_CONFUSION', 'Confusion',      'debuff',  NULL,         0,   'flat',    8, 0, 0, TRUE, 1),
+('EFF_PROTECT',   'Protection',     'buff',    'stat_vit',  50,   'percent', 20, 0, 0, TRUE, 1);
 
 -- ============================================================================
 -- 7. T_ACHIEVEMENTS_DICT — Succès de base

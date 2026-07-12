@@ -1,8 +1,16 @@
 import logger from '../utils/logger.js';
 
-export function calculateDamage(attacker, defender, skill = null) {
-  const atk = attacker.base_atk || 0;
-  const def = defender.base_def || 0;
+export function calculateDamage(attacker, defender, skill = null, activeEffects = null) {
+  let atk = attacker.base_atk || 0;
+  let def = defender.base_def || 0;
+
+  if (activeEffects) {
+    const atkMod = computeStatMod(activeEffects, 'stat_str', atk);
+    const defMod = computeStatMod(activeEffects, 'stat_vit', def);
+    atk = atkMod ?? atk;
+    def = defMod ?? def;
+  }
+
   const levelRatio = Math.min(3.0, attacker.level / Math.max(defender.level, 1));
 
   let baseDmg = (atk * atk) / (atk + Math.max(def, 1));
@@ -50,10 +58,14 @@ export function applyStatusEffect(target, effect) {
     statModified: effect.stat_modified,
     modifierValue: effect.modifier_value || 0,
     modifierType: effect.modifier_type || 'flat',
+    tickDamage: effect.tick_damage || 0,
+    tickInterval: effect.tick_interval || 0,
     durationMs,
     endTime: Date.now() + durationMs,
     maxStacks: effect.max_stacks || 1,
     currentStacks: 1,
+    lastTick: Date.now(),
+    icon: effect.icon_emoji || '',
   };
 
   if (!target.activeEffects) target.activeEffects = [];
@@ -61,6 +73,7 @@ export function applyStatusEffect(target, effect) {
   if (existing) {
     existing.currentStacks = Math.min(existing.currentStacks + 1, existing.maxStacks);
     existing.endTime = Date.now() + durationMs;
+    existing.lastTick = Date.now();
     return existing;
   }
 
@@ -69,23 +82,99 @@ export function applyStatusEffect(target, effect) {
 }
 
 export function tickStatusEffects(target) {
-  if (!target?.activeEffects?.length) return [];
+  if (!target?.activeEffects?.length) return { expired: [], tickEvents: [] };
+
   const now = Date.now();
   const expired = [];
+  const tickEvents = [];
+
   target.activeEffects = target.activeEffects.filter(ef => {
     if (now >= ef.endTime) {
       expired.push(ef);
       return false;
     }
-    if (ef.statModified === 'hp_current' && ef.type === 'debuff') {
-      target.hp_current = Math.max(0, (target.hp_current || 0) - ef.modifierValue);
+
+    if (ef.tickDamage && ef.tickInterval > 0) {
+      const elapsed = now - ef.lastTick;
+      if (elapsed >= ef.tickInterval * 1000) {
+        ef.lastTick = now;
+        target.hp_current = Math.max(0, (target.hp_current || 0) - Math.abs(ef.tickDamage));
+        tickEvents.push({
+          effectId: ef.effectId,
+          name: ef.name,
+          damage: Math.abs(ef.tickDamage),
+        });
+      }
     }
-    if (ef.statModified === 'hp_current' && ef.type === 'buff') {
-      target.hp_current = Math.min(target.hp_max || 9999, (target.hp_current || 0) + ef.modifierValue);
+
+    if (ef.statModified === 'hp_current' && ef.modifierValue && ef.tickDamage === 0) {
+      if (ef.type === 'debuff') {
+        const dmg = Math.min(Math.abs(ef.modifierValue), (target.hp_current || 0));
+        target.hp_current = Math.max(0, (target.hp_current || 0) - dmg);
+        tickEvents.push({ effectId: ef.effectId, name: ef.name, damage: dmg });
+      } else if (ef.type === 'buff') {
+        const heal = Math.abs(ef.modifierValue);
+        target.hp_current = Math.min(target.hp_max || 9999, (target.hp_current || 0) + heal);
+        tickEvents.push({ effectId: ef.effectId, name: ef.name, healing: heal });
+      }
     }
+
     return true;
   });
-  return expired;
+
+  return { expired, tickEvents };
+}
+
+function computeStatMod(activeEffects, statField, baseValue) {
+  if (!activeEffects?.length) return null;
+  let modified = baseValue;
+  let changed = false;
+  for (const ef of activeEffects) {
+    if (ef.statModified !== statField) continue;
+    if (ef.modifierType === 'percent') {
+      modified += baseValue * (ef.modifierValue / 100) * ef.currentStacks;
+      changed = true;
+    } else if (ef.modifierType === 'flat') {
+      modified += ef.modifierValue * ef.currentStacks;
+      changed = true;
+    } else if (ef.modifierType === 'multiplier') {
+      modified *= ef.modifierValue * ef.currentStacks;
+      changed = true;
+    }
+  }
+  return changed ? Math.max(1, Math.round(modified)) : null;
+}
+
+export function getStatModifiers(activeEffects, baseStats) {
+  if (!activeEffects?.length) return { ...baseStats };
+  const result = { ...baseStats };
+  for (const statField of ['stat_str', 'stat_vit', 'stat_agi', 'stat_int']) {
+    const key = statField === 'stat_str' ? 'base_atk'
+      : statField === 'stat_vit' ? 'base_def'
+      : statField === 'stat_agi' ? 'base_agi'
+      : 'base_int';
+    const baseVal = baseStats[key] || 0;
+    const modVal = computeStatMod(activeEffects, statField, baseVal);
+    if (modVal !== null) {
+      if (key === 'base_atk') result.base_atk = modVal;
+      else if (key === 'base_def') result.base_def = modVal;
+      else if (key === 'base_agi') result.base_agi = modVal;
+      else result.base_int = modVal;
+    }
+  }
+  return result;
+}
+
+export function formatActiveEffects(activeEffects) {
+  if (!activeEffects?.length) return '';
+  return activeEffects
+    .map(ef => {
+      const remaining = Math.max(0, Math.ceil((ef.endTime - Date.now()) / 1000));
+      const stacks = ef.maxStacks > 1 ? ` x${ef.currentStacks}` : '';
+      const icon = ef.icon || (ef.type === 'debuff' ? '🔴' : '🟢');
+      return `${icon} ${ef.name}${stacks} (${remaining}s)`;
+    })
+    .join('\n');
 }
 
 export function calculateExpReward(monster, partySize = 1) {
@@ -112,6 +201,8 @@ export default {
   calculateHealing,
   applyStatusEffect,
   tickStatusEffects,
+  getStatModifiers,
+  formatActiveEffects,
   calculateExpReward,
   generateCombatLog,
 };

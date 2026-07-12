@@ -10,8 +10,10 @@
     "health": "curl -s http://localhost:3000/health | jq ."
   },
   "dependencies": {
+    "@huggingface/transformers": "^4.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "ollama": "^0.6.3",
     "onnxruntime-node": "^1.27.0",
     "pg": "^8.13.0",
     "qrcode-terminal": "^0.12.0",

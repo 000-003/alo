@@ -21,7 +21,7 @@ export async function loadVectorIndex(db) {
       CREATE INDEX IF NOT EXISTS idx_embeddings_source ON t_embeddings(source_table, source_id)
     `);
   } catch (err) {
-    logger.warn('Table t_embeddings déjà existante ou erreur création', { error: err.message });
+    logger.warn('Table t_embeddings already exists or creation error', { error: err.message });
   }
 
   try {
@@ -43,15 +43,15 @@ export async function loadVectorIndex(db) {
   return index;
 }
 
-export function search(query, topK = 5) {
+export async function search(query, topK = 5) {
   if (!index.length) return [];
-  const queryVec = embed(query);
+  const queryVec = await embed(query);
   const scored = [];
 
   for (let i = 0; i < index.length; i++) {
     const entry = index[i];
     if (!entry.vector) {
-      entry.vector = embed(entry.text);
+      entry.vector = await embed(entry.text);
     }
     const score = cosineSimilarity(queryVec, entry.vector);
     if (score > 0.15) {
@@ -63,8 +63,8 @@ export function search(query, topK = 5) {
   return scored.slice(0, topK);
 }
 
-export function searchBySource(query, sourceTable, topK = 3) {
-  const results = search(query, index.length);
+export async function searchBySource(query, sourceTable, topK = 3) {
+  const results = await search(query, index.length);
   return results.filter(r => r.sourceTable === sourceTable).slice(0, topK);
 }
 

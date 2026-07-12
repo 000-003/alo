@@ -38,6 +38,15 @@ Vérifie l'ID ou demande la liste des articles au marchand.`,
   attack_kill: `💀 **{targetName}** a été vaincu !
 ✨ Récompense : {exp} XP | 💰 {yrds} Yrds`,
 
+  effect_applied: `🌊 **{targetName}** subit **{effectName}** ({duration}s) — infligé par **{sourceName}** !`,
+
+  effect_tick: `💥 **{effectName}** inflige **{damage}** dégâts à **{targetName}** !`,
+
+  effect_heal: `💚 **{effectName}** soigne **{targetName}** de **{healing}** PV !`,
+
+  status_effects: `📊 **{targetName}** — Effets actifs :
+{effects}`,
+
   attack_death: `💀 Tu es tombé au combat !
 🔄 Téléportation au point de liaison dans 30 secondes...`,
 
@@ -103,6 +112,7 @@ Les développeurs travaillent sur cette fonctionnalité.`,
 !sys_npc_knowledge_unlock player_id=<uuid> npc_id=<id> level=<K0-K3>
 !sys_set_env_hazard zone_id=<id> hazard_type=<type> duration_minutes=<nb> severity=<low|medium|high|extreme>
 !sys_shop_restock npc_id=<id>
+!sys_init_test_group player_id=<uuid> phone=<tel>
 ━━━━━━━━━━━━━━━━`,
 };
 

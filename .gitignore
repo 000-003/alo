@@ -1,4 +1,9 @@
 .claude/settings.local.json
 ressources_brutes/
+directives_generiques/
+directives_generation/
+system_persona_architecte.md
+METHODOLOGIE_REPRISE.md
+etude_deepseek.md
 *.pdf
 *.epub

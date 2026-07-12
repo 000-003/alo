@@ -14,7 +14,7 @@ const config = {
     database: process.env.DB_NAME || 'cardinal_alo',
     user: process.env.DB_USER || 'user1808',
     password: process.env.DB_PASSWORD || '0000',
-    poolSize: parseInt(process.env.DB_POOL_SIZE || '10', 10),
+    poolSize: parseInt(process.env.DB_POOL_SIZE || '4', 10),
   },
   redis: {
     url: process.env.REDIS_URL || 'redis://localhost:6379',
@@ -37,6 +37,8 @@ const config = {
     hfPerTick: process.env.HF_PER_TICK || '10',
     geminiQuota: process.env.GEMINI_QUOTA || '60',
     geminiPerTick: process.env.GEMINI_PER_TICK || '10',
+    ollamaModel: process.env.OLLAMA_MODEL || 'phi3.5:3.8b-mini-instruct-q4_K_M',
+    ollamaUrl: process.env.OLLAMA_URL || 'http://localhost:11434',
   },
   wa: {
     sessionPath: process.env.WA_SESSION_PATH || './wa_session',

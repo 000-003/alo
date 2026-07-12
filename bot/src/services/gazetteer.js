@@ -1,4 +1,5 @@
 import logger from '../utils/logger.js';
+import { getPipeline } from '../models/loader.js';
 
 let itemIndex = [];
 let npcIndex = [];
@@ -61,16 +62,83 @@ function score(a, b) {
   return 0;
 }
 
+export async function extractEntities(text) {
+  const entities = { items: [], npcs: [], zones: [], mobs: [], skills: [] };
+
+  const nerPipe = getPipeline('ner');
+  if (nerPipe) {
+    try {
+      const nerResults = await nerPipe(text, { aggregation_strategy: 'simple' });
+      for (const ent of nerResults) {
+        const lower = ent.word.toLowerCase();
+        const found = fuzzyFind(lower);
+        if (found) {
+          const type = found.type;
+          if (!entities[type]) entities[type] = [];
+          entities[type].push({ ...found, score: ent.score });
+        }
+      }
+      if (entities.items.length || entities.npcs.length || entities.zones.length || entities.mobs.length) {
+        logger.debug('NER entities', { count: entities.items.length + entities.npcs.length + entities.zones.length + entities.mobs.length });
+        return entities;
+      }
+    } catch (err) {
+      logger.debug('NER pipeline failed, fallback regex', { error: err.message });
+    }
+  }
+
+  const words = text.toLowerCase().split(/\s+/);
+  for (const word of words) {
+    const found = fuzzyFind(word);
+    if (found) {
+      const type = found.type;
+      if (!entities[type].some(e => e.id === found.id)) {
+        entities[type].push(found);
+      }
+    }
+  }
+
+  return entities;
+}
+
+function fuzzyFind(word) {
+  const clean = normalize(word);
+  if (!clean || clean.length < 2) return null;
+
+  for (const item of itemIndex) {
+    if (score(clean, item.item_id) > 0.5 || score(clean, item.name) > 0.5) {
+      return { type: 'items', id: item.item_id, name: item.name };
+    }
+  }
+
+  for (const npc of npcIndex) {
+    if (score(clean, npc.npc_id) > 0.4 || score(clean, npc.display_name) > 0.4) {
+      return { type: 'npcs', id: npc.npc_id, name: npc.display_name };
+    }
+  }
+
+  for (const zone of zoneIndex) {
+    if (score(clean, zone.zone_id) > 0.4 || score(clean, zone.zone_name) > 0.4) {
+      return { type: 'zones', id: zone.zone_id, name: zone.zone_name };
+    }
+  }
+
+  for (const mob of mobIndex) {
+    if (score(clean, mob.monster_id) > 0.4 || score(clean, mob.name) > 0.4) {
+      return { type: 'mobs', id: mob.monster_id, name: mob.name };
+    }
+  }
+
+  return null;
+}
+
 export function resolveItem(query) {
   if (!loaded || itemIndex.length === 0) return null;
   let best = null;
   let bestScore = 0;
   for (const item of itemIndex) {
     const s = Math.max(score(query, item.item_id), score(query, item.name));
-    if (s > bestScore) {
-      bestScore = s;
-      best = item;
-    }
+    if (s > bestScore) { bestScore = s; best = item; }
   }
   return bestScore > 0.4 ? best : null;
 }
@@ -81,10 +149,7 @@ export function resolveNpc(query) {
   let bestScore = 0;
   for (const npc of npcIndex) {
     const s = Math.max(score(query, npc.npc_id), score(query, npc.display_name));
-    if (s > bestScore) {
-      bestScore = s;
-      best = npc;
-    }
+    if (s > bestScore) { bestScore = s; best = npc; }
   }
   return bestScore > 0.3 ? best : null;
 }
@@ -95,10 +160,7 @@ export function resolveZone(query) {
   let bestScore = 0;
   for (const zone of zoneIndex) {
     const s = Math.max(score(query, zone.zone_id), score(query, zone.zone_name));
-    if (s > bestScore) {
-      bestScore = s;
-      best = zone;
-    }
+    if (s > bestScore) { bestScore = s; best = zone; }
   }
   return bestScore > 0.3 ? best : null;
 }
@@ -109,10 +171,7 @@ export function resolveMob(query) {
   let bestScore = 0;
   for (const mob of mobIndex) {
     const s = Math.max(score(query, mob.monster_id), score(query, mob.name));
-    if (s > bestScore) {
-      bestScore = s;
-      best = mob;
-    }
+    if (s > bestScore) { bestScore = s; best = mob; }
   }
   return bestScore > 0.3 ? best : null;
 }
@@ -121,4 +180,4 @@ export function isLoaded() {
   return loaded;
 }
 
-export default { loadGazetteer, resolveItem, resolveNpc, resolveZone, resolveMob, isLoaded };
+export default { loadGazetteer, resolveItem, resolveNpc, resolveZone, resolveMob, isLoaded, extractEntities };
