@@ -22,6 +22,13 @@ The Gleam Eyes est l'un des boss les plus tristement célèbres de l'Aincrad d'o
 
 ## 5. Loot et Conséquences
 - **Drop Assuré** : Yrds de palier + Gemme du Palier 74.
-- **Last Attack Bonus** : fragment d'arme T5 (matériau lié) orientant vers un craft de haut niveau.
 - **Conséquence** : ouverture vers `ZONE_AIN_FLR_075` (le Skull Reaper attend).
 - **Intégration Bot** : `!sys_spawn_boss [Group_ID] BOSS_AIN_074` · `SYS_GRANT_ITEM`. Aucune commande nouvelle.
+
+### Parties Récoltables (D78)
+
+> Formalisation du Last Attack Bonus existant dans le schéma D78 — aucun nouvel item.
+
+| Partie | Seuil | Récompense | Attribution |
+|---|---|---|---|
+| Garde Brisée (Fenêtre de Dual Blades) | Phase 3 — dernière barre (25 % HP) | Fragment d'arme T5 (matériau lié) | Porteur du coup final dans cette fenêtre |

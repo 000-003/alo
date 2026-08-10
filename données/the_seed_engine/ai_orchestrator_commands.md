@@ -35,6 +35,8 @@
 - `SYS_SPAWN_WORLD_BOSS(Zone_ID)` : Fait apparaître un Boss Unique non-instancié, nécessitant la coopération de multiples guildes (Ping Global).
 - `SYS_MERGE_MOBS(Mob_ID_1, Mob_ID_2)` : Fusionne deux entités en plein combat pour créer une aberration si le chronomètre du combat est trop long.
 - `SYS_ADJUST_SPAWN(Zone_ID, Mob_ID, Taux)` : Ajuste dynamiquement un taux d'apparition dans `T_SPAWN_TABLES` (surpopulation, événements, équilibrage). Équivalent GM : `!sys_spawn_set`.
+- `SYS_SET_CARVE_TABLE(Mob_ID, Partie, Seuil_%HP, Item_ID, Taux)` : Déclare/modifie une ligne de dépeçage par partie (D78, `19_cdc_moteur_deterministe.md` §4) — résolue par L1, jamais par une IA : le franchissement du seuil de dégâts localisé déclenche un roll garanti, indépendant de la table de drop de fin de combat. Appliqué aux 9 boss territoriaux (étape 50). Équivalent GM : `!sys_carve_set`.
+- `SYS_SET_VARIANT_RATE(Zone_ID_ou_global, Taux)` : Règle la probabilité de promotion d'un mob commun en Variant à l'instanciation (D79, `19_cdc_moteur_deterministe.md` §4/§6 D-DET-6) — résolu par L1 : stats de la fiche mob ×2,5 PV/×1,4 ATQ-DEF/×2 XP, loot existant garanti, +Yrds ×3. Zéro nouvelle ligne `T_SPAWN_TABLES`, zéro nouvel item. Équivalent GM : `!sys_variant_rate`.
 
 ## 4. 🧬 Manipulation Directe des Joueurs (Droit Divin)
 - `SYS_DEBUFF_PLAYER(Avatar_ID, Status_Effect)` : Applique une altération d'état (Cécité, Poison, Silence) suite à une erreur critique du joueur.

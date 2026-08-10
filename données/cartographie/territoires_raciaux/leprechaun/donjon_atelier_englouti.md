@@ -71,11 +71,20 @@ L'Atelier Englouti est la première manufacture de Brokkheim, noyée en une nuit
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Marteau-Pilon de Poing (arme contondante) | Épique | 15% |
 | Schéma du Premier Brevet (recette de forge unique, aléatoire) | Épique | 12% |
-| Noyau du Directeur (matériau légendaire — craft d'automate familier) | Légendaire | 3% |
 | Joint d'Étanchéité Parfait (accessoire, respiration aquatique +60s) | Rare | 25% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Marteau-Pilon de Poing et Noyau du Directeur : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Bras-Presse | 50% HP (Phase 2 — inonde le Bureau, combat semi-nagé) | Marteau-Pilon de Poing | Épique | 15% |
+| Noyau Central | 25% HP (Phase 3 — Auto-Réparation, drain exposé) | Noyau du Directeur | Légendaire | 3% |
 
 ---
 

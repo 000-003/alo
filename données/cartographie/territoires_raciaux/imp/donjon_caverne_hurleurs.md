@@ -71,11 +71,20 @@ La Caverne des Hurleurs est un réseau de grottes plongé dans une obscurité qu
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Griffes du Hurleur (armes doubles) | Épique | 15% |
 | Capuche de Chauve-Souris (tête, +20% furtivité sonore) | Épique | 10% |
-| Larynx d'Alpha (matériau légendaire — craft du sort « Cri Banshee ») | Légendaire | 3% |
 | Boucles d'Oreilles Sourdes (accessoire, immunité Silence) | Rare | 25% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Griffes du Hurleur et Larynx d'Alpha : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Griffes | 50% HP (Phase 2 — détruit les stalagmites-couvertures) | Griffes du Hurleur | Épique | 15% |
+| Larynx | 25% HP (Phase 3 — Frénésie Sonar) | Larynx d'Alpha | Légendaire | 3% |
 
 ---
 

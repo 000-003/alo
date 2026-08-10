@@ -22,6 +22,13 @@ Illfang the Kobold Lord est le tout premier boss de palier de l'Aincrad d'origin
 
 ## 5. Loot et Conséquences
 - **Drop Assuré** : Yrds de palier + Gemme du Palier 1.
-- **Last Attack Bonus** (au porteur du coup final) : **Manteau de Minuit** (référence canon au butin de Kirito) — pièce cosmétique liée.
 - **Conséquence** : ouverture de l'escalier vers `ZONE_AIN_FLR_002` ; inscription au registre du palier de front (`!dome_log`).
 - **Intégration Bot** : `!sys_spawn_boss [Group_ID] BOSS_AIN_001` · loot via `SYS_GRANT_ITEM`. Aucune commande nouvelle.
+
+### Parties Récoltables (D78)
+
+> Formalisation du Last Attack Bonus existant dans le schéma D78 — aucun nouvel item, résolution déjà déterministe (L1 identifie le porteur du coup final).
+
+| Partie | Seuil | Récompense | Attribution |
+|---|---|---|---|
+| Bouclier jeté (bascule Nodachi) | Dernière barre (25 % HP — piège de Diavel) | Manteau de Minuit (cosmétique liée) | Porteur du coup final dans cette fenêtre |

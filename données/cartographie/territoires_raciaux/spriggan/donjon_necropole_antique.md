@@ -71,11 +71,20 @@ Sous les ruines qui portent Penwether s'étend la ville des morts de la civilisa
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Sceptre du Royaume Mort (arme de caster) | Épique | 15% |
 | Couronne Sans Royaume (tête, +20% résistance Terreur) | Épique | 10% |
-| Masque de Pennroth (matériau légendaire — craft d'illusion permanente) | Légendaire | 3% |
 | Chevalière Funéraire (accessoire, +10% dégâts sur morts-vivants) | Rare | 25% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Sceptre du Royaume Mort et Masque de Pennroth : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Sceptre-Bras | 50% HP (Phase 2 — se dédouble en 3 illusions) | Sceptre du Royaume Mort | Épique | 15% |
+| Visage (masque brisé) | 25% HP (Phase 3 — Révélation, jette son masque) | Masque de Pennroth | Légendaire | 3% |
 
 ---
 

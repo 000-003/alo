@@ -1553,3 +1553,120 @@ Vérifié par exécution (31/31 ✅) : **nR14-b CLOS** (`parsePipeTableStats()` 
 ### État de sortie
 
 **Divergence docs maîtres ↔ réalité implémentée : RÉSORBÉE.** Balayage de vérification : plus aucune occurrence active de « 1 lieu/zone = 1 groupe » ni de la taxonomie v1 hors mapping documenté, archives et rapports d'audit historiques. `bot/`, `schema.sql`, `seed*.sql` intacts (D-P3-1) — le chantier PE non commité (effets de statut, 37/37 ✅) n'a pas été touché. Points relevés au passage : (a) le kit `directives_generiques/` du PE réutilise les libellés D71/D72 comme noms d'étapes de pipeline — espace de nommage distinct du registre de décisions projet, à surveiller ; (b) `directives_generiques/` et `pour_rc/` toujours non versionnés (décision PE) ; (c) backlog inchangé (accessoires D39, auberge, `T_GUILDS`, `SYS_RAG_REINDEX`, `ZONE_ROUTE_LUGRU`, CGU API, gating K2/L1, P2 RAG fiches+e5, parseur QI).
+
+---
+
+## ÉTAPE 49 — Étude patterns rareté/drop (genre action-RPG de chasse) ✅ (2026-08-10)
+
+**Objectif** : le PE a proposé un comparatif avec un jeu de chasse commercial précis pour enrichir le système de rareté/drop d'ALO (bestiaire riche, mécaniques variées). Demande initiale = télécharger/apporter une ROM du jeu → **refusée** (contenu protégé, y compris depuis un dump personnel R4 : extraire des tables de données propriétaires d'un binaire commercial reste une reproduction de contenu protégé, et parser un ROM chiffré est de la rétro-ingénierie hors périmètre). Accord PE : travailler sur des **patterns génériques du genre**, sans jeu précis nommé ni valeur chiffrée copiée. Scope resserré par le PE à **rareté & drop rates** (écarté : affliction/statuts — chantier PE en cours non commité, pour ne pas percuter).
+
+### Modifications
+
+| # | Action | Fichier |
+|---|---|---|
+| 49.1 | ➕ Créé — étude comparative : constat (Rareté quasi-1:1 avec Tier aujourd'hui, un seul axe de variance), 5 patterns génériques recensés (P1 courbe de rareté indépendante du tier, P2 récolte par partie, P3 rolls multiples — déjà couvert par D73, P4 bonus contextuel — déjà couvert par `SYS_REWARD_LAST_ATTACK`, P5 variants de créature), **D77** actée (rareté découplée du tier pour les créations futures, sans rétroaction, ne réouvre pas D73), **D78** actée en principe (schéma de récolte par partie `Parties_Récoltables`, résolution L1 déterministe, priorité boss, application différée), arbitrage PE explicite requis pour P5 (touche `T_SPAWN_TABLES` + 256 fiches bestiaire auditées étape 36) et pour l'exécution de D78, capture écartée (hors-thème VRMMO/SAO) | `directives_generation/23_etude_patterns_rarete_drop.md` |
+| 49.2 | ✏️ Modifié — ligne « Dernière mise à jour » + reclassement historique | `alo_context.md` |
+| 49.3 | ✏️ Modifié — journal (cette entrée) | `alo_progression.md` |
+
+### Décisions actées
+
+- **D77** : le champ Rareté d'un item/matériau n'est plus dérivé automatiquement de son Tier — choix par usage voulu (sink de farm vs input de progression). S'applique aux créations futures uniquement ; les fiches déjà closes (têtes 100, matériaux 100, etc.) ne sont pas retouchées par cette étude.
+- **D78** : mécanique de récolte par partie (nouveau champ optionnel `Parties_Récoltables` sur fiche `MOB_*`/`BOSS_*` : `{Partie, Seuil_Dégâts_%, Table_Loot_Dédiée}`, résolution déterministe L1 au franchissement de seuil, indépendante du loot de fin de combat). Schéma et propagation de commandes (`!sys_carve_set` GM / `SYS_SET_CARVE_TABLE` IA) décidés ; **application aux fiches réelles différée**, priorité boss territoriaux+axe vertical si le chantier est ouvert par le PE.
+
+### État de sortie
+
+**Aucun fichier de contenu existant modifié** (D77 non rétroactif, D78 = schéma seulement). Aucune ROM ni donnée propriétaire utilisée. Points laissés à l'arbitrage PE : ouverture du chantier D78 (dépeçage boss), pattern P5 (variants de créature, blast radius = `T_SPAWN_TABLES` + bestiaire audité). Prochaine étape au choix du PE.
+
+---
+
+## ÉTAPE 50 — Chantier D78 ouvert et clos : dépeçage sur les 9 boss territoriaux ✅ (2026-08-10)
+
+**Objectif** : le PE a explicitement ouvert le chantier D78 (schéma acté étape 49), scope = « boss territoriaux ». Application de la mécanique de récolte par partie aux 9 boss de donjon territoriaux, sans toucher aux boss d'axe vertical ni aux mobs communs (hors du périmètre demandé).
+
+**Méthode** : pour chaque boss, réutilisation des seuils **déjà écrits** dans sa propre fiche (Phase 2 / Phase 3, % HP restant — aucun nouveau nombre inventé) ; 2 lignes existantes de la Table de Drop (l'Épique-clé + le Légendaire, choisis pour leur cohérence narrative avec la description de la phase) déplacées vers une nouvelle section « Parties Récoltables (D78) » — même item, même rareté, même taux, seul le déclencheur change (roll garanti au franchissement du seuil plutôt qu'un roll aveugle de fin de combat). Neutre sur l'équilibrage économique étape 37 (aucune probabilité totale de drop augmentée).
+
+### Modifications
+
+| # | Action | Fichier |
+|---|---|---|
+| 50.1 | ✏️ Modifié — Bras-Enclume@50%HP→Marteau du Géant, Fournaise Interne@25%HP→Cœur de Braise | `données/cartographie/territoires_raciaux/salamander/donjon_caldeira_obsidienne.md` |
+| 50.2 | ✏️ Modifié — Flancs Écailleux@60%HP→Écaille du Léviathan, Cœur Battant@30%HP→Perle du Cœur Battant | `données/cartographie/territoires_raciaux/undine/donjon_gouffre_leviathan.md` |
+| 50.3 | ✏️ Modifié — Défenses@50%HP→Défense du Roi, Poitrail@25%HP→Cœur de Béhémoth | `données/cartographie/territoires_raciaux/caitsith/donjon_taniere_roi_behemoth.md` |
+| 50.4 | ✏️ Modifié — Baguette-Main@50%HP→Baguette du Maestro, Partition@25%HP→Fragment de Partition Originelle | `données/cartographie/territoires_raciaux/puca/donjon_amphitheatre_oublie.md` |
+| 50.5 | ✏️ Modifié — Griffes@50%HP→Griffes du Hurleur, Larynx@25%HP→Larynx d'Alpha | `données/cartographie/territoires_raciaux/imp/donjon_caverne_hurleurs.md` |
+| 50.6 | ✏️ Modifié — Fissures du Corps@50%HP→Marteau du Filon, Noyau Magnétique@25%HP→Cœur de Mithril | `données/cartographie/territoires_raciaux/gnome/donjon_mine_mithril_abandonnee.md` |
+| 50.7 | ✏️ Modifié — Bras-Presse@50%HP→Marteau-Pilon de Poing, Noyau Central@25%HP→Noyau du Directeur | `données/cartographie/territoires_raciaux/leprechaun/donjon_atelier_englouti.md` |
+| 50.8 | ✏️ Modifié — Sceptre-Bras@50%HP→Sceptre du Royaume Mort, Visage@25%HP→Masque de Pennroth (phase déjà nommée « jette son masque » — anchoring naturel) | `données/cartographie/territoires_raciaux/spriggan/donjon_necropole_antique.md` |
+| 50.9 | ✏️ Modifié — Ailes@50%HP→Ailes de l'Archonte, Œil du Cyclone@25%HP→Cœur de Tempête | `données/cartographie/territoires_raciaux/sylph/donjon_vent_hurlant.md` |
+| 50.10 | ✏️ Modifié — mapping `SYS_SET_CARVE_TABLE` §4 + décision **D-DET-5** §6 | `directives_generation/19_cdc_moteur_deterministe.md` |
+| 50.11 | ✏️ Modifié — ajout GM `!sys_carve_set` §1 | `données/the_seed_engine/whatsapp_commands_list.md` |
+| 50.12 | ✏️ Modifié — ajout IA `SYS_SET_CARVE_TABLE` §3 | `données/the_seed_engine/ai_orchestrator_commands.md` |
+| 50.13 | ✏️ Modifié — D78 marquée ✅ appliquée, tables §3/§4/§5 mises à jour (statut exécuté, fichiers réels listés) | `directives_generation/23_etude_patterns_rarete_drop.md` |
+| 50.14 | ✏️ Modifié — ligne « Dernière mise à jour » + reclassement historique | `alo_context.md` |
+| 50.15 | ✏️ Modifié — journal (cette entrée) | `alo_progression.md` |
+
+### Décisions actées
+
+- **D-DET-5** (moteur déterministe, `19_cdc_moteur_deterministe.md` §6) : le dépeçage par partie est résolu exclusivement par L1, jamais par une IA ; formalise le déclencheur « seuil de dégâts localisé (% HP, phase déjà définie par boss) → roll garanti indépendant du roll de fin de combat ».
+
+### État de sortie
+
+**D78 CLOS sur le périmètre demandé** : 9/9 boss territoriaux équipés d'une section Parties Récoltables (18 lignes de loot au total re-rattachées), commandes GM/IA propagées, moteur déterministe à jour. Économie étape 37 intacte (mêmes items/raretés/taux). Hors périmètre (non traité, à la discrétion du PE) : boss d'axe vertical (Yggdrasil/Jötunheimr/New Aincrad), pattern P5 variants de créature sur les 256 mobs communs (`T_SPAWN_TABLES`, bestiaire audité étape 36).
+
+---
+
+## ÉTAPE 51 — Extension D78 aux 7 boss d'axe vertical ✅ (2026-08-10)
+
+**Objectif** : le PE a demandé l'extension explicite de D78 aux boss d'axe vertical (Yggdrasil, Jötunheimr, New Aincrad), suite à l'étape 50.
+
+**Constat fait en exécutant (non anticipé par le schéma initial)** : le roster d'axe vertical `_index_boss_axe_vertical.md` **n'est pas uniforme**. Lecture des 7 fiches : 4 boss de palier (`BOSS_AIN_001`, `027`, `074`, `075`) ont une vraie table de loot (Yrds de palier, Gemme, Last Attack Bonus lié) ; 3 boss apex (`BOSS_YGG_001`, `BOSS_JOT_001`, `BOSS_AIN_100`) portent une décision de design antérieure et explicite — « aucun Yrd, aucune arme » (anti-farm strict, texte déjà présent dans leurs fiches avant cette étape). Décision d'exécution : ne **pas** rouvrir cette décision anti-farm sans arbitrage PE ; appliquer D78 en respectant la distinction — items réels déplacés pour les 4 boss de palier (même méthode que l'étape 50), formalisation du déclencheur sans nouvel item pour les 3 boss apex.
+
+### Modifications
+
+| # | Action | Fichier |
+|---|---|---|
+| 51.1 | ✏️ Modifié — Last Attack Bonus (Manteau de Minuit) formalisé en Parties Récoltables, seuil dernière barre/bascule nodachi | `données/personnages_bestiaire/boss_aincrad/boss_ain_001_illfang_kobold_lord.md` |
+| 51.2 | ✏️ Modifié — Masse d'armes Épique (Tier A) déplacée en Parties Récoltables, seuil Phase 2/désynchronisation des bras | `données/personnages_bestiaire/boss_aincrad/boss_ain_027_geant_4_bras.md` |
+| 51.3 | ✏️ Modifié — Last Attack Bonus (fragment d'arme T5) formalisé, seuil Phase 3/Fenêtre de Dual Blades | `données/personnages_bestiaire/boss_aincrad/boss_ain_074_the_gleam_eyes.md` |
+| 51.4 | ✏️ Modifié — Last Attack Bonus (composant d'arme légendaire) formalisé, seuil mi-combat/scission en segments (pas de phase d'enrage par design sur ce boss — seuil = seul repère décrit) | `données/personnages_bestiaire/boss_aincrad/boss_ain_075_the_skull_reaper.md` |
+| 51.5 | ✏️ Modifié — récompense système (Titre « Conquérant d'Aincrad » + gravure) formalisée, seuil Phase finale/Vide du Créateur ; **aucun item ajouté** | `données/personnages_bestiaire/boss_aincrad/boss_ain_100_le_souverain_ecarlate.md` |
+| 51.6 | ✏️ Modifié — récompense système (déverrouillage Sommet + Titre) formalisée, seuil Phase d'Enrage ; **aucun item ajouté** | `données/personnages_bestiaire/monstres/yggdrasil/boss_ygg_001_gardien_du_dome.md` |
+| 51.7 | ✏️ Modifié — événement système (effondrement Thrymheim + récupération Excalibur) formalisé, seuil Phase d'Enrage ; **aucun item ajouté** | `données/personnages_bestiaire/monstres/thrym_roi_des_geants.md` |
+| 51.8 | ✏️ Modifié — §4 « Loot » corrigé (l'ancienne mention « aucun drop monnayable sur les boss d'axe » était inexacte pour les 4 boss de palier — inexactitude préexistante, corrigée au passage) + note D78 + commandes | `données/personnages_bestiaire/_index_boss_axe_vertical.md` |
+| 51.9 | ✏️ Modifié — décision D-DET-5 précisée : nuance anti-farm (4 boss de palier vs 3 boss apex) | `directives_generation/19_cdc_moteur_deterministe.md` |
+| 51.10 | ✏️ Modifié — §1/§3/§4/§5 mis à jour (D78 étendu, tableau des fichiers, résumé) | `directives_generation/23_etude_patterns_rarete_drop.md` |
+| 51.11 | ✏️ Modifié — ligne « Dernière mise à jour » + reclassement historique | `alo_context.md` |
+| 51.12 | ✏️ Modifié — journal (cette entrée) | `alo_progression.md` |
+
+### État de sortie
+
+**D78 CLOS sur l'intégralité du roster de boss nommés (16/16 : 9 territoriaux + 7 axe vertical)**. Aucun item introduit sur les 3 boss apex anti-farm (décision de design antérieure respectée, non rouverte sans arbitrage). Commandes GM/IA (propagées étape 50) couvrent déjà l'ensemble du roster, aucun ajout nécessaire. Seul point encore hors périmètre, à l'arbitrage du PE : pattern P5 (variants de créature) sur les 256 mobs communs (`T_SPAWN_TABLES`, bestiaire audité étape 36).
+
+---
+
+## ÉTAPE 52 — D79 : variants de créature commune (P5), chantier étude 23 clos ✅ (2026-08-10)
+
+**Objectif** : le PE a demandé l'extension explicite de P5 (variants de créature) aux 256 mobs communs — dernier point que l'étude `23_etude_patterns_rarete_drop.md` laissait à l'arbitrage PE (blast radius identifié : `T_SPAWN_TABLES` close + bestiaire audité étape 36, 0 collision).
+
+**Décision d'exécution** : l'approche initialement esquissée en §2 de l'étude (« 2ᵉ instance de loot par fiche ») aurait effectivement touché les 256 fiches et gonflé `T_SPAWN_TABLES` — écartée. Design retenu à la place : **paramétrique**, sur le précédent déjà établi dans ce projet pour les paliers génériques de New Aincrad (`_index_boss_axe_vertical.md` §3 — profil calculé à la volée, pas de fiche permanente). Un Variant est une **promotion d'instance résolue par L1 à l'instanciation du spawn**, jamais une entrée de catalogue : roll indépendant 5% (défaut, ajustable) sur une ligne `T_SPAWN_TABLES` existante → si promu, les stats déjà écrites sur la fiche du mob sont multipliées (PV ×2,5, ATQ/DEF ×1,4, XP ×2), la ligne de loot déjà existante passe de probabiliste à garantie + Yrds ×3. **Résultat : zéro fichier touché sur les 256 fiches `MOB_*`, zéro nouvelle ligne `T_SPAWN_TABLES`, budget de zone ≤100% intact, zéro nouvel item** — le blast radius identifié à l'étape 49 est annulé par le choix de design, pas contourné par une exception.
+
+### Modifications
+
+| # | Action | Fichier |
+|---|---|---|
+| 52.1 | ✏️ Modifié — décision **D79** ajoutée (§2, sortie du tableau d'arbitrage §3), tableau des fichiers §4 et résumé §5 mis à jour — chantier de l'étude marqué entièrement clos | `directives_generation/23_etude_patterns_rarete_drop.md` |
+| 52.2 | ✏️ Modifié — ligne `SYS_SET_VARIANT_RATE` au mapping §4 + décision **D-DET-6** §6 | `directives_generation/19_cdc_moteur_deterministe.md` |
+| 52.3 | ✏️ Modifié — ajout GM `!sys_variant_rate` §1 | `données/the_seed_engine/whatsapp_commands_list.md` |
+| 52.4 | ✏️ Modifié — ajout IA `SYS_SET_VARIANT_RATE` §3 | `données/the_seed_engine/ai_orchestrator_commands.md` |
+| 52.5 | ✏️ Modifié — note de résolution D79 ajoutée (aucun changement de schéma) | `données/cardinal_system_db/MLD_Logic/table_t_spawn_tables.md` |
+| 52.6 | ✏️ Modifié — ligne « Dernière mise à jour » + reclassement historique | `alo_context.md` |
+| 52.7 | ✏️ Modifié — journal (cette entrée) | `alo_progression.md` |
+
+### Décisions actées
+
+- **D79** : variant de créature commune (pattern P5) — résolution paramétrique par L1 à l'instanciation du spawn, 5% de chance par défaut (ajustable `!sys_variant_rate`/`SYS_SET_VARIANT_RATE`), stats ×2,5 PV/×1,4 ATQ-DEF/×2 XP, loot existant garanti + Yrds ×3. Aucun nouveau fichier, aucune nouvelle ligne `T_SPAWN_TABLES`, aucun nouvel item.
+- **D-DET-6** (moteur déterministe) : formalise D79 comme résolution 100% L1, jamais IA ; persistance de l'état d'instance = détail d'implémentation `bot/` (P3, hors périmètre ACP).
+
+### État de sortie
+
+**Le chantier ouvert par l'étude 23 (D77/D78/D79) est désormais entièrement clos** : rareté découplée du tier (créations futures), récolte par partie sur les 16 boss nommés (territoriaux + axe vertical), variants sur les mobs communs — **aucun arbitrage PE en attente sur ce sujet**. Aucune ROM ni donnée propriétaire d'un jeu commercial utilisée à aucune étape (49-52). Bestiaire (256 fiches, étape 36) et `T_SPAWN_TABLES` (budget de zone) intacts.

@@ -22,7 +22,15 @@ Le Palier 100 — le **Palais Rubis** — est le sommet de New Aincrad, jamais a
 4. **Phase finale — Le Vide du Créateur** : à la dernière barre, invulnérable sauf pendant une fenêtre courte ouverte uniquement par un **enchaînement multi-écoles parfait** (magie ultime + OSS T5), clin d'œil à la nécessité de « réécrire les règles » pour finir Aincrad.
 
 ## 5. Loot et Conséquences
-- **Drops Directs** : aucun Yrd ; **conséquence de système** exclusivement.
+- **Drops Directs** : aucun Yrd ; **conséquence de système** exclusivement (design anti-farm — boss apex, cf. `19_cdc_moteur_deterministe.md` D-DET-5).
 - **Récompense de Système** : Titre serveur **« Conquérant d'Aincrad »** (`!titre_set`) au raid ; gravure permanente sur le **Monument des Épéistes** ; achèvement de la progression horizontale (pendant de la Grand Quest d'Yggdrasil).
 - **Intégration Bot** : `!sys_spawn_boss [Group_ID] BOSS_AIN_100` · titre via système existant. Aucune commande nouvelle.
 - **Fil méta** : le « trône vide de Kayaba » est un nœud méta — révélation réservée orchestrateur, jamais confirmée frontalement (règle D22).
+
+### Parties Récoltables (D78)
+
+> Boss apex anti-farm : **aucun item introduit** (respecte le « aucun Yrd » ci-dessus). D78 formalise ici uniquement le déclencheur déjà décrit — la récompense système reste ce qu'elle était.
+
+| Partie | Seuil | Récompense liée | Attribution |
+|---|---|---|---|
+| Le Vide du Créateur (invulnérabilité rompue) | Dernière barre — fenêtre ouverte uniquement par un enchaînement multi-écoles parfait (§4.4) | Titre « Conquérant d'Aincrad » + gravure Monument des Épéistes | Raid inscrit ayant porté le coup dans la fenêtre |

@@ -71,12 +71,21 @@ Derrière le mur de brique dressé à la hâte par Granzam s'étendent les galer
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Marteau du Filon (masse à deux mains) | Épique | 15% |
 | Cotte de Mithril Brut (torse, poids plume) | Épique | 10% |
-| Cœur de Mithril (matériau légendaire — craft d'arme Tier S chez les Leprechauns) | Légendaire | 3% |
 | Bague Magnétique (accessoire, +10% loot de minerai) | Rare | 25% |
 | Lingot de Mithril Impur | Commun | 100% (×2-4) |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Marteau du Filon et Cœur de Mithril : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Fissures du Corps | 50% HP (Phase 2 — s'incruste dans la paroi, zones de fissure vulnérables) | Marteau du Filon | Épique | 15% |
+| Noyau Magnétique | 25% HP (Phase 3 — Surcharge Magnétique) | Cœur de Mithril | Légendaire | 3% |
 
 ---
 

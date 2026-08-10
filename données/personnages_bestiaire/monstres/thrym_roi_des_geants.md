@@ -30,3 +30,11 @@ Thrym ne possède pas de "fenêtre de stun" classique. Ses attaques couvrent la 
 ## 5. Loot et Conséquences
 - **Drops Directs** : Aucun Yrd, aucune arme.
 - **Récompense de Système** : Sa mort déclenche la destruction physique du donjon Thrymheim. Le palais s'effondre en polygones. Les joueurs ont 3 minutes pour sauter dans le vide, atterrir sur une monture volante (Tonkii) et récupérer Excalibur restée sur le socle flottant au centre de l'effondrement. L'événement sauve le serveur du gel éternel.
+
+### Parties Récoltables (D78)
+
+> Boss apex anti-farm : **aucun item introduit** (respecte le « aucun Yrd, aucune arme » ci-dessus). D78 formalise ici uniquement le déclencheur déjà décrit.
+
+| Partie | Seuil | Récompense liée | Attribution |
+|---|---|---|---|
+| Bouclier de Glace (Phase d'Enrage, corps translucide) | Dernière barre (~20 % HP, 1/5) — invulnérable aux attaques physiques, perçable seulement via Mjölnir/Thor (§4.4) | Effondrement de Thrymheim + fenêtre de récupération d'Excalibur | Raid inscrit présent dans la fenêtre |

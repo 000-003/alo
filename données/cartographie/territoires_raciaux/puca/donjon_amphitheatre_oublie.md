@@ -71,11 +71,20 @@ Enfoui sous une colline au nord de Lioda, l'Amphithéâtre Oublié est un théâ
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Baguette du Maestro (arme de caster, +2 emplacements de sort de musique) | Épique | 15% |
 | Manteau de Première (torse, +15% résistance Silence) | Épique | 10% |
-| Fragment de Partition Originelle | Légendaire | 3% |
 | Diapason d'Argent (accessoire, fenêtres de tempo +0.5s) | Rare | 25% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Baguette du Maestro et Fragment de Partition Originelle : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Baguette-Main | 50% HP (Phase 2 — change de tempo, fenêtres d'action rétrécies) | Baguette du Maestro | Épique | 15% |
+| Partition (arrachée au pupitre) | 25% HP (Phase 3 — Symphonie Finale) | Fragment de Partition Originelle | Légendaire | 3% |
 
 ---
 

@@ -27,3 +27,11 @@ Le Gardien du Dôme est le **boss final de la Grand Quest** d'Yggdrasil, le clim
 - **Drops Directs** : aucun Yrd, aucune arme (design anti-farm, comme les Golden Knights et Thrym).
 - **Récompense de Système** : la mort du Gardien **désactive la Zone de Mort Procédurale** ; le Sommet (`ZONE_YGG_TOP_001`) s'ouvre définitivement au serveur. Titre serveur **« Vainqueur de la Grand Quest »** (`!titre_set`) attribué au raid inscrit. Le premier raid à le tuer grave son nom sur le Monument des Épéistes.
 - **Intégration Bot** : `!sys_spawn_boss [Group_ID] BOSS_YGG_001` (GM) · `SYS_LOG_RAID(Raid_ID, Roster, Dome_Floor)` (IA) · déverrouillage zone via trigger de `T_ZONE_LINKS` (`YGG_DUN_001`→`YGG_TOP_001`). Aucune commande nouvelle.
+
+### Parties Récoltables (D78)
+
+> Boss apex anti-farm : **aucun item introduit** (respecte le « aucun Yrd, aucune arme » ci-dessus). D78 formalise ici uniquement le déclencheur déjà décrit.
+
+| Partie | Seuil | Récompense liée | Attribution |
+|---|---|---|---|
+| Noyau Recompilé (Phase d'Enrage, fusion aux Golden Knights) | Dernière barre (~17 % HP, 1/6) — perçable uniquement par Lumière ultime `MAG_LUM_010` ou OSS T5 enchaîné (§4.4) | Désactivation Zone de Mort Procédurale + Titre « Vainqueur de la Grand Quest » + gravure Monument | Raid inscrit ayant porté le coup dans la fenêtre |

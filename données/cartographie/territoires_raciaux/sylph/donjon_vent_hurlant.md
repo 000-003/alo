@@ -76,11 +76,20 @@ Le donjon se compose de trois étages, chacun plus profond et plus dangereux que
 | Item | Rareté | Taux de Drop |
 |---|---|---|
 | Lame du Vent Hurlant (épée) | Épique | 15% |
-| Ailes de l'Archonte (cosmétique ailes) | Épique | 10% |
-| Cœur de Tempête (matériau légendaire) | Légendaire | 3% |
 | Anneau du Cyclone (accessoire, +20% vitesse de vol) | Rare | 25% |
 | Grimoire de Rafale Ultime (sort) | Épique | 8% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Ailes de l'Archonte et Cœur de Tempête : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Ailes | 50% HP (Phase 2 — Aeris s'envole, combat aérien) | Ailes de l'Archonte | Épique | 10% |
+| Œil du Cyclone (noyau) | 25% HP (Phase 3 — Tempête Ultime) | Cœur de Tempête | Légendaire | 3% |
 
 ---
 

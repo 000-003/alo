@@ -23,6 +23,13 @@ The Skull Reaper est le boss le plus meurtrier de l'histoire de SAO : une entit�
 
 ## 5. Loot et Conséquences
 - **Drop Assuré** : Yrds de palier + Gemme du Palier 75.
-- **Last Attack Bonus** : composant d'arme légendaire lié (oriente vers le craft `WPN_LEG_*`).
 - **Conséquence** : ouverture vers `ZONE_AIN_FLR_076` ; jalon narratif « la vérité derrière le jeu » (fil méta, révélation réservée orchestrateur, règle D22).
 - **Intégration Bot** : `!sys_spawn_boss [Group_ID] BOSS_AIN_075` · `SYS_GRANT_ITEM`. Aucune commande nouvelle.
+
+### Parties Récoltables (D78)
+
+> Formalisation du Last Attack Bonus existant dans le schéma D78 — aucun nouvel item. Ce boss n'a pas de phase d'enrage classique (design intentionnel, « test de discipline, pas de burst » — cf. §4) : le seuil retenu est le seul point de repère décrit, pas une barre de HP inventée.
+
+| Partie | Seuil | Récompense | Attribution |
+|---|---|---|---|
+| Segments d'Os (scission en tenaille) | Mi-combat (« Cliquetis d'Os », cf. §4.3) | Composant d'arme légendaire lié (`WPN_LEG_*`) | Porteur du coup final dans cette fenêtre |

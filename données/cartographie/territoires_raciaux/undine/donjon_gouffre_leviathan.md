@@ -92,10 +92,19 @@ Effet de design : le groupe doit **budgéter ses messages entre deux poches d'ai
 | Item | Rareté | Taux de Drop |
 |---|---|---|
 | Trident des Abysses (arme d'hast, +200% dégâts aquatiques) | Légendaire | 3% |
-| Écaille du Léviathan (matériau — armures de plongée) | Épique | 15% |
-| Perle du Cœur Battant (accessoire, +20 Oxygène max) | Épique | 10% |
 | Grimoire des Marées (sort *Tsunami* incomplet — cf. Thalassa `NPC_UND_01`) | Rare | 20% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×8-14) |
+
+*Écaille du Léviathan et Perle du Cœur Battant : retirées du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Flancs Écailleux | 60% HP (Phase 2 — reliefs brisés, courants aléatoires) | Écaille du Léviathan | Épique | 15% |
+| Cœur Battant | 30% HP (Phase 3 — enroulé autour de la poche d'air, flanc exposé) | Perle du Cœur Battant | Épique | 10% |
 
 ---
 

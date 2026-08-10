@@ -71,11 +71,20 @@ La Tanière est un réseau de galeries creusées par le Roi Béhémoth lui-même
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Défense du Roi (lance) | Épique | 15% |
 | Selle Royale (équipement familier, +800 HP monture) | Épique | 10% |
-| Cœur de Béhémoth (matériau légendaire — Beast Taming) | Légendaire | 3% |
 | Amulette Sismique (accessoire, +15% résistance Terre) | Rare | 25% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Défense du Roi et Cœur de Béhémoth : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus. Taux inchangés (D73).
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Défenses | 50% HP (Phase 2 — s'enfouit, attaques-surprise depuis le sol) | Défense du Roi | Épique | 15% |
+| Poitrail | 25% HP (Phase 3 — Rage du Roi, salle qui s'effondre) | Cœur de Béhémoth | Légendaire | 3% |
 
 ---
 

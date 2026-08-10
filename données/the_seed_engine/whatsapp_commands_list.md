@@ -17,6 +17,8 @@
 - `!sys_spawn_set [Zone_ID] [Mob_ID] [Taux%]` : Ajuste le taux d'apparition d'un mob dans une zone (écrit dans `T_SPAWN_TABLES`, budget de zone ≤ 100%).
 - `!sys_npc_move [NPC_ID] [Zone_ID]` : Déplace un PNJ vers une autre zone (met à jour `T_NPC.zone_id` — le bot annonce le départ/l'arrivée dans les groupes concernés).
 - `!sys_env_set [Zone_ID] [Param] [Valeur]` : Règle un paramètre environnemental de zone/instance (`OXYGEN` — jauge d'Apnée du Gouffre de Léviathan, `HEAT` — jauge de Surchauffe de la Caldeira d'Obsidienne, `DOT`…). Équivalent GM de `SYS_SET_ENV_HAZARD`.
+- `!sys_carve_set [Mob_ID] [Partie] [Seuil_%HP] [Item_ID] [Taux%]` : Déclare/modifie une ligne de dépeçage par partie (D78) — franchissement du seuil pendant le combat = roll garanti sur cette ligne, indépendant de la table de drop de fin de combat. Équivalent GM de `SYS_SET_CARVE_TABLE`.
+- `!sys_variant_rate [Zone_ID|global] [Taux%]` : Règle la probabilité qu'un mob commun s'instancie en Variant (D79 — stats de sa fiche ×2,5 PV/×1,4 ATQ-DEF, loot existant garanti, +Yrds ×3 ; 5% par défaut). Équivalent GM de `SYS_SET_VARIANT_RATE`.
 - `!sys_npc_info [NPC_ID]` : Audit de l'enveloppe informationnelle d'un PNJ (slots K0-KX, conditions, déblocages — cf. `npc_knowledge_protocol.md`). Équivalent IA : `SYS_NPC_KNOWLEDGE_CHECK`.
 - `!sys_npc_unlock [NPC_ID] [QI_ID] [Num_WhatsApp]` : Débloque manuellement un slot K2/K3 pour un joueur (écrit dans `T_NPC_KNOWLEDGE_UNLOCKS`). Équivalent IA : `SYS_NPC_KNOWLEDGE_UNLOCK`.
 - `!sys_canon_spawn [NPC_ID] [Zone_ID] [Durée_min]` : Matérialise un personnage canonique dans une zone pour une fenêtre limitée (D19 — seul moyen de rencontrer la trame principale). Équivalent IA : `SYS_SPAWN_CANON`.

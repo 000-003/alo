@@ -28,6 +28,14 @@ Le design du boss est fait pour punir les guildes désorganisées et récompense
    - La seule façon de survivre à cette phase est d'utiliser un DPS massif (*Burst*) pour vider sa barre de HP avant qu'il ne lance son cyclone. C'est l'utilité exacte de l'OSS *Mother's Rosario* de Yuuki (11 coups massifs consécutifs).
 
 ## 5. Loot et Conséquences
-- **Drops Directs** : Masse d'armes Épique (Tier A), 250,000 Yrds, et le "Gemme du Palier 27".
+- **Drops Directs** : 250,000 Yrds et le "Gemme du Palier 27".
 - **Récompense de Système** : Ouvre les grandes portes vers le Palier 28.
 - **Récompense Sociale** : Le système grave automatiquement les noms du groupe gagnant sur le *Monument of Swordsmen* au Palier 1. Si l'équipe ne contenait qu'une seule "Party" (1 à 7 joueurs maximum), les noms sont gravés en relief doré.
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (L1) : franchissement du seuil = roll garanti, indépendant du roll de fin de combat. Item retiré du roll aveugle (même item, même statut Épique, juste rattaché à ce déclencheur).
+
+| Partie | Seuil | Item lié | Rareté |
+|---|---|---|---|
+| Bras Désynchronisés | 50 % HP (Phase 2 — bascule en balayages lourds à tempos désynchronisés) | Masse d'armes Épique (Tier A) | Épique |

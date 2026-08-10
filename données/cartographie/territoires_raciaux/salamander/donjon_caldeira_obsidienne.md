@@ -88,11 +88,20 @@ Effet de design : les groupes doivent **coordonner leurs actions en peu de messa
 
 | Item | Rareté | Taux de Drop |
 |---|---|---|
-| Marteau du Géant (masse à deux mains) | Épique | 15% |
-| Cœur de Braise (matériau — forge d'armes de feu légendaires) | Légendaire | 3% |
 | Tablier d'Obsidienne (armure, +20% résistance Feu) | Épique | 10% |
 | Rune de Forge Ancienne (amélioration d'arme garantie +1) | Rare | 25% |
 | Cristal de Donjon (monnaie) | Commun | 100% (×5-10) |
+
+*Marteau du Géant et Cœur de Braise : retirés du roll aveugle de fin de combat — voir Parties Récoltables ci-dessous (D78).*
+
+### Parties Récoltables (D78)
+
+> Dépeçage déterministe (moteur L1) : le franchissement du seuil de dégâts déclenche un roll **garanti** sur la table dédiée, indépendant du roll de fin de combat. Seuils = phases déjà définies ci-dessus (aucun nouveau nombre introduit). Taux inchangés (D73), simplement retirés du roll aveugle.
+
+| Partie | Seuil | Item lié | Rareté | Taux |
+|---|---|---|---|---|
+| Bras-Enclume | 50% HP (Phase 2 — « frappe son enclume ») | Marteau du Géant | Épique | 15% |
+| Fournaise Interne | 25% HP (Phase 3 — parois-miroirs brisées) | Cœur de Braise | Légendaire | 3% |
 
 ---
 
