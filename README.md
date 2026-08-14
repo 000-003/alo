@@ -153,3 +153,7 @@ processMessage (9 cas), spawn/combat, routage GM, status effects (6 cas).
 | Architecture WA par territoires | ✅ |
 | Guildes joueurs, groupes sociaux, instances | ⏳ À venir |
 | ML ONNX (classifieur d'intention neuronal) | ⏳ Modèle chargé, non branché |
+
+## 📜 Licence
+
+MIT — voir [LICENSE](LICENSE).
